@@ -1,0 +1,39 @@
+{
+  "name": "ripe-date",
+  "description": "Dependency free, opt-in UI, customizable date _(and time)_ picker!",
+  "homepage": "https://github.com/bevacqua/ripe-date",
+  "version": "0.1.44",
+  "author": {
+    "name": "Nicolas Bevacqua",
+    "email": "hello@bevacqua.io",
+    "url": "http://ponyfoo.com"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/bevacqua/ripe-date.git"
+  },
+  "bugs": {
+    "url": "https://github.com/bevacqua/ripe-date/issues"
+  },
+  "main": "src/ripe-date.js",
+  "dependencies": {
+    "lodash.throttle": "^2.4.1",
+    "moment": "^2.7.0"
+  },
+  "devDependencies": {
+    "browserify": "^4.1.3",
+    "gulp": "^3.6.2",
+    "gulp-bump": "^0.1.8",
+    "gulp-clean": "^0.2.4",
+    "gulp-git": "^0.4.2",
+    "gulp-header": "^1.0.2",
+    "gulp-minify-css": "^0.3.4",
+    "gulp-rename": "^1.2.0",
+    "gulp-size": "^0.3.1",
+    "gulp-streamify": "0.0.5",
+    "gulp-stylus": "^1.0.0",
+    "gulp-uglify": "^0.3.0",
+    "vinyl-source-stream": "^0.1.1"
+  }
+}
