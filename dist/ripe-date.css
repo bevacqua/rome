@@ -1,6 +1,6 @@
 /**
  * ripe-date - Dependency free, opt-in UI, customizable date _(and time)_ picker!
- * @version v0.1.76
+ * @version v0.1.78
  * @link https://github.com/bevacqua/ripe-date
  * @license MIT
  */
@@ -42,4 +42,7 @@
 .rd-day-disabled {
   cursor: default;
   color: #999;
+}
+.rd-time {
+  text-align: center;
 }

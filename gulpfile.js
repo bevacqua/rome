@@ -12,6 +12,7 @@ var stylus = require('gulp-stylus');
 var minifyCSS = require('gulp-minify-css');
 var browserify = require('browserify');
 var streamify = require('gulp-streamify');
+var watch = require('gulp-watch');
 var source = require('vinyl-source-stream');
 var size = require('gulp-size');
 
@@ -34,7 +35,10 @@ gulp.task('clean', function () {
     .pipe(clean());
 });
 
-gulp.task('build', ['styles'], function () {
+gulp.task('build-only', build)
+gulp.task('build', ['styles'], build);
+
+function build () {
   var pkg = require('./package.json');
 
   return browserify('./src/ripe-date.js')
@@ -47,12 +51,15 @@ gulp.task('build', ['styles'], function () {
     .pipe(streamify(header(succjs, { pkg : pkg } )))
     .pipe(streamify(size()))
     .pipe(gulp.dest('./dist'));
-});
+}
 
-gulp.task('styles', ['clean', 'bump'], function () {
+gulp.task('styles-only', styles);
+gulp.task('styles', ['clean', 'bump'], styles);
+
+function styles () {
   var pkg = require('./package.json');
 
-  gulp.src('./src/ripe-date.styl')
+  return gulp.src('./src/ripe-date.styl')
     .pipe(stylus({
       import: path.resolve('node_modules/nib/index')
     }))
@@ -63,6 +70,11 @@ gulp.task('styles', ['clean', 'bump'], function () {
     .pipe(size())
     .pipe(header(succss, { pkg : pkg } ))
     .pipe(gulp.dest('./dist'));
+}
+
+gulp.task('watch', function() {
+  watch({ glob: 'src/**/*.js' }, function () { gulp.start('build-only'); });
+  watch({ glob: 'src/**/*.styl' }, function () { gulp.start('styles-only'); });
 });
 
 gulp.task('bump', function () {

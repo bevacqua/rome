@@ -2,7 +2,7 @@
   "name": "ripe-date",
   "description": "Dependency free, opt-in UI, customizable date _(and time)_ picker!",
   "homepage": "https://github.com/bevacqua/ripe-date",
-  "version": "0.1.76",
+  "version": "0.1.78",
   "author": {
     "name": "Nicolas Bevacqua",
     "email": "hello@bevacqua.io",
@@ -35,6 +35,7 @@
     "gulp-streamify": "0.0.5",
     "gulp-stylus": "^1.0.0",
     "gulp-uglify": "^0.3.0",
+    "gulp-watch": "^0.6.8",
     "vinyl-source-stream": "^0.1.1"
   }
 }
