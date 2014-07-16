@@ -42,7 +42,7 @@ function build () {
   var pkg = require('./package.json');
 
   return browserify('./src/ripe-date.js')
-    .bundle({ debug: true, standalone: 'ripedate' })
+    .bundle({ debug: true, standalone: 'ripe' })
     .pipe(source('ripe-date.js'))
     .pipe(streamify(header(extended, { pkg : pkg } )))
     .pipe(gulp.dest('./dist'))

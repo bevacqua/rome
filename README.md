@@ -14,7 +14,7 @@ npm install --save ripe-date
 bower install --save ripe-date
 ```
 
-Note that if you're using the standalone version, the API is published under the `ripedate` global. If you're using CJS, then it's `require('ripe-date')`.
+Note that if you're using the standalone version, the API is published under the `ripe` global. If you're using CJS, then it's `require('ripe-date')`.
 
 ## License
 
