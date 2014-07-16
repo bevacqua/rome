@@ -3,7 +3,7 @@
 var moment = require('moment');
 var throttle = require('lodash.throttle');
 
-function c (options) {
+function dom (options) {
   var o = options || {};
   if (!o.type) { o.type = 'div'; }
   var elem = document.createElement(o.type);
@@ -16,6 +16,8 @@ function c (options) {
 function calendar (input, options) {
   var no;
   var o = options || {};
+  if (o.autoHide === no) { o.autoHide = true; }
+  if (o.inputFormat === no) { o.inputFormat = 'YYYY-MM-DD HH:mm'; }
   if (o.calendar === no) { o.calendar = {}; }
   var cal = o.calendar;
   if (cal.containerClass === no) { cal.containerClass = 'rd-container'; }
@@ -25,30 +27,30 @@ function calendar (input, options) {
   if (cal.monthFormat === no) { cal.monthFormat = 'MMMM YYYY'; }
   if (cal.dayFormat === no) { cal.dayFormat = 'DD'; }
   if (cal.appendTo === no) { cal.appendTo = document.body; }
-  if (o.autoHide === no) { o.autoHide = true; }
-  if (o.inputFormat === no) { o.inputFormat = 'YYYY-MM-DD HH:mm'; }
-  if (o.dayTableClass === no) { o.dayTableClass = 'rd-days'; }
-  if (o.dayHeadClass === no) { o.dayHeadClass = 'rd-days-head'; }
-  if (o.dayHeadElemClass === no) { o.dayHeadClass = 'rd-day-head'; }
-  if (o.dayRowClass === no) { o.dayHeadClass = 'rd-days-row'; }
-  if (o.dayBodyClass === no) { o.dayHeadClass = 'rd-days-head'; }
-  if (o.selectedDayClass === no) { o.selectedDayClass = 'rd-day-selected'; }
+  if (cal.dayTableClass === no) { cal.dayTableClass = 'rd-days'; }
+  if (cal.dayHeadClass === no) { cal.dayHeadClass = 'rd-days-head'; }
+  if (cal.dayHeadElemClass === no) { cal.dayHeadElemClass = 'rd-day-head'; }
+  if (cal.dayRowClass === no) { cal.dayRowClass = 'rd-days-row'; }
+  if (cal.dayBodyClass === no) { cal.dayBodyClass = 'rd-days-body'; }
+  if (cal.dayBodyElemClass === no) { cal.dayBodyElemClass = 'rd-day-body'; }
+  if (cal.selectedDayClass === no) { cal.selectedDayClass = 'rd-day-selected'; }
+  if (cal.dayDisabledClass === no) { cal.dayDisabledClass = 'rd-day-disabled'; }
 
-  var container = c({ classes: cal.containerClass });
-  var back = c({ classes: cal.backClass, parent: container });
-  var month = c({ classes: cal.monthClass, parent: container });
-  var next = c({ classes: cal.nextClass, parent: container });
-  var date = c({ type: 'table', classes: cal.dayTableClass, parent: container });
-  var datehead = c({ type: 'thead', classes: cal.dayHeadClass, parent: date });
-  var dateheadrow = c({ type: 'tr', classes: cal.dayRowClass, parent: datehead });
-  var datebody = c({ type: 'tbody', classes: cal.dayBodyClass, parent: date });
+  var container = dom({ classes: cal.containerClass });
+  var back = dom({ classes: cal.backClass, parent: container });
+  var next = dom({ classes: cal.nextClass, parent: container });
+  var month = dom({ classes: cal.monthClass, parent: container });
+  var date = dom({ type: 'table', classes: cal.dayTableClass, parent: container });
+  var datehead = dom({ type: 'thead', classes: cal.dayHeadClass, parent: date });
+  var dateheadrow = dom({ type: 'tr', classes: cal.dayRowClass, parent: datehead });
+  var datebody = dom({ type: 'tbody', classes: cal.dayBodyClass, parent: date });
   var ref = moment();
   var lastUpdate;
   var i;
   var weekdays = moment.weekdaysMin();
 
   for (i = 0; i < weekdays.length; i++) {
-    c({ type: 'th', classes: cal.dayHeadElementClass, parent: dateheadrow, text: weekdays[i] });
+    dom({ type: 'th', classes: cal.dayHeadElemClass, parent: dateheadrow, text: weekdays[i] });
   }
 
   function show () {
@@ -102,43 +104,58 @@ function calendar (input, options) {
     var current = ref.date(); // 1..31
     var first = ref.clone().date(1);
     var firstDay = first.day(); // 0..6
+    var lastMoment;
     var lastDay;
     var i, day, node;
     var tr = row();
+    var disabled = cal.dayBodyElemClass + ' ' + cal.dayDisabledClass;
 
     for (i = 0; i < firstDay; i++) {
       day = first.clone().subtract('days', firstDay - i);
-      node = c({ type: 'td', classes: cal.dayBodyElemClass, parent: tr, text: day.format(cal.dayFormat) });
-      node.disabled = true;
+      node = dom({ type: 'td', classes: disabled, parent: tr, text: day.format(cal.dayFormat) });
     }
     for (i = 0; i < total; i++) {
       if (tr.children.length === weekdays.length) {
         tr = row();
       }
       day = first.clone().add('days', i);
-      node = c({ type: 'td', classes: cal.dayBodyElemClass, parent: tr, text: day.format(cal.dayFormat) });
+      node = dom({ type: 'td', classes: cal.dayBodyElemClass, parent: tr, text: day.format(cal.dayFormat) });
       if (day.date() === current) {
         node.classList.add(cal.selectedDayClass);
       }
     }
-    lastDay = day.day();
-    for (i = lastDay; i < weekdays.length; i++) {
-      day = lastDay.clone().add('days', i);
-      node = c({ type: 'td', classes: cal.dayBodyElemClass, parent: tr, text: day.format(cal.dayFormat) });
-      node.disabled = true;
-    }
-
-    function row () {
-       return c({ type: 'tr', classes: cal.dayRowClass, parent: datebody });
+    lastMoment = day.clone();
+    lastDay = lastMoment.day();
+    for (i = 1; tr.children.length < weekdays.length; i++) {
+      day = lastMoment.clone().add('days', i);
+      node = dom({ type: 'td', classes: disabled, parent: tr, text: day.format(cal.dayFormat) });
     }
   }
 
+  function row () {
+    return dom({ type: 'tr', classes: cal.dayRowClass, parent: datebody });
+  }
+
   function pickDay (e) {
-    var day = e.target;
+    var target = e.target;
+    if (!target.classList.contains(cal.dayBodyElemClass)) {
+      return;
+    }
+    var day = parseInt(target.innerText || target.textContent);
+    var query = '.' + cal.selectedDayClass.replace(/\s+/g, '.');
+    var prev = container.querySelector(query);
+    if (prev) { prev.classList.remove(cal.selectedDayClass); }
+    target.classList.add(cal.selectedDayClass);
+    ref.date(day);
+    updateInput();
   }
 
   function updated () {
     updatedMonth();
+  }
+
+  function updateInput () {
+    input.value = ref.format(o.inputFormat);
   }
 
   hide();
@@ -155,18 +172,32 @@ function calendar (input, options) {
   input.addEventListener('input', throttledTakeInput);
   back.addEventListener('click', subtractMonth);
   next.addEventListener('click', addMonth);
-  days.addEventListener('click', pickDay);
+  datebody.addEventListener('click', pickDay);
 
   if (o.autoHide) { document.body.addEventListener('click', takeHint); }
 
-// TODO: days, time (optional)
+  function getDate () {
+    return ref.toDate();
+  }
+
+  function getDateString (format) {
+    return ref.format(format || o.inputFormat);
+  }
+
+  function getMoment () {
+    return ref.clone();
+  }
 
   return {
     show: show,
     hide: hide,
     element: container,
-    ref: ref
+    getDate: getDate,
+    getDateString: getDateString,
+    getMoment: getMoment
   };
 }
+
+// TODO: time (optional)
 
 module.exports = calendar;

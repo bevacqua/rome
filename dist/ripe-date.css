@@ -1,0 +1,45 @@
+/**
+ * ripe-date - Dependency free, opt-in UI, customizable date _(and time)_ picker!
+ * @version v0.1.76
+ * @link https://github.com/bevacqua/ripe-date
+ * @license MIT
+ */
+.rd-container {
+  border: 1px solid #333;
+  background-color: #fff;
+  padding: 10px;
+}
+.rd-month {
+  display: block;
+  text-align: center;
+}
+.rd-back,
+.rd-next {
+  cursor: pointer;
+}
+.rd-back {
+  float: left;
+}
+.rd-next {
+  float: right;
+}
+.rd-back:before {
+  display: block;
+  content: '\2190';
+}
+.rd-next:before {
+  display: block;
+  content: '\2192';
+}
+.rd-day-body {
+  cursor: pointer;
+  text-align: center;
+}
+.rd-day-selected {
+  background-color: #333;
+  color: #fff;
+}
+.rd-day-disabled {
+  cursor: default;
+  color: #999;
+}
