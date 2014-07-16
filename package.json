@@ -2,7 +2,7 @@
   "name": "ripe-date",
   "description": "Dependency free, opt-in UI, customizable date _(and time)_ picker!",
   "homepage": "https://github.com/bevacqua/ripe-date",
-  "version": "0.1.44",
+  "version": "0.1.45",
   "author": {
     "name": "Nicolas Bevacqua",
     "email": "hello@bevacqua.io",
