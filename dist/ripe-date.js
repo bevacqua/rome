@@ -1,6 +1,6 @@
 /**
  * ripe-date - Dependency free, opt-in UI, customizable date _(and time)_ picker!
- * @version v0.1.46
+ * @version v0.1.47
  * @link https://github.com/bevacqua/ripe-date
  * @license MIT
  */
