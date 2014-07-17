@@ -1,7 +1,7 @@
 {
-  "name": "ripe-date",
+  "name": "rome",
   "description": "Dependency free, opt-in UI, customizable date _(and time)_ picker!",
-  "homepage": "https://github.com/bevacqua/ripe-date",
+  "homepage": "https://github.com/bevacqua/rome",
   "version": "0.1.78",
   "author": {
     "name": "Nicolas Bevacqua",
@@ -11,12 +11,12 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git://github.com/bevacqua/ripe-date.git"
+    "url": "git://github.com/bevacqua/rome.git"
   },
   "bugs": {
-    "url": "https://github.com/bevacqua/ripe-date/issues"
+    "url": "https://github.com/bevacqua/rome/issues"
   },
-  "main": "dist/ripe-date.js",
+  "main": "dist/rome.js",
   "ignore": [
     ".*",
     "package.json",

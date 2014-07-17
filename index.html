@@ -1,7 +1,7 @@
-<link href='dist/ripe-date.css' rel='stylesheet' type='text/css' />
+<link href='dist/rome.css' rel='stylesheet' type='text/css' />
 <link href='example/example.css' rel='stylesheet' type='text/css' />
-<title>Ripe Date</title>
-<h1>Ripe Date</h1>
+<title>Rome</title>
+<h1>Rome</h1>
 <h3>Dependency free, opt-in UI, customizable date <em>(and time)</em> picker!</h3>
 <div class='examples'>
   <div class='parent'>
@@ -9,7 +9,7 @@
     <input id='dt' class='input' />
     <pre>
       <code>
-ripe(input);
+rome(input);
       </code>
     </pre>
   </div>
@@ -18,7 +18,7 @@ ripe(input);
     <input id='d' class='input' />
     <pre>
       <code>
-ripe(input, { time: false });
+rome(input, { time: false });
       </code>
     </pre>
   </div>
@@ -27,21 +27,21 @@ ripe(input, { time: false });
     <input id='t' class='input' />
     <pre>
       <code>
-ripe(input, { date: false });
+rome(input, { date: false });
       </code>
     </pre>
   </div>
   <div class='parent'>
-    <label for='ind'>Remove and restore <code>ripe</code> at will: </label>
+    <label for='ind'>Remove and restore <code>rome</code> at will: </label>
     <input id='ind' class='input' />
-    <button id='toggle'>Destroy <code>ripe</code> instance!</button>
+    <button id='toggle'>Destroy <code>rome</code> instance!</button>
     <pre>
       <code>
-var picker = ripe(input); // ripe.find(input) also returns picker
+var picker = rome(input); // rome.find(input) also returns picker
 
 toggle.addEventListener('click', function () {
-  if (picker.init) {
-    picker.init();
+  if (picker.restore) {
+    picker.restore();
   } else {
     picker.destroy();
   }
@@ -50,5 +50,5 @@ toggle.addEventListener('click', function () {
     </pre>
   </div>
 </div>
-<script src='dist/ripe-date.js'></script>
+<script src='dist/rome.js'></script>
 <script src='example/example.js'></script>

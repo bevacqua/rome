@@ -1,6 +1,6 @@
 'use strict';
 
-var ikey = 'ripeId';
+var ikey = 'romeId';
 var index = [];
 var moment = require('moment');
 var throttle = require('lodash.throttle');
@@ -59,19 +59,20 @@ function calendar (input, calendarOptions) {
     renderTime();
     o.appendTo.appendChild(container);
     input.addEventListener('click', show);
-    input.addEventListener('focus', show);
+    input.addEventListener('focusin', show);
     input.addEventListener('change', throttledTakeInput);
     input.addEventListener('keypress', throttledTakeInput);
     input.addEventListener('keydown', throttledTakeInput);
     input.addEventListener('input', throttledTakeInput);
     if (o.invalidate) { input.addEventListener('blur', updateInput); }
-    //if (o.autoHideOnBlur) { input.addEventListener('blur', hide); }
-    if (o.autoHideOnClick) { document.body.addEventListener('click', takeHint); }
+    if (o.autoHideOnBlur) { document.body.addEventListener('focusin', hideOnBlur); }
+    if (o.autoHideOnClick) { document.body.addEventListener('click', hideOnClick); }
 
     hide();
     throttledTakeInput();
     updateCalendar();
 
+    delete api.restore;
     api.show = show;
     api.hide = hide;
     api.datepicker = container;
@@ -85,15 +86,14 @@ function calendar (input, calendarOptions) {
 
   function destroy () {
     container.parentNode.removeChild(container);
-    input.removeEventListener('click', show);
-    input.removeEventListener('focus', show);
+    input.removeEventListener('focusin', show);
     input.removeEventListener('change', throttledTakeInput);
     input.removeEventListener('keypress', throttledTakeInput);
     input.removeEventListener('keydown', throttledTakeInput);
     input.removeEventListener('input', throttledTakeInput);
     if (o.invalidate) { input.removeEventListener('blur', updateInput); }
-    //if (o.autoHideOnBlur) { input.addEventListener('blur', hide); }
-    if (o.autoHideOnClick) { document.body.removeEventListener('click', takeHint); }
+    if (o.autoHideOnBlur) { document.body.removeEventListener('focusin', hideOnBlur); }
+    if (o.autoHideOnClick) { document.body.removeEventListener('click', hideOnClick); }
 
     // reverse order micro-optimization
     delete api.options;
@@ -105,7 +105,7 @@ function calendar (input, calendarOptions) {
     delete api.datepicker;
     delete api.hide;
     delete api.show;
-    api.init = init;
+    api.restore = init;
   }
 
   function changeOptions (options) {
@@ -154,16 +154,29 @@ function calendar (input, calendarOptions) {
 
   function hide () { container.style.display = 'none'; }
 
-  function takeHint (e) {
+  function ignoreEventTarget (e) {
     var target = e.target;
     if (target === input) {
-      return;
+      return true;
     }
     while (target) {
       if (target === container) {
-        return;
+        return true;
       }
       target = target.parentNode;
+    }
+  }
+
+  function hideOnBlur (e) {
+    if (ignoreEventTarget(e)) {
+      return;
+    }
+    hide();
+  }
+
+  function hideOnClick (e) {
+    if (ignoreEventTarget(e)) {
+      return;
     }
     hide();
   }
@@ -264,8 +277,8 @@ function calendar (input, calendarOptions) {
     if (prev) { prev.classList.remove(o.styles.selectedDay); }
     target.classList.add(o.styles.selectedDay);
     ref.date(day);
-    if (o.autoClose) { hide(); }
     updateInput();
+    if (o.autoClose) { hide(); }
   }
 
   function getDate () {
@@ -287,7 +300,4 @@ calendar.find = find;
 
 module.exports = calendar;
 
-// TODO: hide on blur, but not if blur because clicking on calendar
-// TODO: when invalidated and clicking away, don't auto-focus
 // TODO: display options in time picker
-// TODO: destroy example always has api.init?

@@ -41,12 +41,12 @@ gulp.task('build', ['styles'], build);
 function build () {
   var pkg = require('./package.json');
 
-  return browserify('./src/ripe-date.js')
-    .bundle({ debug: true, standalone: 'ripe' })
-    .pipe(source('ripe-date.js'))
+  return browserify('./src/rome.js')
+    .bundle({ debug: true, standalone: 'rome' })
+    .pipe(source('rome.js'))
     .pipe(streamify(header(extended, { pkg : pkg } )))
     .pipe(gulp.dest('./dist'))
-    .pipe(streamify(rename('ripe-date.min.js')))
+    .pipe(streamify(rename('rome.min.js')))
     .pipe(streamify(uglify()))
     .pipe(streamify(header(succjs, { pkg : pkg } )))
     .pipe(streamify(size()))
@@ -59,13 +59,13 @@ gulp.task('styles', ['clean', 'bump'], styles);
 function styles () {
   var pkg = require('./package.json');
 
-  return gulp.src('./src/ripe-date.styl')
+  return gulp.src('./src/rome.styl')
     .pipe(stylus({
       import: path.resolve('node_modules/nib/index')
     }))
     .pipe(header(extended, { pkg : pkg } ))
     .pipe(gulp.dest('./dist'))
-    .pipe(rename('ripe-date.min.css'))
+    .pipe(rename('rome.min.css'))
     .pipe(minifyCSS())
     .pipe(size())
     .pipe(header(succss, { pkg : pkg } ))

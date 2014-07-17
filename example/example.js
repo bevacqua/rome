@@ -5,10 +5,10 @@ ripe(t, { date: false });
 var picker = ripe(ind);
 
 toggle.addEventListener('click', function () {
-  if (picker.init) {
-    picker.init();
+  if (picker.restore) {
+    picker.restore();
   } else {
     picker.destroy();
   }
-  toggle.innerHTML = picker.init ? 'Restore <code>ripe</code> instance!' : 'Destroy <code>ripe</code> instance!';
+  toggle.innerHTML = picker.restore ? 'Restore <code>ripe</code> instance!' : 'Destroy <code>ripe</code> instance!';
 });
