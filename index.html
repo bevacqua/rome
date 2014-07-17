@@ -7,14 +7,48 @@
   <div class='parent'>
     <label for='dt'>Pick a date and a time: </label>
     <input id='dt' class='input' />
+    <pre>
+      <code>
+ripe(input);
+      </code>
+    </pre>
   </div>
   <div class='parent'>
     <label for='d'>Pick a date: </label>
     <input id='d' class='input' />
+    <pre>
+      <code>
+ripe(input, { time: false });
+      </code>
+    </pre>
   </div>
   <div class='parent'>
     <label for='t'>Pick a time: </label>
     <input id='t' class='input' />
+    <pre>
+      <code>
+ripe(input, { date: false });
+      </code>
+    </pre>
+  </div>
+  <div class='parent'>
+    <label for='ind'>Remove and restore <code>ripe</code> at will: </label>
+    <input id='ind' class='input' />
+    <button id='toggle'>Destroy <code>ripe</code> instance!</button>
+    <pre>
+      <code>
+var api = ripe(input); // ripe.find(input) also returns api
+
+toggle.addEventListener('click', function () {
+  if (api.init) {
+    api.init();
+  } else {
+    api.destroy();
+  }
+  toggle.innerHTML = api.init ? /* ... */;
+});
+      </code>
+    </pre>
   </div>
 </div>
 <script src='dist/ripe-date.js'></script>

@@ -4,7 +4,7 @@ body {
   max-width: 760px;
 }
 
-body, input {
+body, input, button {
   font-family: Georgia, Helvetica;
   font-size: 17px;
   color: #2c3e50;
@@ -19,6 +19,10 @@ h3 {
   background-color: rgba(255, 255, 255, 0.2);
   padding: 20px;
   text-align: center;
+}
+
+pre code {
+  color: #e74c3c;
 }
 
 .parent {
@@ -37,4 +41,17 @@ h3 {
   padding: 10px;
   outline: none;
   border: none;
+}
+
+#toggle {
+  color: #ecf0f1;
+  background-color: #8e44ad;
+  padding: 10px;
+  outline: none;
+  border: none;
+  cursor: pointer;
+}
+
+#toggle:hover {
+  background-color: #9b59b6;
 }

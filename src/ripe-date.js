@@ -1,86 +1,61 @@
 'use strict';
 
+var ikey = 'ripeId';
+var index = [];
 var moment = require('moment');
 var throttle = require('lodash.throttle');
+var dom = require('./dom');
+var defaults = require('./defaults');
+var no;
 
-function dom (options) {
-  var o = options || {};
-  if (!o.type) { o.type = 'div'; }
-  var elem = document.createElement(o.type);
-  if (o.className) { elem.className = o.className; }
-  if (o.text) { elem.innerText = elem.textContent = o.text; }
-  if (o.parent) { o.parent.appendChild(elem); }
-  return elem;
+function find (thing) {
+  if (typeof thing !== 'number' && thing && thing.dataset) {
+    return find(thing.dataset[ikey]);
+  }
+  var existing = index[thing];
+  if (existing !== no) {
+    return existing;
+  }
 }
 
-function calendar (input, options) {
-  var no;
-  var o = options || {};
-  if (o.autoHide === no) { o.autoHide = true; }
-  if (o.autoClose === no) { o.autoClose = true; }
-  if (o.appendTo === no) { o.appendTo = document.body; }
-  if (o.appendTo === 'parent') { o.appendTo = input.parentNode; }
-  if (o.date === no) { o.date = true; }
-  if (o.time === no) { o.time = true; }
-  if (o.date === false && o.time === false) { throw new Error('At least one of `date` or `time` must be `true`.'); }
-  if (o.inputFormat === no) {
-    if (o.date && o.time) {
-      o.inputFormat = 'YYYY-MM-DD HH:mm';
-    } else if (o.date) {
-      o.inputFormat = 'YYYY-MM-DD';
-    } else {
-      o.inputFormat = 'HH:mm';
-    }
+function calendar (input, calendarOptions) {
+  var existing = find(input);
+  if (existing) {
+    return existing;
   }
-  if (o.timeFormat === no) { o.timeFormat = 'HH:mm'; }
-  if (o.timeInterval === no) { o.timeInterval = 60 * 30; } // 30 minutes by default
-  if (o.monthFormat === no) { o.monthFormat = 'MMMM YYYY'; }
-  if (o.dayFormat === no) { o.dayFormat = 'DD'; }
-  if (o.styles === no) { o.styles = {}; }
-  var styl = o.styles;
-  if (styl.container === no) { styl.container = 'rd-container'; }
-  if (styl.date === no) { styl.date = 'rd-date'; }
-  if (styl.month === no) { styl.month = 'rd-month'; }
-  if (styl.back === no) { styl.back = 'rd-back'; }
-  if (styl.next === no) { styl.next = 'rd-next'; }
-  if (styl.dayTable === no) { styl.dayTable = 'rd-days'; }
-  if (styl.dayHead === no) { styl.dayHead = 'rd-days-head'; }
-  if (styl.dayHeadElem === no) { styl.dayHeadElem = 'rd-day-head'; }
-  if (styl.dayRow === no) { styl.dayRow = 'rd-days-row'; }
-  if (styl.dayBody === no) { styl.dayBody = 'rd-days-body'; }
-  if (styl.dayBodyElem === no) { styl.dayBodyElem = 'rd-day-body'; }
-  if (styl.selectedDay === no) { styl.selectedDay = 'rd-day-selected'; }
-  if (styl.dayDisabled === no) { styl.dayDisabled = 'rd-day-disabled'; }
-  if (styl.time === no) { styl.time = 'rd-time'; }
-
+  var o;
+  var api = {};
   var ref = moment();
-  var container = dom({ className: styl.container });
+  var container;
   var throttledTakeInput = throttle(takeInput, 100);
 
   // date variables
   var weekdays = moment.weekdaysMin();
   var month;
   var datebody;
+  var lastYear;
   var lastMonth;
+  var lastDay;
 
-  renderDates();
-  renderTime();
+  // time variables
+  var time;
+
+  assign();
   init();
-  hide();
-  throttledTakeInput();
-  updatedMonth();
 
-  var api = {
-    show: show,
-    hide: hide,
-    element: container,
-    getDate: getDate,
-    getDateString: getDateString,
-    getMoment: getMoment,
-    destroy: destroy
-  };
+  function assign () {
+    input.dataset[ikey] = index.push(api) - 1;
+  }
 
-  function init () {
+  function init (initOptions) {
+    o = defaults(initOptions || calendarOptions);
+    if (!container) { container = dom({ className: o.styles.container }); }
+    lastMonth = no;
+    lastYear = no;
+    lastDay = no;
+    removeChildren(container);
+    renderDates();
+    renderTime();
     o.appendTo.appendChild(container);
     input.addEventListener('click', show);
     input.addEventListener('focus', show);
@@ -88,7 +63,23 @@ function calendar (input, options) {
     input.addEventListener('keypress', throttledTakeInput);
     input.addEventListener('keydown', throttledTakeInput);
     input.addEventListener('input', throttledTakeInput);
-    if (o.autoHide) { document.body.addEventListener('click', takeHint); }
+    if (o.invalidate) { input.addEventListener('blur', updateInput); }
+    if (o.autoHideOnBlur) { input.addEventListener('blur', hide); }
+    if (o.autoHideOnClick) { document.body.addEventListener('click', takeHint); }
+
+    hide();
+    throttledTakeInput();
+    updateCalendar();
+
+    api.show = show;
+    api.hide = hide;
+    api.datepicker = container;
+    api.input = input;
+    api.getDate = getDate;
+    api.getDateString = getDateString;
+    api.getMoment = getMoment;
+    api.destroy = destroy;
+    api.options = changeOptions;
   }
 
   function destroy () {
@@ -99,26 +90,44 @@ function calendar (input, options) {
     input.removeEventListener('keypress', throttledTakeInput);
     input.removeEventListener('keydown', throttledTakeInput);
     input.removeEventListener('input', throttledTakeInput);
-    if (o.autoHide) { document.body.removeEventListener('click', takeHint); }
-    Object.keys(api).forEach(function (key) { delete api[key]; });
+    if (o.invalidate) { input.removeEventListener('blur', updateInput); }
+    if (o.autoHideOnBlur) { input.addEventListener('blur', hide); }
+    if (o.autoHideOnClick) { document.body.removeEventListener('click', takeHint); }
+
+    // reverse order micro-optimization
+    delete api.options;
+    delete api.destroy;
+    delete api.getMoment;
+    delete api.getDateString;
+    delete api.getDate;
+    delete api.input;
+    delete api.datepicker;
+    delete api.hide;
+    delete api.show;
+    api.init = init;
+  }
+
+  function changeOptions (options) {
+    destroy();
+    init(options);
   }
 
   function renderDates () {
     if (!o.date) {
       return;
     }
-    var datewrapper = dom({ className: styl.date, parent: container });
-    var back = dom({ className: styl.back, parent: datewrapper });
-    var next = dom({ className: styl.next, parent: datewrapper });
-    month = dom({ className: styl.month, parent: datewrapper });
-    var date = dom({ type: 'table', className: styl.dayTable, parent: datewrapper });
-    var datehead = dom({ type: 'thead', className: styl.dayHead, parent: date });
-    var dateheadrow = dom({ type: 'tr', className: styl.dayRow, parent: datehead });
-    datebody = dom({ type: 'tbody', className: styl.dayBody, parent: date });
+    var datewrapper = dom({ className: o.styles.date, parent: container });
+    var back = dom({ className: o.styles.back, parent: datewrapper });
+    var next = dom({ className: o.styles.next, parent: datewrapper });
+    month = dom({ className: o.styles.month, parent: datewrapper });
+    var date = dom({ type: 'table', className: o.styles.dayTable, parent: datewrapper });
+    var datehead = dom({ type: 'thead', className: o.styles.dayHead, parent: date });
+    var dateheadrow = dom({ type: 'tr', className: o.styles.dayRow, parent: datehead });
+    datebody = dom({ type: 'tbody', className: o.styles.dayBody, parent: date });
     var i;
 
     for (i = 0; i < weekdays.length; i++) {
-      dom({ type: 'th', className: styl.dayHeadElem, parent: dateheadrow, text: weekdays[i] });
+      dom({ type: 'th', className: o.styles.dayHeadElem, parent: dateheadrow, text: weekdays[i] });
     }
 
     back.addEventListener('click', subtractMonth);
@@ -130,8 +139,9 @@ function calendar (input, options) {
     if (!o.time) {
       return;
     }
-    var timewrapper = dom({ className: styl.time, parent: container });
-    timewrapper.innerText = timewrapper.textContent = ref.format(o.timeFormat);
+    var timewrapper = dom({ className: o.styles.time, parent: container });
+    time = dom({ className: o.styles.selectedTime, parent: timewrapper });
+    time.innerText = time.textContent = ref.format(o.timeFormat);
   }
 
   function show () {
@@ -160,23 +170,34 @@ function calendar (input, options) {
   function takeInput () {
     if (input.value) {
       var val = moment(input.value, o.inputFormat);
-      if (val.isValid()) { ref = val; updatedMonth(); }
+      if (val.isValid()) { ref = val; updateCalendar(); updateTime(); }
     }
   }
   function subtractMonth () { ref.subtract('months', 1); update(); }
   function addMonth () { ref.add('months', 1); update(); }
-  function updatedMonth () {
+  function updateCalendar () {
     if (!o.date) {
       return;
     }
-    var value = ref.month();
-    if (value === lastMonth) {
+    var y = ref.year();
+    var m = ref.month();
+    var d = ref.date();
+    if (d === lastDay && m === lastMonth && y === lastYear) {
       return;
     }
     month.innerText = month.textContent = ref.format(o.monthFormat);
+    lastDay = ref.date();
     lastMonth = ref.month();
-    clearDays();
+    lastYear = ref.year();
+    removeChildren(datebody);
     drawDays();
+  }
+
+  function updateTime () {
+    if (!o.time) {
+      return;
+    }
+    time.innerText = time.textContent = ref.format(o.timeFormat);
   }
 
   function updateInput () {
@@ -184,13 +205,13 @@ function calendar (input, options) {
   }
 
   function update () {
-    updatedMonth();
+    updateCalendar();
     updateInput();
   }
 
-  function clearDays () {
-    while (datebody.firstChild) {
-      datebody.removeChild(datebody.firstChild);
+  function removeChildren (elem) {
+    while (elem.firstChild) {
+      elem.removeChild(elem.firstChild);
     }
   }
 
@@ -203,7 +224,7 @@ function calendar (input, options) {
     var lastDay;
     var i, day, node;
     var tr = row();
-    var disabled = styl.dayBodyElem + ' ' + styl.dayDisabled;
+    var disabled = o.styles.dayBodyElem + ' ' + o.styles.dayDisabled;
 
     for (i = 0; i < firstDay; i++) {
       day = first.clone().subtract('days', firstDay - i);
@@ -214,9 +235,9 @@ function calendar (input, options) {
         tr = row();
       }
       day = first.clone().add('days', i);
-      node = dom({ type: 'td', className: styl.dayBodyElem, parent: tr, text: day.format(o.dayFormat) });
+      node = dom({ type: 'td', className: o.styles.dayBodyElem, parent: tr, text: day.format(o.dayFormat) });
       if (day.date() === current) {
-        node.classList.add(styl.selectedDay);
+        node.classList.add(o.styles.selectedDay);
       }
     }
     lastMoment = day.clone();
@@ -228,19 +249,19 @@ function calendar (input, options) {
   }
 
   function row () {
-    return dom({ type: 'tr', className: styl.dayRow, parent: datebody });
+    return dom({ type: 'tr', className: o.styles.dayRow, parent: datebody });
   }
 
   function pickDay (e) {
     var target = e.target;
-    if (target.classList.contains(styl.dayDisabled) || !target.classList.contains(styl.dayBodyElem)) {
+    if (target.classList.contains(o.styles.dayDisabled) || !target.classList.contains(o.styles.dayBodyElem)) {
       return;
     }
     var day = parseInt(target.innerText || target.textContent, 10);
-    var query = '.' + styl.selectedDay.replace(/\s+/g, '.');
+    var query = '.' + o.styles.selectedDay.replace(/\s+/g, '.');
     var prev = container.querySelector(query);
-    if (prev) { prev.classList.remove(styl.selectedDay); }
-    target.classList.add(styl.selectedDay);
+    if (prev) { prev.classList.remove(o.styles.selectedDay); }
+    target.classList.add(o.styles.selectedDay);
     ref.date(day);
     if (o.autoClose) { hide(); }
     updateInput();
@@ -261,6 +282,6 @@ function calendar (input, options) {
   return api;
 }
 
-// TODO: time (optional)
+calendar.find = find;
 
 module.exports = calendar;
