@@ -4,6 +4,7 @@ var ikey = 'ripeId';
 var index = [];
 var moment = require('moment');
 var throttle = require('lodash.throttle');
+var raf = require('raf');
 var dom = require('./dom');
 var defaults = require('./defaults');
 var no;
@@ -64,7 +65,7 @@ function calendar (input, calendarOptions) {
     input.addEventListener('keydown', throttledTakeInput);
     input.addEventListener('input', throttledTakeInput);
     if (o.invalidate) { input.addEventListener('blur', updateInput); }
-    if (o.autoHideOnBlur) { input.addEventListener('blur', hide); }
+    //if (o.autoHideOnBlur) { input.addEventListener('blur', hide); }
     if (o.autoHideOnClick) { document.body.addEventListener('click', takeHint); }
 
     hide();
@@ -91,7 +92,7 @@ function calendar (input, calendarOptions) {
     input.removeEventListener('keydown', throttledTakeInput);
     input.removeEventListener('input', throttledTakeInput);
     if (o.invalidate) { input.removeEventListener('blur', updateInput); }
-    if (o.autoHideOnBlur) { input.addEventListener('blur', hide); }
+    //if (o.autoHideOnBlur) { input.addEventListener('blur', hide); }
     if (o.autoHideOnClick) { document.body.removeEventListener('click', takeHint); }
 
     // reverse order micro-optimization
@@ -285,3 +286,7 @@ function calendar (input, calendarOptions) {
 calendar.find = find;
 
 module.exports = calendar;
+
+// TODO: hide on blur, but not if blur because clicking on calendar
+// TODO: when invalidated and clicking away, don't auto-focus
+// TODO: display options in time picker

@@ -37,15 +37,14 @@ ripe(input, { date: false });
     <button id='toggle'>Destroy <code>ripe</code> instance!</button>
     <pre>
       <code>
-var api = ripe(input); // ripe.find(input) also returns api
+var picker = ripe(input); // ripe.find(input) also returns picker
 
 toggle.addEventListener('click', function () {
-  if (api.init) {
-    api.init();
+  if (picker.init) {
+    picker.init();
   } else {
-    api.destroy();
+    picker.destroy();
   }
-  toggle.innerHTML = api.init ? /* ... */;
 });
       </code>
     </pre>
