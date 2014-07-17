@@ -290,3 +290,4 @@ module.exports = calendar;
 // TODO: hide on blur, but not if blur because clicking on calendar
 // TODO: when invalidated and clicking away, don't auto-focus
 // TODO: display options in time picker
+// TODO: destroy example always has api.init?

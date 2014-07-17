@@ -2,13 +2,13 @@ ripe(dt);
 ripe(d, { time: false });
 ripe(t, { date: false });
 
-var api = ripe(ind);
+var picker = ripe(ind);
 
 toggle.addEventListener('click', function () {
-  if (api.init) {
-    api.init();
+  if (picker.init) {
+    picker.init();
   } else {
-    api.destroy();
+    picker.destroy();
   }
-  toggle.innerHTML = api.init ? 'Restore <code>ripe</code> instance!' : 'Destroy <code>ripe</code> instance!';
+  toggle.innerHTML = picker.init ? 'Restore <code>ripe</code> instance!' : 'Destroy <code>ripe</code> instance!';
 });
