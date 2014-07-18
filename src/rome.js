@@ -12,7 +12,7 @@ var index = [];
 var no;
 
 function cloner (value) {
-  if moment.isMoment(value) {
+  if (moment.isMoment(value)) {
     return value.clone();
   }
 }
