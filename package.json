@@ -22,7 +22,6 @@
     "lodash.clonedeep": "^2.4.1",
     "lodash.throttle": "^2.4.1",
     "moment": "^2.7.0",
-    "nib": "^1.0.3",
     "raf": "^2.0.1"
   },
   "devDependencies": {
@@ -39,6 +38,7 @@
     "gulp-stylus": "^1.0.0",
     "gulp-uglify": "^0.3.0",
     "gulp-watch": "^0.6.8",
+    "nib": "^1.0.3",
     "vinyl-source-stream": "^0.1.1"
   }
 }
