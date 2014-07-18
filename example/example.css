@@ -21,6 +21,11 @@ h3 {
   text-align: center;
 }
 
+a,
+a:hover {
+  color: #9b59b6;
+}
+
 pre code {
   color: #e74c3c;
 }
