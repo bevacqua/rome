@@ -146,6 +146,7 @@ function calendar (input, calendarOptions) {
     }
     var timewrapper = dom({ className: o.styles.time, parent: container });
     time = dom({ className: o.styles.selectedTime, parent: timewrapper, text: ref.format(o.timeFormat) });
+    time.addEventListener('click', toggleTimeList);
     var timelist = dom({ className: o.styles.timeList, parent: timewrapper });
     var next = moment('00:00:00', 'HH:mm:ss');
     var latest = next.clone().add('days', 1);
@@ -155,8 +156,20 @@ function calendar (input, calendarOptions) {
     }
   }
 
-  function show () {
+  function toggleTimeList () {
+    if (timelist.style.display === 'none') {
+      timelist.style.display = 'block';
+    } else {
+      hideTimeList();
+    }
+  }
+
+  function hideTimeList () {
     if (timelist) { timelist.style.display = 'none'; }
+  }
+
+  function show () {
+    hideTimeList();
     container.style.display = 'block';
     container.style.position = 'absolute';
     container.style.top = input.offsetTop + input.offsetHeight;
@@ -164,8 +177,8 @@ function calendar (input, calendarOptions) {
   }
 
   function hide () {
+    hideTimeList();
     container.style.display = 'none';
-    if (timelist) { timelist.style.display = 'none'; }
   }
 
   function ignoreEventTarget (e) {
@@ -314,6 +327,5 @@ calendar.find = find;
 
 module.exports = calendar;
 
-// TODO: toggle time picker drop-down
 // TODO: select options in time picker
 // TODO: when lost focus clicking on calendar, don't invalidate!!
