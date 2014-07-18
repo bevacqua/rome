@@ -165,20 +165,20 @@ function calendar (input, calendarOptions) {
     }
   }
 
-  function toggleTimeList () {
-    if (timelist.style.display === 'none') {
-      timelist.style.display = 'block';
+  function toggleTimeList (show) {
+    var display = show !== no ? show : timelist.style.display === 'none';
+    if (display) {
+      showTimeList();
     } else {
       hideTimeList();
     }
   }
 
-  function hideTimeList () {
-    if (timelist) { timelist.style.display = 'none'; }
-  }
+  function showTimeList () { if (timelist) { timelist.style.display = 'block'; } }
+  function hideTimeList () { if (timelist) { timelist.style.display = 'none'; } }
 
   function show () {
-    hideTimeList();
+    toggleTimeList(!o.date);
     container.style.display = 'block';
     container.style.position = 'absolute';
     container.style.top = input.offsetTop + input.offsetHeight;
@@ -322,11 +322,11 @@ function calendar (input, calendarOptions) {
     if (!target.classList.contains(o.styles.timeOption)) {
       return;
     }
-    var date = moment(text(target), o.timeFormat);
-    ref.hour(date.hour()).minute(date.minute()).second(date.second());
+    var value = moment(text(target), o.timeFormat);
+    ref.hour(value.hour()).minute(value.minute()).second(value.second());
     updateTime();
     updateInput();
-    if (!date && o.autoClose) {
+    if (!o.date && o.autoClose) {
       hide();
     } else {
       hideTimeList();
