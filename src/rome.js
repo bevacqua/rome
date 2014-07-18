@@ -63,7 +63,7 @@ function calendar (input, calendarOptions) {
   }
 
   function init (initOptions) {
-    o = defaults(initOptions || calendarOptions);
+    o = defaults(initOptions || calendarOptions, input);
     if (!container) { container = dom({ className: o.styles.container }); }
     lastMonth = no;
     lastYear = no;

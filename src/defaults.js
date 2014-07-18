@@ -17,7 +17,7 @@ function parse (date, format) {
   return null;
 }
 
-function defaults (options) {
+function defaults (options, input) {
   var temp;
   var no;
   var o = options || {};
