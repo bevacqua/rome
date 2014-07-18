@@ -41,6 +41,7 @@ function calendar (input, calendarOptions) {
 
   // time variables
   var time;
+  var timelist;
 
   assign();
   init();
@@ -147,7 +148,7 @@ function calendar (input, calendarOptions) {
     var timewrapper = dom({ className: o.styles.time, parent: container });
     time = dom({ className: o.styles.selectedTime, parent: timewrapper, text: ref.format(o.timeFormat) });
     time.addEventListener('click', toggleTimeList);
-    var timelist = dom({ className: o.styles.timeList, parent: timewrapper });
+    timelist = dom({ className: o.styles.timeList, parent: timewrapper });
     var next = moment('00:00:00', 'HH:mm:ss');
     var latest = next.clone().add('days', 1);
     while (next.isBefore(latest)) {
