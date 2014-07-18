@@ -174,6 +174,21 @@ function calendar (input, calendarOptions) {
     }
   }
 
+  function displayValidTimesOnly () {
+    var times = timelist.children;
+    var length = times.length;
+    var date;
+    var time;
+    var item;
+    var i;
+    for (i = 0; i < length; i++) {
+      item = times[i];
+      time = moment(text(item), o.timeFormat);
+      date = setTime(ref.clone(), time);
+      item.style.display = isInRange(date) ? 'block' : 'none';
+    }
+  }
+
   function toggleTimeList (show) {
     var display = typeof show === 'boolean' ? show : timelist.style.display === 'none';
     if (display) {
@@ -237,12 +252,7 @@ function calendar (input, calendarOptions) {
     if (input.value) {
       var val = moment(input.value, o.inputFormat);
       if (val.isValid()) {
-        if (o.min && val.isBefore(o.min)) {
-          val = o.min.clone();
-        } else if (o.max && val.isAfter(o.max)) {
-          val = o.max.clone();
-        }
-        ref = val; updateCalendar(); updateTime();
+        ref = inRange(val); updateCalendar(); updateTime(); displayValidTimesOnly();
       }
     }
   }
@@ -264,7 +274,7 @@ function calendar (input, calendarOptions) {
     lastMonth = ref.month();
     lastYear = ref.year();
     removeChildren(datebody);
-    drawDays();
+    renderDays();
   }
 
   function updateTime () {
@@ -313,7 +323,7 @@ function calendar (input, calendarOptions) {
     }
   }
 
-  function drawDays () {
+  function renderDays () {
     var total = ref.daysInMonth();
     var current = ref.date(); // 1..31
     var first = ref.clone().date(1);
@@ -347,25 +357,36 @@ function calendar (input, calendarOptions) {
       node = dom({ type: 'td', className: test(day, nextMonth), parent: tr, text: day.format(o.dayFormat) });
     }
 
-    back.disabled = !isEnabled(first.clone().subtract('days', firstDay));
-    next.disabled = !isEnabled(day);
+    back.disabled = !isInRange(first.clone().subtract('days', firstDay), true);
+    next.disabled = !isInRange(day, true);
 
     function test (day, classes) {
-      if (isEnabled(day)) {
+      if (isInRange(day, true)) {
         return classes;
       }
       return classes + disabled;
     }
+  }
 
-    function isEnabled (day) {
-      if (o.min && day.isBefore(o.min)) {
-        return false;
-      }
-      if (o.max && day.isAfter(o.max)) {
-        return false;
-      }
-      return true;
+  function isInRange (date, day) {
+    var min = !o.min ? false : (day ? o.min.clone().startOf('day') : o.min);
+    var max = !o.max ? false : (day ? o.max.clone().endOf('day') : o.max);
+    if (min && date.isBefore(min)) {
+      return false;
     }
+    if (max && date.isAfter(max)) {
+      return false;
+    }
+    return true;
+  }
+
+  function inRange (date) {
+    if (o.min && date.isBefore(o.min)) {
+      return o.min.clone();
+    } else if (o.max && date.isAfter(o.max)) {
+      return o.max.clone();
+    }
+    return date;
   }
 
   function row () {
@@ -391,7 +412,10 @@ function calendar (input, calendarOptions) {
       target.classList.add(o.styles.selectedDay);
     }
     ref.date(day); // must run after setting the month
+    setTime(ref, inRange(ref));
+    displayValidTimesOnly();
     updateInput();
+    updateTime()
     if (o.autoClose) { hide(); }
     api.emit('data', getDateString());
     api.emit('day', day);
@@ -401,13 +425,18 @@ function calendar (input, calendarOptions) {
     }
   }
 
+  function setTime (to, from) {
+    to.hour(from.hour()).minute(from.minute()).second(from.second());
+    return to;
+  }
+
   function pickTime (e) {
     var target = e.target;
     if (!target.classList.contains(o.styles.timeOption)) {
       return;
     }
     var value = moment(text(target), o.timeFormat);
-    ref.hour(value.hour()).minute(value.minute()).second(value.second());
+    setTime(ref, value);
     updateTime();
     updateInput();
     if (!o.date && o.autoClose) {

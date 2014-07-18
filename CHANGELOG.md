@@ -1,3 +1,7 @@
+# 0.2.6 Mouse Trap
+
+- Fix to support `min` and `max` time settings as well
+
 # 0.2.5 Cat and Mouse
 
 - Added the ability to choose a minimum date
