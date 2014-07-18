@@ -1,3 +1,7 @@
+# 0.3.2 Pick Up
+
+- Cloned options objects return proper clones of the `min` and `max` moments instead of references.
+
 # 0.3.1 Pack Up
 
 - Consumer only gets copies of the configuration object, never the original

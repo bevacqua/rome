@@ -11,6 +11,12 @@ var ikey = 'romeId';
 var index = [];
 var no;
 
+function cloner (value) {
+  if moment.isMoment(value) {
+    return value.clone();
+  }
+}
+
 function text (elem, value) {
   if (arguments.length === 2) {
     elem.innerText = elem.textContent = value;
@@ -86,7 +92,7 @@ function calendar (input, calendarOptions) {
     if (o.autoHideOnClick) { window.addEventListener('click', hideOnClick); }
     window.addEventListener('resize', throttledPosition);
 
-    api.emit('ready', clone(o));
+    api.emit('ready', clone(o, cloner));
 
     hide();
     throttledTakeInput();
@@ -134,7 +140,7 @@ function calendar (input, calendarOptions) {
 
   function changeOptions (options) {
     if (arguments.length === 0) {
-      return clone(o);
+      return clone(o, cloner);
     }
     destroy();
     init(options);
