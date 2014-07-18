@@ -1,3 +1,7 @@
+# 0.2.7 Cat Trap
+
+- Fix bug when setting `appendTo: 'parent'`
+
 # 0.2.6 Mouse Trap
 
 - Fix to support `min` and `max` time settings as well

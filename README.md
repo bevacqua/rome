@@ -39,7 +39,7 @@ Creates a Rome calendar using a ton of options. These have reasonable defaults t
 Option            | Description
 ------------------|--------------------------------------------------------------------------------------------------
 `autoHideOnClick` | Hides the calendar when clicking away
-`appendTo`        | DOM element where the calendar will be appended to
+`appendTo`        | DOM element where the calendar will be appended to. Takes `'parent'` as the parent element
 `autoClose`       | Closes the calendar when picking a day or a time
 `autoHideOnBlur`  | Hides the calendar when focusing something other than the input field
 `date`            | The calendar shows days and allows you to navigate between months
