@@ -18,7 +18,8 @@
   },
   "main": "src/rome.js",
   "dependencies": {
-    "contra": "^1.6.6",
+    "contra": "^1.6.7",
+    "lodash.clonedeep": "^2.4.1",
     "lodash.throttle": "^2.4.1",
     "moment": "^2.7.0",
     "nib": "^1.0.3",

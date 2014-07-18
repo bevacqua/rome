@@ -3,6 +3,7 @@
 var contra = require('contra');
 var moment = require('moment');
 var throttle = require('lodash.throttle');
+var clone = require('lodash.clonedeep');
 var raf = require('raf');
 var dom = require('./dom');
 var defaults = require('./defaults');
@@ -85,7 +86,7 @@ function calendar (input, calendarOptions) {
     if (o.autoHideOnClick) { window.addEventListener('click', hideOnClick); }
     window.addEventListener('resize', throttledPosition);
 
-    api.emit('ready', o);
+    api.emit('ready', clone(o));
 
     hide();
     throttledTakeInput();
@@ -101,6 +102,7 @@ function calendar (input, calendarOptions) {
     api.getMoment = getMoment;
     api.destroy = destroy;
     api.options = changeOptions;
+    api.options.reset = resetOptions;
   }
 
   function destroy () {
@@ -127,11 +129,20 @@ function calendar (input, calendarOptions) {
     delete api.show;
     api.restore = init;
     api.emit('destroyed');
+    api.off();
   }
 
   function changeOptions (options) {
+    if (arguments.length === 0) {
+      return clone(o);
+    }
     destroy();
     init(options);
+  }
+
+  function resetOptions () {
+    destroy();
+    init({});
   }
 
   function renderDates () {

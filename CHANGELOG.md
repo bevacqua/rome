@@ -1,3 +1,12 @@
+# 0.2.9 Pack Up
+
+- Consumer only gets copies of the configuration object, never the original
+- Introduced `.options.reset()` to reset options to their default values like `.options()` used to do
+
+Changes
+
+- `.options()` API changed, now returns copy of options if no arguments are provided
+
 # 0.2.8 Shower Time
 
 - Fixed a bug where the calendar wasn't being absolutely positioned

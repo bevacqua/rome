@@ -130,7 +130,7 @@ Returns a copy of the `moment` object underlying the current date in the calenda
 
 ##### `.destroy()`
 
-Removes the calendar from the DOM and all of its associated DOM event listeners. The API is reduced to provide only the `.restore` method described below.
+Removes the calendar from the DOM and all of its associated DOM event listeners. The API is reduced to provide only the `.restore` method described below. After emitting the `destroyed` event, all event listeners are removed from the instance.
 
 ##### `.restore(options?)`
 
@@ -138,7 +138,9 @@ Restores the calendar, using the provided options (or the default options). The 
 
 ##### `.options(options?)`
 
-Destroys the calendar and initializes it with the provided options. Effectively the same as calling `.restore(options?)` immediately after calling `.destroy()`.
+If an options object is provided, it destroys the calendar and initializes it with the provided options. Effectively the same as calling `.restore(options)` immediately after calling `.destroy()`.
+
+If no options object is provided, the current options are returned **by value**.
 
 #### Events
 
