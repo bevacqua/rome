@@ -1,4 +1,4 @@
-# 0.3.0 Pack Up
+# 0.3.1 Pack Up
 
 - Consumer only gets copies of the configuration object, never the original
 - Introduced `.options.reset()` to reset options to their default values like `.options()` used to do
