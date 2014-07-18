@@ -217,8 +217,8 @@ function calendar (input, calendarOptions) {
 
   function position () {
     container.style.position = 'absolute';
-    container.style.top = input.offsetTop + input.offsetHeight;
-    container.style.left = input.offsetLeft;
+    container.style.top = input.offsetTop + input.offsetHeight + 'px';
+    container.style.left = input.offsetLeft + 'px';
   }
 
   function calendarEventTarget (e) {

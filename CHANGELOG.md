@@ -1,10 +1,14 @@
+# 0.2.8 Shower Time
+
+- Fixed a bug where the calendar wasn't being absolutely positioned
+
 # 0.2.7 Cat Trap
 
-- Fix bug when setting `appendTo: 'parent'`
+- Fixed bug when setting `appendTo: 'parent'`
 
 # 0.2.6 Mouse Trap
 
-- Fix to support `min` and `max` time settings as well
+- Fixed support for `min` and `max` time settings
 
 # 0.2.5 Cat and Mouse
 
