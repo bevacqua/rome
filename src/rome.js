@@ -1,12 +1,13 @@
 'use strict';
 
-var ikey = 'romeId';
-var index = [];
+var contra = require('contra');
 var moment = require('moment');
 var throttle = require('lodash.throttle');
 var raf = require('raf');
 var dom = require('./dom');
 var defaults = require('./defaults');
+var ikey = 'romeId';
+var index = [];
 var no;
 
 function find (thing) {
@@ -25,7 +26,7 @@ function calendar (input, calendarOptions) {
     return existing;
   }
   var o;
-  var api = {};
+  var api = contra.emitter({});
   var ref = moment();
   var container;
   var throttledTakeInput = throttle(takeInput, 100);
@@ -68,6 +69,8 @@ function calendar (input, calendarOptions) {
     if (o.autoHideOnBlur) { document.body.addEventListener('focusin', hideOnBlur); }
     if (o.autoHideOnClick) { document.body.addEventListener('click', hideOnClick); }
 
+    api.emit('ready', o);
+
     hide();
     throttledTakeInput();
     updateCalendar();
@@ -106,6 +109,7 @@ function calendar (input, calendarOptions) {
     delete api.hide;
     delete api.show;
     api.restore = init;
+    api.emit('destroyed');
   }
 
   function changeOptions (options) {
@@ -137,22 +141,32 @@ function calendar (input, calendarOptions) {
   }
 
   function renderTime () {
-    if (!o.time) {
+    if (!o.time || !o.timeInterval) {
       return;
     }
     var timewrapper = dom({ className: o.styles.time, parent: container });
-    time = dom({ className: o.styles.selectedTime, parent: timewrapper });
-    time.innerText = time.textContent = ref.format(o.timeFormat);
+    time = dom({ className: o.styles.selectedTime, parent: timewrapper, text: ref.format(o.timeFormat) });
+    var timelist = dom({ className: o.styles.timeList, parent: timewrapper });
+    var next = moment('00:00:00', 'HH:mm:ss');
+    var latest = next.clone().add('days', 1);
+    while (next.isBefore(latest)) {
+      dom({ className: o.styles.timeOption, parent: timelist, text: next.format(o.timeFormat) });
+      next.add('seconds', o.timeInterval);
+    }
   }
 
   function show () {
+    if (timelist) { timelist.style.display = 'none'; }
     container.style.display = 'block';
     container.style.position = 'absolute';
     container.style.top = input.offsetTop + input.offsetHeight;
     container.style.left = input.offsetLeft;
   }
 
-  function hide () { container.style.display = 'none'; }
+  function hide () {
+    container.style.display = 'none';
+    if (timelist) { timelist.style.display = 'none'; }
+  }
 
   function ignoreEventTarget (e) {
     var target = e.target;
@@ -300,4 +314,6 @@ calendar.find = find;
 
 module.exports = calendar;
 
-// TODO: display options in time picker
+// TODO: toggle time picker drop-down
+// TODO: select options in time picker
+// TODO: when lost focus clicking on calendar, don't invalidate!!

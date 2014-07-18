@@ -2,10 +2,10 @@
   border 1px solid #333
   background-color #fff
   padding 10px
+  text-align center
 
 .rd-month
   display block
-  text-align center
 
 .rd-back,
 .rd-next
@@ -29,7 +29,10 @@
   cursor pointer
   text-align center
 
-.rd-day-selected
+.rd-day-selected,
+.rd-time-selected,
+.rd-time-option:hover
+  cursor pointer
   background-color #333
   color #fff
 
@@ -38,4 +41,22 @@
   color #999
 
 .rd-time
-  text-align center
+  position relative
+  display inline-block
+  margin-top 5px
+  min-width 80px
+
+.rd-time-list
+  position absolute
+  overflow scroll
+  max-height 160px
+  left 0
+  right 0
+  background-color #fff
+  color #333
+
+.rd-time-selected
+  padding 5px
+
+.rd-time-option
+  padding 5px

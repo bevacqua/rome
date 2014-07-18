@@ -43,6 +43,8 @@ function defaults (options) {
   if (styl.dayDisabled === no) { styl.dayDisabled = 'rd-day-disabled'; }
   if (styl.time === no) { styl.time = 'rd-time'; }
   if (styl.selectedTime === no) { styl.selectedTime = 'rd-time-selected'; }
+  if (styl.timeList === no) { styl.timeList = 'rd-time-list'; }
+  if (styl.timeOption === no) { styl.timeOption = 'rd-time-option'; }
 
   return o;
 }
