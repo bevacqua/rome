@@ -8,7 +8,7 @@ You can [see a live demo here][3].
 
 [![screenshot.png][4]][3]
 
-Oh, `rome` synchronizes in real-time with the input, never steals focus, and it's CSS is entirely customizable!
+Oh, `rome` synchronizes in real-time with the input, never steals focus, and its CSS is entirely customizable!
 
 ## Install
 
