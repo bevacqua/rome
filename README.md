@@ -2,6 +2,12 @@
 
 > Dependency free, opt-in UI, customizable date _(and time)_ picker!
 
+#### Demo!
+
+You can [see a live demo here][3].
+
+[![screenshot.png][4]][3]
+
 ## Install
 
 From npm or Bower.
@@ -148,3 +154,5 @@ MIT
 
 [1]: https://github.com/bevacqua/rome/blob/master/src/defaults.js
 [2]: https://github.com/bevacqua/contra
+[3]: https://bevacqua.github.io/rome
+[4]: https://cloud.githubusercontent.com/assets/934293/3626957/a5daf31e-0e83-11e4-98a4-7ab292e2bb25.png

@@ -36,7 +36,8 @@ function calendar (input, calendarOptions) {
   var api = contra.emitter({});
   var ref = moment();
   var container;
-  var throttledTakeInput = throttle(takeInput, 100);
+  var throttledTakeInput = throttle(takeInput, 50);
+  var throttledPosition = throttle(position, 30);
   var ignoreInvalidation;
   var ignoreShow;
 
@@ -78,8 +79,9 @@ function calendar (input, calendarOptions) {
     input.addEventListener('keydown', throttledTakeInput);
     input.addEventListener('input', throttledTakeInput);
     if (o.invalidate) { input.addEventListener('blur', invalidateInput); }
-    if (o.autoHideOnBlur) { document.body.addEventListener('focusin', hideOnBlur); }
-    if (o.autoHideOnClick) { document.body.addEventListener('click', hideOnClick); }
+    if (o.autoHideOnBlur) { window.addEventListener('focusin', hideOnBlur); }
+    if (o.autoHideOnClick) { window.addEventListener('click', hideOnClick); }
+    window.addEventListener('resize', throttledPosition);
 
     api.emit('ready', o);
 
@@ -107,8 +109,9 @@ function calendar (input, calendarOptions) {
     input.removeEventListener('keydown', throttledTakeInput);
     input.removeEventListener('input', throttledTakeInput);
     if (o.invalidate) { input.removeEventListener('blur', invalidateInput); }
-    if (o.autoHideOnBlur) { document.body.removeEventListener('focusin', hideOnBlur); }
-    if (o.autoHideOnClick) { document.body.removeEventListener('click', hideOnClick); }
+    if (o.autoHideOnBlur) { window.removeEventListener('focusin', hideOnBlur); }
+    if (o.autoHideOnClick) { window.removeEventListener('click', hideOnClick); }
+    window.removeEventListener('resize', throttledPosition);
 
     // reverse order micro-optimization
     delete api.options;
