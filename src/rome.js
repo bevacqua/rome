@@ -312,11 +312,12 @@ function calendar (input, calendarOptions) {
     var lastDay;
     var i, day, node;
     var tr = row();
-    var disabled = o.styles.dayBodyElem + ' ' + o.styles.dayDisabled;
+    var prevMonth = o.styles.dayBodyElem + ' ' + o.styles.dayPrevMonth;
+    var nextMonth = o.styles.dayBodyElem + ' ' + o.styles.dayNextMonth;
 
     for (i = 0; i < firstDay; i++) {
       day = first.clone().subtract('days', firstDay - i);
-      node = dom({ type: 'td', className: disabled, parent: tr, text: day.format(o.dayFormat) });
+      node = dom({ type: 'td', className: prevMonth, parent: tr, text: day.format(o.dayFormat) });
     }
     for (i = 0; i < total; i++) {
       if (tr.children.length === weekdays.length) {
@@ -332,7 +333,7 @@ function calendar (input, calendarOptions) {
     lastDay = lastMoment.day();
     for (i = 1; tr.children.length < weekdays.length; i++) {
       day = lastMoment.clone().add('days', i);
-      node = dom({ type: 'td', className: disabled, parent: tr, text: day.format(o.dayFormat) });
+      node = dom({ type: 'td', className: nextMonth, parent: tr, text: day.format(o.dayFormat) });
     }
   }
 
@@ -342,19 +343,31 @@ function calendar (input, calendarOptions) {
 
   function pickDay (e) {
     var target = e.target;
-    if (target.classList.contains(o.styles.dayDisabled) || !target.classList.contains(o.styles.dayBodyElem)) {
+    if (!target.classList.contains(o.styles.dayBodyElem)) {
       return;
     }
     var day = parseInt(text(target), 10);
     var query = '.' + o.styles.selectedDay.replace(/\s+/g, '.');
-    var prev = container.querySelector(query);
-    if (prev) { prev.classList.remove(o.styles.selectedDay); }
-    target.classList.add(o.styles.selectedDay);
-    ref.date(day);
+    var selection = container.querySelector(query);
+    if (selection) { selection.classList.remove(o.styles.selectedDay); }
+    var prev = target.classList.contains(o.styles.dayPrevMonth);
+    var next = target.classList.contains(o.styles.dayNextMonth);
+    var action;
+    if (prev || next) {
+      action = prev ? 'subtract' : 'add';
+      ref[action]('months', 1);
+    } else {
+      target.classList.add(o.styles.selectedDay);
+    }
+    ref.date(day); // must run after setting the month
     updateInput();
     if (o.autoClose) { hide(); }
     api.emit('data', getDateString());
     api.emit('day', day);
+    if (prev || next) {
+      updateCalendar(); // must run after setting the date
+      api.emit('month', ref.month());
+    }
   }
 
   function pickTime (e) {

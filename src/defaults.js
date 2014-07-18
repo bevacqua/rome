@@ -28,21 +28,22 @@ function defaults (options) {
   if (o.styles === no) { o.styles = {}; }
 
   var styl = o.styles;
+  if (styl.back === no) { styl.back = 'rd-back'; }
   if (styl.container === no) { styl.container = 'rd-container'; }
   if (styl.date === no) { styl.date = 'rd-date'; }
-  if (styl.month === no) { styl.month = 'rd-month'; }
-  if (styl.back === no) { styl.back = 'rd-back'; }
-  if (styl.next === no) { styl.next = 'rd-next'; }
-  if (styl.dayTable === no) { styl.dayTable = 'rd-days'; }
+  if (styl.dayBody === no) { styl.dayBody = 'rd-days-body'; }
+  if (styl.dayBodyElem === no) { styl.dayBodyElem = 'rd-day-body'; }
+  if (styl.dayPrevMonth === no) { styl.dayPrevMonth = 'rd-day-prev-month'; }
+  if (styl.dayNextMonth === no) { styl.dayNextMonth = 'rd-day-next-month'; }
   if (styl.dayHead === no) { styl.dayHead = 'rd-days-head'; }
   if (styl.dayHeadElem === no) { styl.dayHeadElem = 'rd-day-head'; }
   if (styl.dayRow === no) { styl.dayRow = 'rd-days-row'; }
-  if (styl.dayBody === no) { styl.dayBody = 'rd-days-body'; }
-  if (styl.dayBodyElem === no) { styl.dayBodyElem = 'rd-day-body'; }
+  if (styl.dayTable === no) { styl.dayTable = 'rd-days'; }
+  if (styl.month === no) { styl.month = 'rd-month'; }
+  if (styl.next === no) { styl.next = 'rd-next'; }
   if (styl.selectedDay === no) { styl.selectedDay = 'rd-day-selected'; }
-  if (styl.dayDisabled === no) { styl.dayDisabled = 'rd-day-disabled'; }
-  if (styl.time === no) { styl.time = 'rd-time'; }
   if (styl.selectedTime === no) { styl.selectedTime = 'rd-time-selected'; }
+  if (styl.time === no) { styl.time = 'rd-time'; }
   if (styl.timeList === no) { styl.timeList = 'rd-time-list'; }
   if (styl.timeOption === no) { styl.timeOption = 'rd-time-option'; }
 
