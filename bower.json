@@ -24,6 +24,7 @@
     "src",
     "index.html",
     "example",
+    "resources",
     "gulpfile.js"
   ],
   "dependencies": {}
