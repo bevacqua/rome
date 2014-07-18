@@ -46,8 +46,8 @@ Option            | Description
 `dayFormat`       | Format string used to display days on the calendar
 `inputFormat`     | Format string used for the input field as well as the results of `rome`
 `invalidate`      | Ensures the date is valid when the field is blurred
-`min`             | Disallow dates before `min`. Takes `string`, `Date`, `moment`.
-`max`             | Disallow dates past `max`. Takes `string`, `Date`, `moment`.
+`min`             | Disallow dates before `min`. Takes `string`, `Date`, `moment`
+`max`             | Disallow dates past `max`. Takes `string`, `Date`, `moment`
 `monthFormat`     | Format string used by the calendar to display months and their year
 `styles`          | CSS classes applied to elements on the calendar
 `time`            | The calendar shows the current time and allows you to change it using a dropdown
@@ -146,13 +146,13 @@ Rome calendars also provide a few events you can subscribe to. These events are 
 
 Event       | Arguments   | Description
 ------------|-------------|------------
-`ready`     | `[options]` | The calendar has been `.restore`d.
-`destroyed` | `[]`        | The calendar has been `.destroy`ed.
-`data`      | `[value]`   | The date may have been updated by the calendar. Value of `.getDateString()` is provided.
-`year`      | `[year]`    | The year may have been updated by the calendar. Value of `moment.year()` is provided.
-`month`     | `[month]`   | The month may have been updated by the calendar. Value of `moment.month()` is provided.
-`day`       | `[day]`     | The day may have been updated by the calendar. Value of `moment.date()` is provided.
-`time`      | `[time]`    | The time may have been updated by the calendar. Formatted time string is provided.
+`ready`     | `[options]` | The calendar has been `.restore`d
+`destroyed` | `[]`        | The calendar has been `.destroy`ed
+`data`      | `[value]`   | The date may have been updated by the calendar. Value of `.getDateString()` is provided
+`year`      | `[year]`    | The year may have been updated by the calendar. Value of `moment.year()` is provided
+`month`     | `[month]`   | The month may have been updated by the calendar. Value of `moment.month()` is provided
+`day`       | `[day]`     | The day may have been updated by the calendar. Value of `moment.date()` is provided
+`time`      | `[time]`    | The time may have been updated by the calendar. Formatted time string is provided
 
 ## License
 
