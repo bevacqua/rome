@@ -1,6 +1,6 @@
 /**
  * rome - Dependency free, opt-in UI, customizable date _(and time)_ picker!
- * @version v0.2.3
+ * @version v0.2.4
  * @link https://github.com/bevacqua/rome
  * @license MIT
  */
@@ -54,7 +54,7 @@
 }
 .rd-time-list {
   position: absolute;
-  overflow: scroll;
+  overflow-y: scroll;
   max-height: 160px;
   left: 0;
   right: 0;
