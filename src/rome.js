@@ -10,6 +10,13 @@ var ikey = 'romeId';
 var index = [];
 var no;
 
+function text (elem, value) {
+  if (arguments.length === 2) {
+    elem.innerText = elem.textContent = value;
+  }
+  return elem.innerText || elem.textContent;
+}
+
 function find (thing) {
   if (typeof thing !== 'number' && thing && thing.dataset) {
     return find(thing.dataset[ikey]);
@@ -149,6 +156,7 @@ function calendar (input, calendarOptions) {
     time = dom({ className: o.styles.selectedTime, parent: timewrapper, text: ref.format(o.timeFormat) });
     time.addEventListener('click', toggleTimeList);
     timelist = dom({ className: o.styles.timeList, parent: timewrapper });
+    timelist.addEventListener('click', pickTime);
     var next = moment('00:00:00', 'HH:mm:ss');
     var latest = next.clone().add('days', 1);
     while (next.isBefore(latest)) {
@@ -227,7 +235,7 @@ function calendar (input, calendarOptions) {
     if (d === lastDay && m === lastMonth && y === lastYear) {
       return;
     }
-    month.innerText = month.textContent = ref.format(o.monthFormat);
+    text(month, ref.format(o.monthFormat));
     lastDay = ref.date();
     lastMonth = ref.month();
     lastYear = ref.year();
@@ -239,7 +247,7 @@ function calendar (input, calendarOptions) {
     if (!o.time) {
       return;
     }
-    time.innerText = time.textContent = ref.format(o.timeFormat);
+    text(time, ref.format(o.timeFormat));
   }
 
   function updateInput () {
@@ -299,7 +307,7 @@ function calendar (input, calendarOptions) {
     if (target.classList.contains(o.styles.dayDisabled) || !target.classList.contains(o.styles.dayBodyElem)) {
       return;
     }
-    var day = parseInt(target.innerText || target.textContent, 10);
+    var day = parseInt(text(target), 10);
     var query = '.' + o.styles.selectedDay.replace(/\s+/g, '.');
     var prev = container.querySelector(query);
     if (prev) { prev.classList.remove(o.styles.selectedDay); }
@@ -307,6 +315,22 @@ function calendar (input, calendarOptions) {
     ref.date(day);
     updateInput();
     if (o.autoClose) { hide(); }
+  }
+
+  function pickTime (e) {
+    var target = e.target;
+    if (!target.classList.contains(o.styles.timeOption)) {
+      return;
+    }
+    var date = moment(text(target), o.timeFormat);
+    ref.hour(date.hour()).minute(date.minute()).second(date.second());
+    updateTime();
+    updateInput();
+    if (!date && o.autoClose) {
+      hide();
+    } else {
+      hideTimeList();
+    }
   }
 
   function getDate () {
@@ -328,5 +352,5 @@ calendar.find = find;
 
 module.exports = calendar;
 
-// TODO: select options in time picker
 // TODO: when lost focus clicking on calendar, don't invalidate!!
+// TODO: write up API docs
