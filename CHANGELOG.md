@@ -1,4 +1,4 @@
-# 0.3.3 Pick Up
+# 0.3.4 Pick Up
 
 - Cloned options objects return proper clones of the `min` and `max` moments instead of references.
 
