@@ -141,8 +141,7 @@ function calendar (input, calendarOptions) {
   }
 
   function resetOptions () {
-    destroy();
-    init({});
+    changeOptions({});
   }
 
   function renderDates () {

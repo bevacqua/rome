@@ -140,7 +140,11 @@ Restores the calendar, using the provided options (or the default options). The 
 
 If an options object is provided, it destroys the calendar and initializes it with the provided options. Effectively the same as calling `.restore(options)` immediately after calling `.destroy()`.
 
-If no options object is provided, the current options are returned **by value**.
+If no options object is provided, a copy of the current options is returned.
+
+##### `.options.reset()`
+
+Resets the options to the factory defaults. Effectively the same as calling `.options({})`.
 
 #### Events
 
