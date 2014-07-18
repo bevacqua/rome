@@ -37,6 +37,8 @@ function calendar (input, calendarOptions) {
   var ref = moment();
   var container;
   var throttledTakeInput = throttle(takeInput, 100);
+  var ignoreInvalidation;
+  var ignoreShow;
 
   // date variables
   var weekdays = moment.weekdaysMin();
@@ -67,13 +69,15 @@ function calendar (input, calendarOptions) {
     renderDates();
     renderTime();
     o.appendTo.appendChild(container);
+    container.addEventListener('mousedown', containerMouseDown);
+    container.addEventListener('click', containerClick);
     input.addEventListener('click', show);
     input.addEventListener('focusin', show);
     input.addEventListener('change', throttledTakeInput);
     input.addEventListener('keypress', throttledTakeInput);
     input.addEventListener('keydown', throttledTakeInput);
     input.addEventListener('input', throttledTakeInput);
-    if (o.invalidate) { input.addEventListener('blur', updateInput); }
+    if (o.invalidate) { input.addEventListener('blur', invalidateInput); }
     if (o.autoHideOnBlur) { document.body.addEventListener('focusin', hideOnBlur); }
     if (o.autoHideOnClick) { document.body.addEventListener('click', hideOnClick); }
 
@@ -86,7 +90,7 @@ function calendar (input, calendarOptions) {
     delete api.restore;
     api.show = show;
     api.hide = hide;
-    api.datepicker = container;
+    api.container = container;
     api.input = input;
     api.getDate = getDate;
     api.getDateString = getDateString;
@@ -102,7 +106,7 @@ function calendar (input, calendarOptions) {
     input.removeEventListener('keypress', throttledTakeInput);
     input.removeEventListener('keydown', throttledTakeInput);
     input.removeEventListener('input', throttledTakeInput);
-    if (o.invalidate) { input.removeEventListener('blur', updateInput); }
+    if (o.invalidate) { input.removeEventListener('blur', invalidateInput); }
     if (o.autoHideOnBlur) { document.body.removeEventListener('focusin', hideOnBlur); }
     if (o.autoHideOnClick) { document.body.removeEventListener('click', hideOnClick); }
 
@@ -113,7 +117,7 @@ function calendar (input, calendarOptions) {
     delete api.getDateString;
     delete api.getDate;
     delete api.input;
-    delete api.datepicker;
+    delete api.container;
     delete api.hide;
     delete api.show;
     api.restore = init;
@@ -166,7 +170,7 @@ function calendar (input, calendarOptions) {
   }
 
   function toggleTimeList (show) {
-    var display = show !== no ? show : timelist.style.display === 'none';
+    var display = typeof show === 'boolean' ? show : timelist.style.display === 'none';
     if (display) {
       showTimeList();
     } else {
@@ -178,11 +182,12 @@ function calendar (input, calendarOptions) {
   function hideTimeList () { if (timelist) { timelist.style.display = 'none'; } }
 
   function show () {
+    if (ignoreShow || container.style.display === 'block') {
+      return;
+    }
     toggleTimeList(!o.date);
     container.style.display = 'block';
-    container.style.position = 'absolute';
-    container.style.top = input.offsetTop + input.offsetHeight;
-    container.style.left = input.offsetLeft;
+    position();
   }
 
   function hide () {
@@ -190,7 +195,13 @@ function calendar (input, calendarOptions) {
     container.style.display = 'none';
   }
 
-  function ignoreEventTarget (e) {
+  function position () {
+    container.style.position = 'absolute';
+    container.style.top = input.offsetTop + input.offsetHeight;
+    container.style.left = input.offsetLeft;
+  }
+
+  function calendarEventTarget (e) {
     var target = e.target;
     if (target === input) {
       return true;
@@ -204,14 +215,14 @@ function calendar (input, calendarOptions) {
   }
 
   function hideOnBlur (e) {
-    if (ignoreEventTarget(e)) {
+    if (calendarEventTarget(e)) {
       return;
     }
     hide();
   }
 
   function hideOnClick (e) {
-    if (ignoreEventTarget(e)) {
+    if (calendarEventTarget(e)) {
       return;
     }
     hide();
@@ -257,6 +268,30 @@ function calendar (input, calendarOptions) {
   function update () {
     updateCalendar();
     updateInput();
+    api.emit('data', getDateString());
+    api.emit('year', ref.year());
+    api.emit('month', ref.month());
+  }
+
+  function containerClick () {
+    ignoreShow = true;
+    input.focus();
+    ignoreShow = false;
+  }
+
+  function containerMouseDown () {
+    ignoreInvalidation = true;
+    raf(unignore);
+
+    function unignore () {
+      ignoreInvalidation = false;
+    }
+  }
+
+  function invalidateInput () {
+    if (!ignoreInvalidation) {
+      updateInput();
+    }
   }
 
   function removeChildren (elem) {
@@ -315,6 +350,8 @@ function calendar (input, calendarOptions) {
     ref.date(day);
     updateInput();
     if (o.autoClose) { hide(); }
+    api.emit('data', getDateString());
+    api.emit('day', day);
   }
 
   function pickTime (e) {
@@ -331,6 +368,8 @@ function calendar (input, calendarOptions) {
     } else {
       hideTimeList();
     }
+    api.emit('data', getDateString());
+    api.emit('time', value);
   }
 
   function getDate () {
@@ -351,6 +390,3 @@ function calendar (input, calendarOptions) {
 calendar.find = find;
 
 module.exports = calendar;
-
-// TODO: when lost focus clicking on calendar, don't invalidate!!
-// TODO: write up API docs
