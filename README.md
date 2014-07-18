@@ -8,6 +8,8 @@ You can [see a live demo here][3].
 
 [![screenshot.png][4]][3]
 
+Oh, `rome` synchronizes in real-time with the input, never steals focus, and it's CSS is entirely customizable!
+
 ## Install
 
 From npm or Bower.
@@ -28,7 +30,7 @@ The API in `rome` exposes two methods.
 
 ### `rome.find(input)`
 
-Finds a previously created Rome calendar. Exactly the same as doing `rome(input)` after the first time. The difference is that if the first call made on an input is `.find` you'll get `undefined`, and if the first call is `rome` then a Rome calendar will be created and associated to the input. This association can't be undone even by `.destroy()`-ing the `rome` instance, which can be `.restore()`-d later.
+Finds a previously created Rome calendar. Exactly the same as doing `rome(input)` after the first time. The difference is that if the first call made on an input is `.find` you'll get `undefined`, and if the first call is `rome` then a Rome calendar will be created and associated to the input. This association can't be undone even by `.destroy()`ing the `rome` instance, which can be `.restore()`d later.
 
 ### `rome(input, options?)`
 
@@ -65,7 +67,7 @@ If you don't set an option, the default will be used. You can [look up the defau
   "inputFormat": "YYYY-MM-DD HH:mm",
   "invalidate": true,
   "monthFormat": "MMMM YYYY",
-  "styles": {,
+  "styles": {
     "back": "rd-back",
     "container": "rd-container",
     "date": "rd-date",
@@ -140,8 +142,8 @@ Rome calendars also provide a few events you can subscribe to. These events are 
 
 Event       | Arguments   | Description
 ------------|-------------|------------
-`ready`     | `[options]` | The calendar has been `.restore`-d.
-`destroyed` | `[]`        | The calendar has been `.destroy`-ed.
+`ready`     | `[options]` | The calendar has been `.restore`d.
+`destroyed` | `[]`        | The calendar has been `.destroy`ed.
 `data`      | `[value]`   | The date may have been updated by the calendar. Value of `.getDateString()` is provided.
 `year`      | `[year]`    | The year may have been updated by the calendar. Value of `moment.year()` is provided.
 `month`     | `[month]`   | The month may have been updated by the calendar. Value of `moment.month()` is provided.
