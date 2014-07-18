@@ -10,6 +10,14 @@
 .rd-back,
 .rd-next
   cursor pointer
+  border none
+  outline none
+  background none
+  padding 0
+  margin 0
+
+  &[disabled]
+    cursor default
 
 .rd-back
   float left
@@ -39,6 +47,10 @@
 .rd-day-prev-month,
 .rd-day-next-month
   color #999
+
+.rd-day-disabled
+  cursor default
+  color #fcc
 
 .rd-time
   position relative

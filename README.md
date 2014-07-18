@@ -46,6 +46,8 @@ Option            | Description
 `dayFormat`       | Format string used to display days on the calendar
 `inputFormat`     | Format string used for the input field as well as the results of `rome`
 `invalidate`      | Ensures the date is valid when the field is blurred
+`min`             | Minimum valid date. The calendar won't show dates before this date. Accepts `string`, `Date`, `moment`.
+`max`             | Maximum valid date. The calendar won't show dates past this date. Accepts `string`, `Date`, `moment`.
 `monthFormat`     | Format string used by the calendar to display months and their year
 `styles`          | CSS classes applied to elements on the calendar
 `time`            | The calendar shows the current time and allows you to change it using a dropdown
@@ -66,6 +68,8 @@ If you don't set an option, the default will be used. You can [look up the defau
   "dayFormat": "DD",
   "inputFormat": "YYYY-MM-DD HH:mm",
   "invalidate": true,
+  "min": null,
+  "max": null,
   "monthFormat": "MMMM YYYY",
   "styles": {
     "back": "rd-back",

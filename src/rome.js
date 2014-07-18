@@ -48,6 +48,8 @@ function calendar (input, calendarOptions) {
   var lastYear;
   var lastMonth;
   var lastDay;
+  var back;
+  var next;
 
   // time variables
   var time;
@@ -137,8 +139,8 @@ function calendar (input, calendarOptions) {
       return;
     }
     var datewrapper = dom({ className: o.styles.date, parent: container });
-    var back = dom({ className: o.styles.back, parent: datewrapper });
-    var next = dom({ className: o.styles.next, parent: datewrapper });
+    back = dom({ type: 'button', className: o.styles.back, parent: datewrapper });
+    next = dom({ type: 'button', className: o.styles.next, parent: datewrapper });
     month = dom({ className: o.styles.month, parent: datewrapper });
     var date = dom({ type: 'table', className: o.styles.dayTable, parent: datewrapper });
     var datehead = dom({ type: 'thead', className: o.styles.dayHead, parent: date });
@@ -234,9 +236,17 @@ function calendar (input, calendarOptions) {
   function takeInput () {
     if (input.value) {
       var val = moment(input.value, o.inputFormat);
-      if (val.isValid()) { ref = val; updateCalendar(); updateTime(); }
+      if (val.isValid()) {
+        if (o.min && val.isBefore(o.min)) {
+          val = o.min.clone();
+        } else if (o.max && val.isAfter(o.max)) {
+          val = o.max.clone();
+        }
+        ref = val; updateCalendar(); updateTime();
+      }
     }
   }
+
   function subtractMonth () { ref.subtract('months', 1); update(); }
   function addMonth () { ref.add('months', 1); update(); }
   function updateCalendar () {
@@ -314,17 +324,18 @@ function calendar (input, calendarOptions) {
     var tr = row();
     var prevMonth = o.styles.dayBodyElem + ' ' + o.styles.dayPrevMonth;
     var nextMonth = o.styles.dayBodyElem + ' ' + o.styles.dayNextMonth;
+    var disabled = ' ' + o.styles.dayDisabled;
 
     for (i = 0; i < firstDay; i++) {
       day = first.clone().subtract('days', firstDay - i);
-      node = dom({ type: 'td', className: prevMonth, parent: tr, text: day.format(o.dayFormat) });
+      node = dom({ type: 'td', className: test(day, prevMonth), parent: tr, text: day.format(o.dayFormat) });
     }
     for (i = 0; i < total; i++) {
       if (tr.children.length === weekdays.length) {
         tr = row();
       }
       day = first.clone().add('days', i);
-      node = dom({ type: 'td', className: o.styles.dayBodyElem, parent: tr, text: day.format(o.dayFormat) });
+      node = dom({ type: 'td', className: test(day, o.styles.dayBodyElem), parent: tr, text: day.format(o.dayFormat) });
       if (day.date() === current) {
         node.classList.add(o.styles.selectedDay);
       }
@@ -333,7 +344,27 @@ function calendar (input, calendarOptions) {
     lastDay = lastMoment.day();
     for (i = 1; tr.children.length < weekdays.length; i++) {
       day = lastMoment.clone().add('days', i);
-      node = dom({ type: 'td', className: nextMonth, parent: tr, text: day.format(o.dayFormat) });
+      node = dom({ type: 'td', className: test(day, nextMonth), parent: tr, text: day.format(o.dayFormat) });
+    }
+
+    back.disabled = !isEnabled(first.clone().subtract('days', firstDay));
+    next.disabled = !isEnabled(day);
+
+    function test (day, classes) {
+      if (isEnabled(day)) {
+        return classes;
+      }
+      return classes + disabled;
+    }
+
+    function isEnabled (day) {
+      if (o.min && day.isBefore(o.min)) {
+        return false;
+      }
+      if (o.max && day.isAfter(o.max)) {
+        return false;
+      }
+      return true;
     }
   }
 
@@ -343,11 +374,11 @@ function calendar (input, calendarOptions) {
 
   function pickDay (e) {
     var target = e.target;
-    if (!target.classList.contains(o.styles.dayBodyElem)) {
+    if (target.classList.contains(o.styles.dayDisabled) || !target.classList.contains(o.styles.dayBodyElem)) {
       return;
     }
     var day = parseInt(text(target), 10);
-    var query = '.' + o.styles.selectedDay.replace(/\s+/g, '.');
+    var query = '.' + o.styles.selectedDay;
     var selection = container.querySelector(query);
     if (selection) { selection.classList.remove(o.styles.selectedDay); }
     var prev = target.classList.contains(o.styles.dayPrevMonth);

@@ -1,6 +1,24 @@
 'use strict';
 
+var moment = require('moment');
+
+function parse (date, format) {
+  var value;
+  if (typeof date === 'string') {
+    value = moment(date, format);
+    return value.isValid() ? value : null;
+  }
+  if (Object.prototype.toString.call(date) === '[object Date]') {
+    return moment(date);
+  }
+  if (moment.isMoment(date)) {
+    return date;
+  }
+  return null;
+}
+
 function defaults (options) {
+  var temp;
   var no;
   var o = options || {};
   if (o.autoHideOnClick === no) { o.autoHideOnClick = true; }
@@ -21,6 +39,18 @@ function defaults (options) {
       o.inputFormat = 'HH:mm';
     }
   }
+  if (o.min === no) { o.min = null; } else { o.min = parse(o.min, o.inputFormat); }
+  if (o.max === no) { o.max = null; } else { o.max = parse(o.max, o.inputFormat); }
+  if (o.min && o.max) {
+    if (o.max.isBefore(o.min)) {
+      temp = o.max;
+      o.max = o.min;
+      o.min = temp;
+    }
+    if (o.max.clone().subtract('days', 1).isBefore(o.min)) {
+      throw new Error('`max` must be at least one day after `min`');
+    }
+  }
   if (o.timeFormat === no) { o.timeFormat = 'HH:mm'; }
   if (o.timeInterval === no) { o.timeInterval = 60 * 30; } // 30 minutes by default
   if (o.monthFormat === no) { o.monthFormat = 'MMMM YYYY'; }
@@ -35,6 +65,7 @@ function defaults (options) {
   if (styl.dayBodyElem === no) { styl.dayBodyElem = 'rd-day-body'; }
   if (styl.dayPrevMonth === no) { styl.dayPrevMonth = 'rd-day-prev-month'; }
   if (styl.dayNextMonth === no) { styl.dayNextMonth = 'rd-day-next-month'; }
+  if (styl.dayDisabled === no) { styl.dayDisabled = 'rd-day-disabled'; }
   if (styl.dayHead === no) { styl.dayHead = 'rd-days-head'; }
   if (styl.dayHeadElem === no) { styl.dayHeadElem = 'rd-day-head'; }
   if (styl.dayRow === no) { styl.dayRow = 'rd-days-row'; }

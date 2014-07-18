@@ -12,3 +12,5 @@ toggle.addEventListener('click', function () {
   }
   toggle.innerHTML = picker.restore ? 'Restore <code>rome</code> instance!' : 'Destroy <code>rome</code> instance!';
 });
+
+rome(mm, { min: '2013-12-30', max: '2014-10-01' });
