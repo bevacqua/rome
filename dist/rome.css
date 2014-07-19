@@ -43,6 +43,7 @@
 .rd-day-body {
   cursor: pointer;
   text-align: center;
+  padding: 5px;
 }
 .rd-day-selected,
 .rd-time-selected,
@@ -50,10 +51,12 @@
   cursor: pointer;
   background-color: #333;
   color: #fff;
+  padding: 5px;
 }
 .rd-day-prev-month,
 .rd-day-next-month {
   color: #999;
+  font-weight: bold;
 }
 .rd-day-disabled {
   cursor: default;
@@ -64,6 +67,10 @@
   display: inline-block;
   margin-top: 5px;
   min-width: 80px;
+}
+.rd-time-list:first-child
+{
+  padding: 10px;
 }
 .rd-time-list {
   position: absolute;
