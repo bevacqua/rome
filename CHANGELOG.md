@@ -1,3 +1,7 @@
+# 0.3.7 Kamasutra
+
+- Made it easier to overwrite the absolute positioning of the calendar by only setting it once, on the stylesheet
+
 # 0.3.6 Web Starter Kit
 
 - Fixed a bug where closing the calendar, with the time list open, triggered a rendering bug in WebKit (952e714)
