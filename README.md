@@ -2,6 +2,8 @@
 
 > Dependency free, opt-in UI, customizable date _(and time)_ picker!
 
+Rome wasn't built in a day.
+
 #### Demo!
 
 You can [see a live demo here][3].
