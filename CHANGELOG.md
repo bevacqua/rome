@@ -1,4 +1,4 @@
-# 0.3.7 Kamasutra
+# 0.3.8 Kamasutra
 
 - Made it easier to overwrite the absolute positioning of the calendar by only setting it once, on the stylesheet
 
