@@ -1,3 +1,7 @@
+# 0.3.6 Web Starter Kit
+
+- Fixed a bug where closing the 
+
 # 0.3.5 Pick Up
 
 - Cloned options objects return proper clones of the `min` and `max` moments instead of references.

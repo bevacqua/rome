@@ -216,19 +216,21 @@ function calendar (input, calendarOptions) {
 
   function showTimeList () { if (timelist) { timelist.style.display = 'block'; } }
   function hideTimeList () { if (timelist) { timelist.style.display = 'none'; } }
+  function showCalendar () { container.style.display = 'block'; }
+  function hideCalendar () { container.style.display = 'none'; }
 
   function show () {
-    if (ignoreShow || container.style.display === 'block') {
+    if (ignoreShow || container.style.display !== 'none') {
       return;
     }
     toggleTimeList(!o.date);
-    container.style.display = 'block';
+    showCalendar();
     position();
   }
 
   function hide () {
     hideTimeList();
-    container.style.display = 'none';
+    raf(hideCalendar);
   }
 
   function position () {
