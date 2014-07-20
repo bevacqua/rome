@@ -1,10 +1,10 @@
 # 0.3.6 Web Starter Kit
 
-- Fixed a bug where closing the 
+- Fixed a bug where closing the calendar, with the time list open, triggered a rendering bug in WebKit (952e714)
 
 # 0.3.5 Pick Up
 
-- Cloned options objects return proper clones of the `min` and `max` moments instead of references.
+- Cloned options objects return proper clones of the `min` and `max` moments instead of references
 
 # 0.3.1 Pack Up
 
