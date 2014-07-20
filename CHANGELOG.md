@@ -1,6 +1,6 @@
 # 0.3.6 Web Starter Kit
 
-- Fixed a bug where closing the calendar, with the time list open, triggered a rendering bug in WebKit (952e714)
+- Fixed a bug where closing the calendar, with the time list open, triggered a rendering bug in WebKit [(952e714)][1]
 
 # 0.3.5 Pick Up
 
@@ -36,3 +36,5 @@ Changes
 # 0.2.0 IPO
 
 - Initial Public Release
+
+[1]: https://github.com/bevacqua/rome/commit/952e714b4e818bd6261621b53fe1f24c01aeba96
