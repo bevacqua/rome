@@ -27,7 +27,8 @@ a:hover {
 }
 
 pre code {
-  color: #e74c3c;
+  color: #fff;
+  font-size: 18px;
 }
 
 .parent {
