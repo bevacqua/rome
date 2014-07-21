@@ -284,8 +284,8 @@ function calendar (input, calendarOptions) {
     }
   }
 
-  function subtractMonth () { ref.subtract('months', 1); update(); }
-  function addMonth () { ref.add('months', 1); update(); }
+  function subtractMonth () { ref = inRange(ref.subtract('months', 1)); update(); }
+  function addMonth () { ref = inRange(ref.add('months', 1)); update(); }
   function updateCalendar () {
     if (!o.date) {
       return;
@@ -317,6 +317,7 @@ function calendar (input, calendarOptions) {
 
   function update () {
     updateCalendar();
+    updateTime();
     updateInput();
     api.emit('data', getDateString());
     api.emit('year', ref.year());
@@ -382,8 +383,8 @@ function calendar (input, calendarOptions) {
       node = dom({ type: 'td', className: test(day, nextMonth), parent: tr, text: day.format(o.dayFormat) });
     }
 
-    back.disabled = !isInRange(first.clone().subtract('days', firstDay), true);
-    next.disabled = !isInRange(day, true);
+    back.disabled = !isInRange(first.clone(), true);
+    next.disabled = !isInRange(lastMoment, true);
 
     function test (day, classes) {
       if (isInRange(day, true)) {
@@ -491,3 +492,7 @@ function calendar (input, calendarOptions) {
 calendar.find = find;
 
 module.exports = calendar;
+
+// TODO split logic input/calendar
+// TODO disabled method
+// TODO invalid method

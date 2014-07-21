@@ -1,3 +1,7 @@
+# 0.3.10 Texas Ranger
+
+- Fixed a bug where you weren't able to navigate to the month if it was visible in the current calendar view
+
 # 0.3.9 Day of the Week
 
 - Implemented `weekStart` to choose the starting day of the week
