@@ -28,9 +28,9 @@ rome(iwe, {
 rome(win, {
   dateValidator: function (d) {
     var m = moment(d);
-    var winterStart = moment('12-21', 'MM-DD').year(m.year()).startOf('day');
-    var winterEnd = moment('03-19', 'MM-DD').year(m.year()).endOf('day');
-    return m.isBefore(winterStart) && m.isAfter(winterEnd);
+    var start = moment('12-21', 'MM-DD').year(m.year()).startOf('day');
+    var end = moment('03-19', 'MM-DD').year(m.year()).endOf('day');
+    return m.isBefore(start) && m.isAfter(end);
   }
 });
 
