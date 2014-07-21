@@ -1,8 +1,6 @@
 'use strict';
 
-var moment = require('moment');
-
-function parse (date, format) {
+function parse (moment, date, format) {
   var value;
   if (typeof date === 'string') {
     value = moment(date, format);
@@ -17,7 +15,7 @@ function parse (date, format) {
   return null;
 }
 
-function defaults (options, input) {
+function defaults (moment, options, input) {
   var temp;
   var no;
   var o = options || {};
@@ -39,8 +37,8 @@ function defaults (options, input) {
       o.inputFormat = 'HH:mm';
     }
   }
-  if (o.min === no) { o.min = null; } else { o.min = parse(o.min, o.inputFormat); }
-  if (o.max === no) { o.max = null; } else { o.max = parse(o.max, o.inputFormat); }
+  if (o.min === no) { o.min = null; } else { o.min = parse(moment, o.min, o.inputFormat); }
+  if (o.max === no) { o.max = null; } else { o.max = parse(moment, o.max, o.inputFormat); }
   if (o.min && o.max) {
     if (o.max.isBefore(o.min)) {
       temp = o.max;

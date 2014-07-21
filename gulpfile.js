@@ -35,23 +35,32 @@ gulp.task('clean', function () {
     .pipe(clean());
 });
 
+gulp.task('build-only-broad', function () {
+  build();
+  buildAlone();
+});
 gulp.task('build-only', build)
-gulp.task('build', ['styles'], build);
+gulp.task('build', ['styles', 'build-only-broad']);
 
-function build () {
+function buildSource (src, dest) {
   var pkg = require('./package.json');
-
-  return browserify('./src/rome.js')
+  var min = dest.split('.');
+  min.splice(min.length - 1, 0, 'min');
+  min = min.join('.');
+  return browserify('./src/' + src)
     .bundle({ debug: true, standalone: 'rome' })
-    .pipe(source('rome.js'))
+    .pipe(source(dest))
     .pipe(streamify(header(extended, { pkg : pkg } )))
     .pipe(gulp.dest('./dist'))
-    .pipe(streamify(rename('rome.min.js')))
+    .pipe(streamify(rename(min)))
     .pipe(streamify(uglify()))
     .pipe(streamify(header(succjs, { pkg : pkg } )))
     .pipe(streamify(size()))
     .pipe(gulp.dest('./dist'));
 }
+
+function build () { buildSource('rome.moment.js', 'rome.js'); }
+function buildAlone () { buildSource('rome.standalone.js', 'rome.standalone.js'); }
 
 gulp.task('styles-only', styles);
 gulp.task('styles', ['clean', 'bump'], styles);

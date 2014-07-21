@@ -12,6 +12,8 @@ You can [see a live demo here][3].
 
 Oh, `rome` synchronizes in real-time with the input, never steals focus, and its CSS is entirely customizable!
 
+<sub>Not dependency free. It depends on [`moment`][6]. Does not depend on jQuery or other weird frameworks, though.
+
 ## Install
 
 From npm or Bower.
@@ -25,6 +27,23 @@ bower install --save rome
 ```
 
 Note that if you're using the standalone version, the API is published under the `rome` global. If you're using CJS, then you'll have to `require('rome')`.
+
+### Setup
+
+You can define `moment` yourself, using `rome.standalone.js`.
+
+```html
+<script src='moment.js'></script>
+<script src='rome.standalone.js'></script>
+```
+
+You could just use the bundled `rome.js` distribution, which comes with `moment` in it.
+
+```html
+<script src='rome.js'></script>
+```
+
+If you need to do anything regarding internationalization, [refer to `moment` for that][5] before starting to create Rome calendar components.
 
 ## API
 
@@ -172,3 +191,5 @@ MIT
 [2]: https://github.com/bevacqua/contra
 [3]: https://bevacqua.github.io/rome
 [4]: https://cloud.githubusercontent.com/assets/934293/3627112/a635c562-0e85-11e4-8b57-2ec2d8be9af2.png
+[5]: http://momentjs.com/docs/#/i18n/
+[6]: http://momentjs.com

@@ -1,7 +1,6 @@
 'use strict';
 
 var contra = require('contra');
-var moment = require('moment');
 var throttle = require('lodash.throttle');
 var clone = require('lodash.clonedeep');
 var raf = require('raf');
@@ -12,7 +11,7 @@ var index = [];
 var no;
 
 function cloner (value) {
-  if (moment.isMoment(value)) {
+  if (calendar.moment.isMoment(value)) {
     return value.clone();
   }
 }
@@ -41,7 +40,7 @@ function calendar (input, calendarOptions) {
   }
   var o;
   var api = contra.emitter({});
-  var ref = moment();
+  var ref = calendar.moment();
   var container;
   var throttledTakeInput = throttle(takeInput, 50);
   var throttledPosition = throttle(position, 30);
@@ -49,7 +48,7 @@ function calendar (input, calendarOptions) {
   var ignoreShow;
 
   // date variables
-  var weekdays = moment.weekdaysMin();
+  var weekdays = calendar.moment.weekdaysMin();
   var weekdayCount = weekdays.length;
   var month;
   var datebody;
@@ -71,7 +70,7 @@ function calendar (input, calendarOptions) {
   }
 
   function init (initOptions) {
-    o = defaults(initOptions || calendarOptions, input);
+    o = defaults(calendar.moment, initOptions || calendarOptions, input);
     if (!container) { container = dom({ className: o.styles.container }); }
     lastMonth = no;
     lastYear = no;
@@ -183,7 +182,7 @@ function calendar (input, calendarOptions) {
     time.addEventListener('click', toggleTimeList);
     timelist = dom({ className: o.styles.timeList, parent: timewrapper });
     timelist.addEventListener('click', pickTime);
-    var next = moment('00:00:00', 'HH:mm:ss');
+    var next = calendar.moment('00:00:00', 'HH:mm:ss');
     var latest = next.clone().add('days', 1);
     while (next.isBefore(latest)) {
       dom({ className: o.styles.timeOption, parent: timelist, text: next.format(o.timeFormat) });
@@ -212,7 +211,7 @@ function calendar (input, calendarOptions) {
     var i;
     for (i = 0; i < length; i++) {
       item = times[i];
-      time = moment(text(item), o.timeFormat);
+      time = calendar.moment(text(item), o.timeFormat);
       date = setTime(ref.clone(), time);
       item.style.display = isInRange(date) ? 'block' : 'none';
     }
@@ -280,7 +279,7 @@ function calendar (input, calendarOptions) {
 
   function takeInput () {
     if (input.value) {
-      var val = moment(input.value, o.inputFormat);
+      var val = calendar.moment(input.value, o.inputFormat);
       if (val.isValid()) {
         ref = inRange(val); updateCalendar(); updateTime(); displayValidTimesOnly();
       }
@@ -322,6 +321,7 @@ function calendar (input, calendarOptions) {
     updateCalendar();
     updateTime();
     updateInput();
+    displayValidTimesOnly();
     api.emit('data', getDateString());
     api.emit('year', ref.year());
     api.emit('month', ref.month());
@@ -464,7 +464,7 @@ function calendar (input, calendarOptions) {
     if (!target.classList.contains(o.styles.timeOption)) {
       return;
     }
-    var value = moment(text(target), o.timeFormat);
+    var value = calendar.moment(text(target), o.timeFormat);
     setTime(ref, value);
     updateTime();
     updateInput();

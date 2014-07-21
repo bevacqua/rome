@@ -1,3 +1,7 @@
+# 0.3.12 Optional Overload
+
+- Published alternative distribution `rome.standalone.js` which doesn't bundle `moment`.
+
 # 0.3.11 Time Obsession
 
 - Fixed a bug where the calendar would break if `time` was set to `false`

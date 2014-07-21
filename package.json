@@ -16,7 +16,7 @@
   "bugs": {
     "url": "https://github.com/bevacqua/rome/issues"
   },
-  "main": "src/rome.js",
+  "main": "src/rome.moment.js",
   "dependencies": {
     "contra": "^1.6.7",
     "lodash.clonedeep": "^2.4.1",
