@@ -201,6 +201,9 @@ function calendar (input, calendarOptions) {
   }
 
   function displayValidTimesOnly () {
+    if (!o.time) {
+      return;
+    }
     var times = timelist.children;
     var length = times.length;
     var date;

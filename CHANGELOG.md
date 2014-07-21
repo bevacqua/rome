@@ -1,3 +1,7 @@
+# 0.3.11 Time Obsession
+
+- Fixed a bug where the calendar would break if `time` was set to `false`
+
 # 0.3.10 Texas Ranger
 
 - Fixed a bug where you weren't able to navigate to the month if it was visible in the current calendar view
