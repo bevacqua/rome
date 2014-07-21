@@ -1,3 +1,7 @@
+# 0.3.13 Foo Fighters
+
+- Fixed an issue when `required` was set to `false`
+
 # 0.3.12 Optional Overload
 
 - Published alternative distribution `rome.standalone.js` which doesn't bundle `moment`

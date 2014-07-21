@@ -315,9 +315,6 @@ function calendar (input, calendarOptions) {
   }
 
   function updateInput () {
-    if (isEmpty()) {
-      return;
-    }
     input.value = ref.format(o.inputFormat);
   }
 
@@ -347,7 +344,7 @@ function calendar (input, calendarOptions) {
   }
 
   function invalidateInput () {
-    if (!ignoreInvalidation) {
+    if (!ignoreInvalidation && !isEmpty()) {
       updateInput();
     }
   }
