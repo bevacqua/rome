@@ -47,6 +47,10 @@ If you need to do anything regarding internationalization, [refer to `moment` fo
 
 ## API
 
+### `rome.moment`
+
+Rome will use this instance of `moment`. It can either come from the `rome.js` bundle or you can choose your own by setting `window.moment = value` before loading`rome.standalone.js`.
+
 The API in `rome` exposes two methods.
 
 ### `rome.find(input)`
