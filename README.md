@@ -64,6 +64,7 @@ Option            | Description
 `autoHideOnBlur`  | Hides the calendar when focusing something other than the input field
 `autoHideOnClick` | Hides the calendar when clicking away
 `date`            | The calendar shows days and allows you to navigate between months
+`dateValidator`   | Function to validate that a given date is considered valid. Takes a native `Date` parameter.
 `dayFormat`       | Format string used to display days on the calendar
 `inputFormat`     | Format string used for the input field as well as the results of `rome`
 `invalidate`      | Ensures the date is valid when the field is blurred
@@ -75,6 +76,7 @@ Option            | Description
 `time`            | The calendar shows the current time and allows you to change it using a dropdown
 `timeFormat`      | Format string used to display the time on the calendar
 `timeInterval`    | Seconds between each option in the time dropdown
+`timeValidator`   | Function to validate that a given time is considered valid. Takes a native `Date` parameter.
 `weekStart`       | Day considered the first of the week. Range: Sunday `0` - Saturday `6`
 
 #### Default Options
@@ -88,6 +90,7 @@ If you don't set an option, the default will be used. You can [look up the defau
   "autoClose": true,
   "autoHideOnBlur": true,
   "date": true,
+  "dateValidator": Function.prototype,
   "dayFormat": "DD",
   "inputFormat": "YYYY-MM-DD HH:mm",
   "invalidate": true,
@@ -117,6 +120,7 @@ If you don't set an option, the default will be used. You can [look up the defau
   "time": true,
   "timeFormat": "HH:mm",
   "timeInterval": 1800,
+  "timeValidator": Function.prototype,
   "weekStart": 0
 }
 ```
@@ -184,6 +188,12 @@ Event       | Arguments   | Description
 `month`     | `[month]`   | The month may have been updated by the calendar. Value of `moment.month()` is provided
 `day`       | `[day]`     | The day may have been updated by the calendar. Value of `moment.date()` is provided
 `time`      | `[time]`    | The time may have been updated by the calendar. Formatted time string is provided
+
+#### Date and Time Validator
+
+Please note that `dateValidator` and `timeValidator` both receive a native `Date` object as a parameter. These methods are expected to return `undefined` or `true` if the date is deemed valid, and `false` in case the date is invalid. If `dateValidator` returns `false`, the validation process will try to find a valid date near the desired date.
+
+If `dateValidator` passes for a given date, the `timeValidator` will attempt to validate that date as well. If the time is invalid, the day will be probed for a valid time. This validation starts at the desired time, and grows in `timeInterval` increments. When the end of the day is reached, validation resumes at the start of the day instead of leaping to the next day.
 
 ## License
 

@@ -67,13 +67,57 @@ rome(input, { min: '2013-12-30', max: '2014-10-01' });
       </code>
     </pre>
   </div>
-</div>
   <div class='parent'>
     <label for='mmt'>It works great with specific date and time too! </label>
     <input id='mmt' class='input' />
     <pre>
       <code>
 rome(input, { min: '2014-04-30 19:45', max: '2014-09-01 08:30' });
+      </code>
+    </pre>
+  </div>
+  <div class='parent'>
+    <label for='iwe'>Tired of people thinking saturdays are <code>'valid'</code> dates? </label>
+    <input id='iwe' class='input' />
+    <pre>
+      <code>
+rome(input, {
+  dateValidator: function (d) {
+    return moment(d).day() !== 6;
+  }
+});
+      </code>
+    </pre>
+  </div>
+  <div class='parent'>
+    <label for='win'>Winter doesn't meet your fancy? </label>
+    <input id='win' class='input' />
+    <pre>
+      <code>
+rome(input, {
+  dateValidator: function (d) {
+    var m = moment(d);
+    var winterStart = moment('12-21', 'MM-DD').year(m.year()).startOf('day');
+    var winterEnd = moment('03-19', 'MM-DD').year(m.year()).endOf('day');
+    return m.isBefore(winterStart) && m.isAfter(winterEnd);
+  }
+});
+      </code>
+    </pre>
+  </div>
+  <div class='parent'>
+    <label for='tim'>Sure enough, it also allows you to define specific time ranges </label>
+    <input id='tim' class='input' />
+    <pre>
+      <code>
+rome(input, {
+  timeValidator: function (d) {
+    var m = moment(d);
+    var start = m.clone().hour(12).minute(59).second(59);
+    var end = m.clone().hour(18).minute(0).second(1);
+    return m.isAfter(start) && m.isBefore(end);
+  }
+});
       </code>
     </pre>
   </div>

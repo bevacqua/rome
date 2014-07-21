@@ -1,3 +1,7 @@
+# 0.4.0 Tinder
+
+- Introduced `dateValidator` and `timeValidator` options
+
 # 0.3.14 Foo Fighters
 
 - Fixed an issue when `required` was set to `false`

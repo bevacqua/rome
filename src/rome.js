@@ -40,7 +40,8 @@ function calendar (input, calendarOptions) {
   }
   var o;
   var api = contra.emitter({});
-  var ref = calendar.moment();
+  var ref;
+  var refCal;
   var container;
   var throttledTakeInput = throttle(takeInput, 50);
   var throttledPosition = throttle(position, 30);
@@ -59,6 +60,7 @@ function calendar (input, calendarOptions) {
   var next;
 
   // time variables
+  var secondsInDay = 60 * 60 * 24;
   var time;
   var timelist;
 
@@ -75,9 +77,6 @@ function calendar (input, calendarOptions) {
     lastMonth = no;
     lastYear = no;
     lastDay = no;
-    removeChildren(container);
-    renderDates();
-    renderTime();
     o.appendTo.appendChild(container);
     container.addEventListener('mousedown', containerMouseDown);
     container.addEventListener('click', containerClick);
@@ -94,9 +93,16 @@ function calendar (input, calendarOptions) {
 
     api.emit('ready', clone(o, cloner));
 
+    ref = calendar.moment();
+    refCal = ref.clone();
     hide();
+    removeChildren(container);
+    renderDates();
+    renderTime();
     throttledTakeInput();
     updateCalendar();
+    updateTime();
+    displayValidTimesOnly();
 
     delete api.restore;
     api.show = show;
@@ -213,7 +219,7 @@ function calendar (input, calendarOptions) {
       item = times[i];
       time = calendar.moment(text(item), o.timeFormat);
       date = setTime(ref.clone(), time);
-      item.style.display = isInRange(date) ? 'block' : 'none';
+      item.style.display = isInRange(date, false, o.timeValidator) ? 'block' : 'none';
     }
   }
 
@@ -279,30 +285,51 @@ function calendar (input, calendarOptions) {
 
   function takeInput () {
     var value = input.value.trim();
-    if (value) {
-      var date = calendar.moment(value, o.inputFormat);
-      if (date.isValid()) {
-        ref = inRange(date); updateCalendar(); updateTime(); displayValidTimesOnly();
-      }
+    if (isEmpty()) {
+      return;
     }
+    var date = calendar.moment(value, o.inputFormat);
+    if (date.isValid() === false) {
+      return;
+    }
+    ref = inRange(date) || ref;
+    refCal = ref.clone();
+    updateCalendar();
+    updateTime();
+    displayValidTimesOnly();
   }
 
-  function subtractMonth () { ref = inRange(ref.subtract('months', 1)); update(); }
-  function addMonth () { ref = inRange(ref.add('months', 1)); update(); }
+  function subtractMonth () { changeMonth('subtract'); }
+  function addMonth () { changeMonth('add'); }
+  function changeMonth (op) {
+    refCal[op]('months', 1);
+    ref = inRange(refCal.clone()) || ref; update();
+  }
+
+  function update () {
+    updateCalendar();
+    updateTime();
+    updateInput();
+    displayValidTimesOnly();
+    api.emit('data', getDateString());
+    api.emit('year', ref.year());
+    api.emit('month', ref.month());
+  }
+
   function updateCalendar () {
     if (!o.date) {
       return;
     }
-    var y = ref.year();
-    var m = ref.month();
-    var d = ref.date();
+    var y = refCal.year();
+    var m = refCal.month();
+    var d = refCal.date();
     if (d === lastDay && m === lastMonth && y === lastYear) {
       return;
     }
-    text(month, ref.format(o.monthFormat));
-    lastDay = ref.date();
-    lastMonth = ref.month();
-    lastYear = ref.year();
+    text(month, refCal.format(o.monthFormat));
+    lastDay = refCal.date();
+    lastMonth = refCal.month();
+    lastYear = refCal.year();
     removeChildren(datebody);
     renderDays();
   }
@@ -316,16 +343,6 @@ function calendar (input, calendarOptions) {
 
   function updateInput () {
     input.value = ref.format(o.inputFormat);
-  }
-
-  function update () {
-    updateCalendar();
-    updateTime();
-    updateInput();
-    displayValidTimesOnly();
-    api.emit('data', getDateString());
-    api.emit('year', ref.year());
-    api.emit('month', ref.month());
   }
 
   function containerClick () {
@@ -356,9 +373,9 @@ function calendar (input, calendarOptions) {
   }
 
   function renderDays () {
-    var total = ref.daysInMonth();
-    var current = ref.date(); // 1..31
-    var first = ref.clone().date(1);
+    var total = refCal.daysInMonth();
+    var current = refCal.month() !== ref.month() ? -1 : ref.date(); // 1..31
+    var first = refCal.clone().date(1);
     var firstDay = weekday(first.day(), true); // 0..6
     var lastMoment;
     var i, day, node;
@@ -387,36 +404,73 @@ function calendar (input, calendarOptions) {
       node = dom({ type: 'td', className: test(day, nextMonth), parent: tr, text: day.format(o.dayFormat) });
     }
 
-    back.disabled = !isInRange(first.clone(), true);
+    back.disabled = !isInRange(first, true);
     next.disabled = !isInRange(lastMoment, true);
 
     function test (day, classes) {
-      if (isInRange(day, true)) {
+      if (isInRange(day, true, o.dateValidator)) {
         return classes;
       }
       return classes + disabled;
     }
   }
 
-  function isInRange (date, day) {
-    var min = !o.min ? false : (day ? o.min.clone().startOf('day') : o.min);
-    var max = !o.max ? false : (day ? o.max.clone().endOf('day') : o.max);
+  function isInRange (date, allday, validator) {
+    var min = !o.min ? false : (allday ? o.min.clone().startOf('day') : o.min);
+    var max = !o.max ? false : (allday ? o.max.clone().endOf('day') : o.max);
     if (min && date.isBefore(min)) {
       return false;
     }
     if (max && date.isAfter(max)) {
       return false;
     }
-    return true;
+    var valid = (validator || Function.prototype)(date.toDate());
+    return valid !== false;
   }
 
   function inRange (date) {
     if (o.min && date.isBefore(o.min)) {
-      return o.min.clone();
+      return inRange(o.min.clone());
     } else if (o.max && date.isAfter(o.max)) {
-      return o.max.clone();
+      return inRange(o.max.clone());
     }
-    return date;
+    var days = date.daysInMonth();
+    var value = date.clone().subtract('days', 1);
+    if (validateTowards(value, date, 'add')) {
+      return inTimeRange(value);
+    }
+    value = date.clone();
+    if (validateTowards(value, date, 'subtract')) {
+      return inTimeRange(value);
+    }
+  }
+
+  function inTimeRange (value) {
+    var valid = false;
+    var copy = value.clone().subtract('seconds', o.timeInterval);
+    var times = Math.ceil(secondsInDay / o.timeInterval);
+    var i;
+    for (i = 0; i < times; i++) {
+      copy.add('seconds', o.timeInterval);
+      if (copy.date() > value.date()) {
+        copy.subtract('days', 1);
+      }
+      if (o.timeValidator(copy.toDate()) !== false) {
+        return copy;
+      }
+    }
+  }
+
+  function validateTowards (value, date, op) {
+    var valid = false;
+    while (valid === false) {
+      value[op]('days', 1);
+      if (value.month() !== date.month()) {
+        break;
+      }
+      valid = o.dateValidator(value.toDate());
+    }
+    return valid !== false;
   }
 
   function row () {
@@ -442,7 +496,8 @@ function calendar (input, calendarOptions) {
       target.classList.add(o.styles.selectedDay);
     }
     ref.date(day); // must run after setting the month
-    setTime(ref, inRange(ref));
+    setTime(ref, inRange(ref) || ref);
+    refCal = ref.clone();
     displayValidTimesOnly();
     updateInput();
     updateTime();
@@ -467,6 +522,7 @@ function calendar (input, calendarOptions) {
     }
     var value = calendar.moment(text(target), o.timeFormat);
     setTime(ref, value);
+    refCal = ref.clone();
     updateTime();
     updateInput();
     if (!o.date && o.autoClose) {
@@ -502,5 +558,3 @@ calendar.find = find;
 module.exports = calendar;
 
 // TODO split logic input/calendar
-// TODO disabled method
-// TODO invalid method
