@@ -40,21 +40,22 @@ Creates a Rome calendar using a ton of options. These have reasonable defaults t
 
 Option            | Description
 ------------------|--------------------------------------------------------------------------------------------------
-`autoHideOnClick` | Hides the calendar when clicking away
 `appendTo`        | DOM element where the calendar will be appended to. Takes `'parent'` as the parent element
 `autoClose`       | Closes the calendar when picking a day or a time
 `autoHideOnBlur`  | Hides the calendar when focusing something other than the input field
+`autoHideOnClick` | Hides the calendar when clicking away
 `date`            | The calendar shows days and allows you to navigate between months
 `dayFormat`       | Format string used to display days on the calendar
 `inputFormat`     | Format string used for the input field as well as the results of `rome`
 `invalidate`      | Ensures the date is valid when the field is blurred
-`min`             | Disallow dates before `min`. Takes `string`, `Date`, `moment`
 `max`             | Disallow dates past `max`. Takes `string`, `Date`, `moment`
+`min`             | Disallow dates before `min`. Takes `string`, `Date`, `moment`
 `monthFormat`     | Format string used by the calendar to display months and their year
 `styles`          | CSS classes applied to elements on the calendar
 `time`            | The calendar shows the current time and allows you to change it using a dropdown
 `timeFormat`      | Format string used to display the time on the calendar
 `timeInterval`    | Seconds between each option in the time dropdown
+`weekStart`       | Day considered the first of the week. Range: Sunday `0` - Saturday `6`
 
 #### Default Options
 
@@ -94,7 +95,8 @@ If you don't set an option, the default will be used. You can [look up the defau
   },
   "time": true,
   "timeFormat": "HH:mm",
-  "timeInterval": 1800
+  "timeInterval": 1800,
+  "weekStart": 0
 }
 ```
 

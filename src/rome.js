@@ -50,6 +50,7 @@ function calendar (input, calendarOptions) {
 
   // date variables
   var weekdays = moment.weekdaysMin();
+  var weekdayCount = weekdays.length;
   var month;
   var datebody;
   var lastYear;
@@ -164,8 +165,8 @@ function calendar (input, calendarOptions) {
     datebody = dom({ type: 'tbody', className: o.styles.dayBody, parent: date });
     var i;
 
-    for (i = 0; i < weekdays.length; i++) {
-      dom({ type: 'th', className: o.styles.dayHeadElem, parent: dateheadrow, text: weekdays[i] });
+    for (i = 0; i < weekdayCount; i++) {
+      dom({ type: 'th', className: o.styles.dayHeadElem, parent: dateheadrow, text: weekdays[weekday(i)] });
     }
 
     back.addEventListener('click', subtractMonth);
@@ -188,6 +189,15 @@ function calendar (input, calendarOptions) {
       dom({ className: o.styles.timeOption, parent: timelist, text: next.format(o.timeFormat) });
       next.add('seconds', o.timeInterval);
     }
+  }
+
+  function weekday (index, backwards) {
+    var factor = backwards ? -1 : 1;
+    var offset = index + o.weekStart * factor;
+    if (offset >= weekdayCount || offset < 0) {
+      offset += weekdayCount * -factor;
+    }
+    return offset;
   }
 
   function displayValidTimesOnly () {
@@ -344,9 +354,8 @@ function calendar (input, calendarOptions) {
     var total = ref.daysInMonth();
     var current = ref.date(); // 1..31
     var first = ref.clone().date(1);
-    var firstDay = first.day(); // 0..6
+    var firstDay = weekday(first.day(), true); // 0..6
     var lastMoment;
-    var lastDay;
     var i, day, node;
     var tr = row();
     var prevMonth = o.styles.dayBodyElem + ' ' + o.styles.dayPrevMonth;
@@ -358,7 +367,7 @@ function calendar (input, calendarOptions) {
       node = dom({ type: 'td', className: test(day, prevMonth), parent: tr, text: day.format(o.dayFormat) });
     }
     for (i = 0; i < total; i++) {
-      if (tr.children.length === weekdays.length) {
+      if (tr.children.length === weekdayCount) {
         tr = row();
       }
       day = first.clone().add('days', i);
@@ -368,8 +377,7 @@ function calendar (input, calendarOptions) {
       }
     }
     lastMoment = day.clone();
-    lastDay = lastMoment.day();
-    for (i = 1; tr.children.length < weekdays.length; i++) {
+    for (i = 1; tr.children.length < weekdayCount; i++) {
       day = lastMoment.clone().add('days', i);
       node = dom({ type: 'td', className: test(day, nextMonth), parent: tr, text: day.format(o.dayFormat) });
     }
@@ -432,7 +440,7 @@ function calendar (input, calendarOptions) {
     setTime(ref, inRange(ref));
     displayValidTimesOnly();
     updateInput();
-    updateTime()
+    updateTime();
     if (o.autoClose) { hide(); }
     api.emit('data', getDateString());
     api.emit('day', day);

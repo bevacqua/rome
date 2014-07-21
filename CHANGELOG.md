@@ -1,3 +1,7 @@
+# 0.3.9 Day of the Week
+
+- Implemented `weekStart` to choose the starting day of the week
+
 # 0.3.8 Kamasutra
 
 - Made it easier to overwrite the absolute positioning of the calendar by only setting it once, on the stylesheet

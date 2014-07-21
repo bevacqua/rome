@@ -1,4 +1,5 @@
 rome(dt);
+rome(sm, { weekStart: 1 });
 rome(d, { time: false });
 rome(t, { date: false });
 
