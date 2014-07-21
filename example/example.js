@@ -44,11 +44,3 @@ rome(tim, {
     return m.isAfter(start) && m.isBefore(end);
   }
 });
-
-
-
-
-
-
-
-

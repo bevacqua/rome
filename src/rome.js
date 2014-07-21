@@ -556,5 +556,3 @@ function calendar (input, calendarOptions) {
 calendar.find = find;
 
 module.exports = calendar;
-
-// TODO split logic input/calendar
