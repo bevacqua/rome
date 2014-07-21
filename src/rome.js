@@ -302,8 +302,12 @@ function calendar (input, calendarOptions) {
   function subtractMonth () { changeMonth('subtract'); }
   function addMonth () { changeMonth('add'); }
   function changeMonth (op) {
+    var bound;
     refCal[op]('months', 1);
-    ref = inRange(refCal.clone()) || ref; update();
+    bound = inRange(refCal.clone());
+    ref = bound || ref;
+    if (bound) { refCal = bound.clone(); }
+    update();
   }
 
   function update () {

@@ -1,3 +1,7 @@
+# 0.4.2 Time Frame
+
+- Fixed an issue where the date _closest to an invalid one_ wouldn't be selected
+
 # 0.4.0 Tinder
 
 - Introduced `dateValidator` and `timeValidator` options
