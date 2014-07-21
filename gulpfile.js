@@ -35,12 +35,10 @@ gulp.task('clean', function () {
     .pipe(clean());
 });
 
-gulp.task('build-only-broad', function () {
-  build();
-  buildAlone();
-});
+gulp.task('build-only-broad', bab);
+
 gulp.task('build-only', build)
-gulp.task('build', ['styles', 'build-only-broad']);
+gulp.task('build', ['styles'], bab);
 
 function buildSource (src, dest) {
   var pkg = require('./package.json');
@@ -59,8 +57,12 @@ function buildSource (src, dest) {
     .pipe(gulp.dest('./dist'));
 }
 
-function build () { buildSource('rome.moment.js', 'rome.js'); }
-function buildAlone () { buildSource('rome.standalone.js', 'rome.standalone.js'); }
+function build () { return buildSource('rome.moment.js', 'rome.js'); }
+function buildAlone () { return buildSource('rome.standalone.js', 'rome.standalone.js'); }
+function bab () {
+  buildAlone();
+  return build();
+}
 
 gulp.task('styles-only', styles);
 gulp.task('styles', ['clean', 'bump'], styles);
