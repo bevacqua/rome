@@ -1,4 +1,4 @@
-# 0.3.13 Foo Fighters
+# 0.3.14 Foo Fighters
 
 - Fixed an issue when `required` was set to `false`
 
