@@ -97,8 +97,10 @@ rome(input, {
 rome(input, {
   dateValidator: function (d) {
     var m = moment(d);
-    var start = moment('12-21', 'MM-DD').year(m.year()).startOf('day');
-    var end = moment('03-19', 'MM-DD').year(m.year()).endOf('day');
+    var y = m.year();
+    var f = 'MM-DD';
+    var start = moment('12-21', f).year(y).startOf('day');
+    var end = moment('03-19', f).year(y).endOf('day');
     return m.isBefore(start) && m.isAfter(end);
   }
 });
