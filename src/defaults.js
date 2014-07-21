@@ -50,6 +50,8 @@ function defaults (moment, options, input) {
       throw new Error('`max` must be at least one day after `min`');
     }
   }
+  if (o.dateValidator === no) { o.dateValidator = Function.prototype; }
+  if (o.timeValidator === no) { o.timeValidator = Function.prototype; }
   if (o.timeFormat === no) { o.timeFormat = 'HH:mm'; }
   if (o.timeInterval === no) { o.timeInterval = 60 * 30; } // 30 minutes by default
   if (o.weekStart === no) { o.weekStart = 0; }
