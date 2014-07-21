@@ -70,6 +70,7 @@ Option            | Description
 `max`             | Disallow dates past `max`. Takes `string`, `Date`, `moment`
 `min`             | Disallow dates before `min`. Takes `string`, `Date`, `moment`
 `monthFormat`     | Format string used by the calendar to display months and their year
+`required`        | Is the field required or do you allow empty values?
 `styles`          | CSS classes applied to elements on the calendar
 `time`            | The calendar shows the current time and allows you to change it using a dropdown
 `timeFormat`      | Format string used to display the time on the calendar
@@ -93,6 +94,7 @@ If you don't set an option, the default will be used. You can [look up the defau
   "min": null,
   "max": null,
   "monthFormat": "MMMM YYYY",
+  "required": false,
   "styles": {
     "back": "rd-back",
     "container": "rd-container",
@@ -141,15 +143,15 @@ The input field assigned to this calendar instance.
 
 ##### `.getDate()`
 
-Returns the current date, as defined by the calendar, in a native `Date` object.
+Returns the current date, as defined by the calendar, in a native `Date` object. If `required: false` you'll get `null` when the input field is empty.
 
 ##### `.getDateString(format?)`
 
-Returns the current date, as defined by the calendar, using the provided `options.inputFormat` format string or a format of your choosing.
+Returns the current date, as defined by the calendar, using the provided `options.inputFormat` format string or a format of your choosing. If `required: false` you'll get `null` when the input field is empty.
 
 ##### `.getMoment()`
 
-Returns a copy of the `moment` object underlying the current date in the calendar.
+Returns a copy of the `moment` object underlying the current date in the calendar. If `required: false` you'll get `null` when the input field is empty.
 
 ##### `.destroy()`
 

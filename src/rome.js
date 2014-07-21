@@ -278,10 +278,11 @@ function calendar (input, calendarOptions) {
   }
 
   function takeInput () {
-    if (input.value) {
-      var val = calendar.moment(input.value, o.inputFormat);
-      if (val.isValid()) {
-        ref = inRange(val); updateCalendar(); updateTime(); displayValidTimesOnly();
+    var value = input.value.trim();
+    if (value) {
+      var date = calendar.moment(value, o.inputFormat);
+      if (date.isValid()) {
+        ref = inRange(date); updateCalendar(); updateTime(); displayValidTimesOnly();
       }
     }
   }
@@ -314,6 +315,9 @@ function calendar (input, calendarOptions) {
   }
 
   function updateInput () {
+    if (isEmpty()) {
+      return;
+    }
     input.value = ref.format(o.inputFormat);
   }
 
@@ -477,16 +481,20 @@ function calendar (input, calendarOptions) {
     api.emit('time', value);
   }
 
+  function isEmpty () {
+    return o.required === false && input.value.trim() === '';
+  }
+
   function getDate () {
-    return ref.toDate();
+    return isEmpty() ? null : ref.toDate();
   }
 
   function getDateString (format) {
-    return ref.format(format || o.inputFormat);
+    return isEmpty() ? null : ref.format(format || o.inputFormat);
   }
 
   function getMoment () {
-    return ref.clone();
+    return isEmpty() ? null : ref.clone();
   }
 
   return api;

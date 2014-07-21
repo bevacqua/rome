@@ -25,6 +25,7 @@ function defaults (moment, options, input) {
   if (o.appendTo === no) { o.appendTo = document.body; }
   if (o.appendTo === 'parent') { o.appendTo = input.parentNode; }
   if (o.invalidate === no) { o.invalidate = true; }
+  if (o.required === no) { o.required = false; }
   if (o.date === no) { o.date = true; }
   if (o.time === no) { o.time = true; }
   if (o.date === false && o.time === false) { throw new Error('At least one of `date` or `time` must be `true`.'); }
