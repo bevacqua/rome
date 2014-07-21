@@ -1,6 +1,7 @@
 # 0.3.12 Optional Overload
 
-- Published alternative distribution `rome.standalone.js` which doesn't bundle `moment`.
+- Published alternative distribution `rome.standalone.js` which doesn't bundle `moment`
+- Implemented `required` option that allows the input field to be cleared
 
 # 0.3.11 Time Obsession
 
