@@ -57,3 +57,22 @@ pre code {
 #toggle:hover {
   background-color: #9b59b6;
 }
+
+
+#inl {
+  margin: 1em 0;
+}
+
+#inlvc {
+  vertical-align: top;
+  font-weight: bold;
+  color: #c0392b;
+  margin: 80px;
+}
+
+.block {
+  display: block;
+}
+.inline {
+  display: inline-block;
+}

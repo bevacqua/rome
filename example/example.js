@@ -44,3 +44,7 @@ rome(tim, {
     return m.isAfter(start) && m.isBefore(end);
   }
 });
+
+rome.inline({ appendTo: inl }).on('data', function (value) {
+  inlv.innerText = value;
+});

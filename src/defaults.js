@@ -23,7 +23,13 @@ function defaults (moment, options, input) {
   if (o.autoHideOnBlur === no) { o.autoHideOnBlur = true; }
   if (o.autoClose === no) { o.autoClose = true; }
   if (o.appendTo === no) { o.appendTo = document.body; }
-  if (o.appendTo === 'parent') { o.appendTo = input.parentNode; }
+  if (o.appendTo === 'parent') {
+    if (input) {
+      o.appendTo = input.parentNode;
+    } else {
+      throw new Error('Inline calendars must be appended to a parent node explicitly.');
+    }
+  }
   if (o.invalidate === no) { o.invalidate = true; }
   if (o.required === no) { o.required = false; }
   if (o.date === no) { o.date = true; }
@@ -62,6 +68,7 @@ function defaults (moment, options, input) {
   var styl = o.styles;
   if (styl.back === no) { styl.back = 'rd-back'; }
   if (styl.container === no) { styl.container = 'rd-container'; }
+  if (styl.positioned === no) { styl.positioned = 'rd-container-attachment'; }
   if (styl.date === no) { styl.date = 'rd-date'; }
   if (styl.dayBody === no) { styl.dayBody = 'rd-days-body'; }
   if (styl.dayBodyElem === no) { styl.dayBodyElem = 'rd-day-body'; }

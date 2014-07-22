@@ -123,6 +123,21 @@ rome(input, {
       </code>
     </pre>
   </div>
+  <div class='parent'>
+    <label class='block' for='inl'>Did I mention you can use Rome inline as well? </label>
+    <div class='inline' id='inl'></div>
+    <div class='inline' id='inlvc'>Value: <span id='inlv' class='inline'>(choose)</span></div>
+    <pre>
+      <code>
+&lt;div id=&#39;parent&#39;&gt;&lt;/div&gt;
+&lt;div id=&#39;result&#39;&gt;(choose)&lt;/div&gt;
+
+rome.inline({ appendTo: parent }).on('data', function (value) {
+  result.innerText = value;
+});
+      </code>
+    </pre>
+  </div>
 </div>
 <h3>Get it on GitHub! <a href='https://github.com/bevacqua/rome'>bevacqua/rome</a></h3>
 <script src='dist/rome.js'></script>
