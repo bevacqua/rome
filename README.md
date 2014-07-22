@@ -141,6 +141,10 @@ Shows the calendar by absolutely positioning it right below the input field.
 
 Hides the calendar.
 
+##### `.id`
+
+Auto-generated unique identifier assigned to this instance of Rome.
+
 ##### `.container`
 
 The DOM element that contains the calendar.

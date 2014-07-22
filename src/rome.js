@@ -2,39 +2,16 @@
 
 var contra = require('contra');
 var throttle = require('lodash.throttle');
-var clone = require('lodash.clonedeep');
 var raf = require('raf');
 var dom = require('./dom');
+var text = require('./text');
+var index = require('./index');
+var clone = require('./clone');
 var defaults = require('./defaults');
-var ikey = 'romeId';
-var index = [];
 var no;
 
-function cloner (value) {
-  if (calendar.moment.isMoment(value)) {
-    return value.clone();
-  }
-}
-
-function text (elem, value) {
-  if (arguments.length === 2) {
-    elem.innerText = elem.textContent = value;
-  }
-  return elem.innerText || elem.textContent;
-}
-
-function find (thing) {
-  if (typeof thing !== 'number' && thing && thing.dataset) {
-    return find(thing.dataset[ikey]);
-  }
-  var existing = index[thing];
-  if (existing !== no) {
-    return existing;
-  }
-}
-
 function calendar (input, calendarOptions) {
-  var existing = find(input);
+  var existing = index.find(input);
   if (existing) {
     return existing;
   }
@@ -64,12 +41,8 @@ function calendar (input, calendarOptions) {
   var time;
   var timelist;
 
-  assign();
+  index.assign(input, api);
   init();
-
-  function assign () {
-    input.dataset[ikey] = index.push(api) - 1;
-  }
 
   function init (initOptions) {
     o = defaults(calendar.moment, initOptions || calendarOptions, input);
@@ -91,7 +64,7 @@ function calendar (input, calendarOptions) {
     if (o.autoHideOnClick) { window.addEventListener('click', hideOnClick); }
     window.addEventListener('resize', throttledPosition);
 
-    api.emit('ready', clone(o, cloner));
+    api.emit('ready', clone(o));
 
     ref = calendar.moment();
     refCal = ref.clone();
@@ -146,7 +119,7 @@ function calendar (input, calendarOptions) {
 
   function changeOptions (options) {
     if (arguments.length === 0) {
-      return clone(o, cloner);
+      return clone(o);
     }
     destroy();
     init(options);
