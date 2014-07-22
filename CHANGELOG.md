@@ -1,4 +1,4 @@
-# 0.7.0 Treasure Goblin
+# 0.7.1 Treasure Goblin
 
 - `rome.find` operates on both inputs and inline calendars
 - Fixed a minor bug when showing and hiding calendars on `'ready'`
