@@ -222,6 +222,14 @@ Please note that `dateValidator` and `timeValidator` both receive a native `Date
 
 If `dateValidator` passes for a given date, the `timeValidator` will attempt to validate that date as well. If the time is invalid, the day will be probed for a valid time. This validation starts at the desired time, and grows in `timeInterval` increments. When the end of the day is reached, validation resumes at the start of the day instead of leaping to the next day.
 
+### `rome.moment`
+
+Exposes the [`moment`][6] instance used by Rome. To change the `moment` instance, refer to `rome.use(moment)`.
+
+### `rome.use(moment)`
+
+Sets the instance of `moment` used by Rome.
+
 ## License
 
 MIT

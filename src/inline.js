@@ -435,6 +435,7 @@ function inline (calendarOptions) {
     displayValidTimesOnly();
     emitValues();
     updateTime();
+    if (o.autoClose) { hide(); }
     if (prev || next) {
       updateCalendar(); // must run after setting the date
     }
