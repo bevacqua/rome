@@ -124,4 +124,3 @@ calendar.find = find;
 calendar.inline = inline;
 
 module.exports = calendar;
-// initialValue option

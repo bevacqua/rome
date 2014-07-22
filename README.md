@@ -47,15 +47,25 @@ If you need to do anything regarding internationalization, [refer to `moment` fo
 
 ## API
 
+The API in `rome` exposes a few properties.
+
 ### `rome.moment`
 
 Rome will use this instance of `moment`. It can either come from the `rome.js` bundle or you can choose your own by setting `window.moment = value` before loading`rome.standalone.js`.
 
-The API in `rome` exposes two methods.
-
 ### `rome.find(input)`
 
 Finds a previously created Rome calendar. Exactly the same as doing `rome(input)` after the first time. The difference is that if the first call made on an input is `.find` you'll get `undefined`, and if the first call is `rome` then a Rome calendar will be created and associated to the input. This association can't be undone even by `.destroy()`ing the `rome` instance, which can be `.restore()`d later.
+
+### `rome.inline(options?)`
+
+This method behaves almost identically to `rome(input, options?)`, found below. The difference is that it'll render the calendar inline on the parent, and it won't absolutely attach it to an input element. The options listed below will be ignored.
+
+- `autoHideOnBlur`, because there is no input field that can be tracked for `blur` events
+- `invalidate`, because there is no input field to keep consistent with the calendar component
+- `required`, because you can easily do that on an input field
+
+All of the other options still apply, and identical behavior should be expected.
 
 ### `rome(input, options?)`
 

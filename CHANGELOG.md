@@ -1,3 +1,13 @@
+# 0.5.0 Split Second
+
+- Introduced ability to set an `initialValue` for the calendar
+- Published internal method `setValue(value)` to set a date on the calendar
+- Published internal method `emitValues()` to emit data through the calendar
+- Initialization happens in the next frame, meaning you can easily listen for `'ready'` events
+- Split functionality between calendar and input field
+  - Ability to create inline calendars that don't depend on an input field
+  - Original method doesn't change its public API
+
 # 0.4.2 Time Frame
 
 - Fixed an issue where the date _closest to an invalid one_ wouldn't be selected
