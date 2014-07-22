@@ -68,20 +68,23 @@ Option            | Description
 `autoHideOnBlur`  | Hides the calendar when focusing something other than the input field
 `autoHideOnClick` | Hides the calendar when clicking away
 `date`            | The calendar shows days and allows you to navigate between months
-`dateValidator`   | Function to validate that a given date is considered valid. Takes a native `Date` parameter.
+`dateValidator`   | Function to validate that a given date is considered valid. Receives a native `Date` parameter.
 `dayFormat`       | Format string used to display days on the calendar
+`initialValue`    | Value used to initialize calendar. Takes `string`, `Date`, or `moment`
 `inputFormat`     | Format string used for the input field as well as the results of `rome`
 `invalidate`      | Ensures the date is valid when the field is blurred
-`max`             | Disallow dates past `max`. Takes `string`, `Date`, `moment`
-`min`             | Disallow dates before `min`. Takes `string`, `Date`, `moment`
+`max`             | Disallow dates past `max`. Takes `string`, `Date`, or `moment`
+`min`             | Disallow dates before `min`. Takes `string`, `Date`, or `moment`
 `monthFormat`     | Format string used by the calendar to display months and their year
 `required`        | Is the field required or do you allow empty values?
 `styles`          | CSS classes applied to elements on the calendar
 `time`            | The calendar shows the current time and allows you to change it using a dropdown
 `timeFormat`      | Format string used to display the time on the calendar
 `timeInterval`    | Seconds between each option in the time dropdown
-`timeValidator`   | Function to validate that a given time is considered valid. Takes a native `Date` parameter.
+`timeValidator`   | Function to validate that a given time is considered valid. Receives a native `Date` parameter.
 `weekStart`       | Day considered the first of the week. Range: Sunday `0` - Saturday `6`
+
+Note that in the case of input fields, the initial value is inferred from the `input`, in case one isn't provided.
 
 #### Default Options
 
@@ -96,6 +99,7 @@ If you don't set an option, the default will be used. You can [look up the defau
   "date": true,
   "dateValidator": Function.prototype,
   "dayFormat": "DD",
+  "initialValue": null,
   "inputFormat": "YYYY-MM-DD HH:mm",
   "invalidate": true,
   "min": null,
@@ -183,6 +187,14 @@ If no options object is provided, a copy of the current options is returned.
 ##### `.options.reset()`
 
 Resets the options to the factory defaults. Effectively the same as calling `.options({})`.
+
+##### `.emitValues()`
+
+Emits all of the data events listed below. Mostly used internally, **should be avoided** in consumer-land.
+
+##### `.setValue(value)`
+
+Sets the current date to the provided `value`, but only if that value is valid according to the rules defined by the calendar. Takes `string`, `Date`, or `moment`. Mostly used internally, and it doesn't emit any events.
 
 #### Events
 

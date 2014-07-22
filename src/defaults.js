@@ -1,19 +1,6 @@
 'use strict';
 
-function parse (moment, date, format) {
-  var value;
-  if (typeof date === 'string') {
-    value = moment(date, format);
-    return value.isValid() ? value : null;
-  }
-  if (Object.prototype.toString.call(date) === '[object Date]') {
-    return moment(date);
-  }
-  if (moment.isMoment(date)) {
-    return date;
-  }
-  return null;
-}
+var parse = require('./parse');
 
 function defaults (moment, options, input) {
   var temp;
@@ -43,6 +30,11 @@ function defaults (moment, options, input) {
     } else {
       o.inputFormat = 'HH:mm';
     }
+  }
+  if (o.initialValue === no) {
+    o.initialValue = null;
+  } else {
+    o.initialValue = parse(moment, o.initialValue, o.inputFormat);
   }
   if (o.min === no) { o.min = null; } else { o.min = parse(moment, o.min, o.inputFormat); }
   if (o.max === no) { o.max = null; } else { o.max = parse(moment, o.max, o.inputFormat); }
