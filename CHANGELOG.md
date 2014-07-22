@@ -1,3 +1,7 @@
+# 0.6.0 Moving Target
+
+- Merged `rome.inline` with `rome(elem, options?)`
+
 # 0.5.0 Split Second
 
 - Changed the way how `moment` should be passed to `rome`, because architecture

@@ -45,6 +45,6 @@ rome(tim, {
   }
 });
 
-rome.inline({ appendTo: inl }).on('data', function (value) {
+rome(inl).on('data', function (value) {
   inlv.innerText = value;
 });

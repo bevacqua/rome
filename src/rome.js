@@ -1,12 +1,10 @@
 'use strict';
 
-var input = require('./input');
-var inline = require('./inline');
+var core = require('./core');
 var index = require('./index');
 var use = require('./use');
 
-input.use = use.bind(input);
-input.find = index.find;
-input.inline = inline;
+core.use = use.bind(core);
+core.find = index.find;
 
-module.exports = input;
+module.exports = core;

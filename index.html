@@ -124,7 +124,7 @@ rome(input, {
     </pre>
   </div>
   <div class='parent'>
-    <label class='block' for='inl'>Did I mention you can use Rome inline as well? </label>
+    <label class='block' for='inl'>Did I mention you can use Rome inline as well? Just give it a non-input element!</label>
     <div class='inline' id='inl'></div>
     <div class='inline' id='inlvc'>Value: <span id='inlv' class='inline'>(choose)</span></div>
     <pre>
@@ -132,7 +132,7 @@ rome(input, {
 &lt;div id=&#39;parent&#39;&gt;&lt;/div&gt;
 &lt;div id=&#39;result&#39;&gt;(choose)&lt;/div&gt;
 
-rome.inline({ appendTo: parent }).on('data', function (value) {
+rome(parent).on('data', function (value) {
   result.innerText = value;
 });
       </code>

@@ -53,17 +53,7 @@ The API in `rome` exposes a few properties.
 
 Finds a previously created Rome calendar. Exactly the same as doing `rome(input)` after the first time. The difference is that if the first call made on an input is `.find` you'll get `undefined`, and if the first call is `rome` then a Rome calendar will be created and associated to the input. This association can't be undone even by `.destroy()`ing the `rome` instance, which can be `.restore()`d later.
 
-### `rome.inline(options?)`
-
-This method behaves almost identically to `rome(input, options?)`, found below. The difference is that it'll render the calendar inline on the parent, and it won't absolutely attach it to an input element. The options listed below will be ignored.
-
-- `autoHideOnBlur`, because there is no input field that can be tracked for `blur` events
-- `invalidate`, because there is no input field to keep consistent with the calendar component
-- `required`, because you can easily do that on an input field
-
-All of the other options still apply, and identical behavior should be expected.
-
-### `rome(input, options?)`
+### `rome(elem, options?)`
 
 Creates a Rome calendar using a ton of options. These have reasonable defaults that are easy to adjust, too. The options are listed below.
 
@@ -91,6 +81,17 @@ Option            | Description
 `weekStart`       | Day considered the first of the week. Range: Sunday `0` - Saturday `6`
 
 Note that in the case of input fields, the initial value is inferred from the `input`, in case one isn't provided.
+
+#### Inlining the Calendar
+
+If you pass in an element other than an input tag, then this method behaves slightly differently. The difference is that `appendTo` becomes the provided `elem`, and the calendar won't attach itself to an input element. The options listed below will be ignored.
+
+- `autoHideOnBlur`, because there is no input field that can be tracked for `blur` events
+- `invalidate`, because there is no input field to keep consistent with the calendar component
+- `required`, because you can easily do that on an input field
+- `styles.positioned`, because the calendar will be considered inlined
+
+All of the other options still apply, and identical behavior should be expected.
 
 #### Default Options
 
