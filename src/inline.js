@@ -7,6 +7,7 @@ var text = require('./text');
 var parse = require('./parse');
 var clone = require('./clone');
 var defaults = require('./defaults');
+var momentum = require('./momentum');
 var no;
 
 function inline (calendarOptions) {
@@ -17,7 +18,7 @@ function inline (calendarOptions) {
   var container;
 
   // date variables
-  var weekdays = calendar.moment.weekdaysMin();
+  var weekdays = momentum.moment.weekdaysMin();
   var weekdayCount = weekdays.length;
   var month;
   var datebody;
@@ -37,14 +38,14 @@ function inline (calendarOptions) {
   });
 
   function init (initOptions) {
-    o = defaults(calendar.moment, initOptions || calendarOptions);
+    o = defaults(momentum.moment, initOptions || calendarOptions);
     if (!container) { container = dom({ className: o.styles.container }); }
     lastMonth = no;
     lastYear = no;
     lastDay = no;
     o.appendTo.appendChild(container);
 
-    ref = o.initialValue ? o.initialValue : calendar.moment();
+    ref = o.initialValue ? o.initialValue : momentum.moment();
     refCal = ref.clone();
     removeChildren(container);
     renderDates();
@@ -68,7 +69,7 @@ function inline (calendarOptions) {
     api.options.reset = resetOptions;
     api.setValue = setValue;
     api.emitValues = emitValues;
-    api.emit('ready', clone(o, calendar.moment));
+    api.emit('ready', clone(o, momentum.moment));
   }
 
   function destroy () {
@@ -101,7 +102,7 @@ function inline (calendarOptions) {
 
   function changeOptions (options) {
     if (arguments.length === 0) {
-      return clone(o, calendar.moment);
+      return clone(o, momentum.moment);
     }
     destroy();
     init(options);
@@ -143,7 +144,7 @@ function inline (calendarOptions) {
     time.addEventListener('click', toggleTimeList);
     timelist = dom({ className: o.styles.timeList, parent: timewrapper });
     timelist.addEventListener('click', pickTime);
-    var next = calendar.moment('00:00:00', 'HH:mm:ss');
+    var next = momentum.moment('00:00:00', 'HH:mm:ss');
     var latest = next.clone().add('days', 1);
     while (next.isBefore(latest)) {
       dom({ className: o.styles.timeOption, parent: timelist, text: next.format(o.timeFormat) });
@@ -172,7 +173,7 @@ function inline (calendarOptions) {
     var i;
     for (i = 0; i < length; i++) {
       item = times[i];
-      time = calendar.moment(text(item), o.timeFormat);
+      time = momentum.moment(text(item), o.timeFormat);
       date = setTime(ref.clone(), time);
       item.style.display = isInRange(date, false, o.timeValidator) ? 'block' : 'none';
     }
@@ -288,7 +289,7 @@ function inline (calendarOptions) {
   }
 
   function setValue (value) {
-    var date = parse(calendar.moment, value, o.inputFormat);
+    var date = parse(momentum.moment, value, o.inputFormat);
     if (date === null) {
       return;
     }
@@ -449,7 +450,7 @@ function inline (calendarOptions) {
     if (!target.classList.contains(o.styles.timeOption)) {
       return;
     }
-    var value = calendar.moment(text(target), o.timeFormat);
+    var value = momentum.moment(text(target), o.timeFormat);
     setTime(ref, value);
     refCal = ref.clone();
     emitValues();

@@ -30,28 +30,24 @@ Note that if you're using the standalone version, the API is published under the
 
 ### Setup
 
-You can define `moment` yourself, using `rome.standalone.js`.
+You can use your own distribution of [`moment`][6], using `rome.standalone.js`.
 
 ```html
 <script src='moment.js'></script>
 <script src='rome.standalone.js'></script>
 ```
 
-You could just use the bundled `rome.js` distribution, which comes with `moment` in it.
+You could just use the bundled `rome.js` distribution, which comes with [`moment`][6] in it.
 
 ```html
 <script src='rome.js'></script>
 ```
 
-If you need to do anything regarding internationalization, [refer to `moment` for that][5] before starting to create Rome calendar components.
+If you need to do anything regarding internationalization, [refer to `moment` for that][5]. Ideally, make those changes before starting to create Rome calendar components.
 
 ## API
 
 The API in `rome` exposes a few properties.
-
-### `rome.moment`
-
-Rome will use this instance of `moment`. It can either come from the `rome.js` bundle or you can choose your own by setting `window.moment = value` before loading`rome.standalone.js`.
 
 ### `rome.find(input)`
 

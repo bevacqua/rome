@@ -1,5 +1,6 @@
 # 0.5.0 Split Second
 
+- Changed the way how `moment` should be passed to `rome`, because architecture
 - Introduced ability to set an `initialValue` for the calendar
 - Published internal method `setValue(value)` to set a date on the calendar
 - Published internal method `emitValues()` to emit data through the calendar

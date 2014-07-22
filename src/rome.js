@@ -5,6 +5,7 @@ var raf = require('raf');
 var index = require('./index');
 var clone = require('./clone');
 var inline = require('./inline');
+var momentum = require('./momentum');
 var no;
 
 function calendar (input, calendarOptions) {
@@ -25,7 +26,7 @@ function calendar (input, calendarOptions) {
   api.on('destroyed', destroy);
 
   function init (superOptions) {
-    o = clone(superOptions, calendar.moment);
+    o = clone(superOptions, momentum.moment);
 
     api.container.classList.add(o.styles.positioned);
     api.container.addEventListener('mousedown', containerMouseDown);
@@ -103,7 +104,7 @@ function calendar (input, calendarOptions) {
     if (isEmpty()) {
       return;
     }
-    var date = calendar.moment(value, o.inputFormat);
+    var date = momentum.moment(value, o.inputFormat);
     api.setValue(date);
   }
 
@@ -120,6 +121,7 @@ function calendar (input, calendarOptions) {
   return api;
 }
 
+calendar.use = use;
 calendar.find = find;
 calendar.inline = inline;
 
