@@ -70,6 +70,8 @@ function inline (calendarOptions) {
     api.setValue = setValue;
     api.emitValues = emitValues;
     api.emit('ready', clone(o, momentum.moment));
+
+    return api;
   }
 
   function destroy () {
@@ -91,6 +93,8 @@ function inline (calendarOptions) {
     api.restore = init;
     api.emit('destroyed');
     api.off();
+
+    return api;
   }
 
   function eventListening (remove) {
@@ -106,10 +110,11 @@ function inline (calendarOptions) {
     }
     destroy();
     init(options);
+    return api;
   }
 
   function resetOptions () {
-    changeOptions({});
+    return changeOptions({});
   }
 
   function renderDates () {
@@ -195,10 +200,11 @@ function inline (calendarOptions) {
 
   function show (forced) {
     if (!forced && container.style.display !== 'none') {
-      return;
+      return api;
     }
     toggleTimeList(!o.date);
     showCalendar();
+    return api;
   }
 
   function hide () {
@@ -208,6 +214,7 @@ function inline (calendarOptions) {
     if (pos) {
       raf(hideCalendar);
     }
+    return api;
   }
 
   function calendarEventTarget (e) {
@@ -286,6 +293,7 @@ function inline (calendarOptions) {
     api.emit('month', ref.month());
     api.emit('day', ref.day());
     api.emit('time', ref.format(o.timeFormat));
+    return api;
   }
 
   function setValue (value) {
@@ -298,6 +306,8 @@ function inline (calendarOptions) {
     updateCalendar();
     updateTime();
     displayValidTimesOnly();
+
+    return api;
   }
 
   function removeChildren (elem) {

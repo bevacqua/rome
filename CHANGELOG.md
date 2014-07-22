@@ -1,3 +1,7 @@
+# 0.6.1 Diminishing Returns
+
+- Where possible, API methods return the Rome instance for chaining
+
 # 0.6.0 Moving Target
 
 - Merged `rome.inline` with `rome(elem, options?)`

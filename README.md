@@ -143,7 +143,7 @@ If you don't set an option, the default will be used. You can [look up the defau
 
 #### Rome API
 
-When you create a calendar with `rome(input)`, you'll get a `cal` instance back. This has a few API methods.
+When you create a calendar with `rome(input)`, you'll get a `cal` instance back. This has a few API methods. Most of these methods return the calendar instance whenever possible, allowing for method chaining.
 
 ##### `.show()`
 
