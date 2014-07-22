@@ -4,17 +4,17 @@ var throttle = require('lodash.throttle');
 var raf = require('raf');
 var index = require('./index');
 var clone = require('./clone');
-var inline = require('./inline');
+var calendar = require('./calendar');
 var momentum = require('./momentum');
 var no;
 
-function calendar (input, calendarOptions) {
+function inputCalendar (input, calendarOptions) {
   var existing = index.find(input);
   if (existing) {
     return existing;
   }
   var o;
-  var api = inline(calendarOptions);
+  var api = calendar(calendarOptions);
   var throttledTakeInput = throttle(takeInput, 50);
   var throttledPosition = throttle(position, 30);
   var ignoreInvalidation;
@@ -31,7 +31,7 @@ function calendar (input, calendarOptions) {
     api.container.addEventListener('mousedown', containerMouseDown);
     api.container.addEventListener('click', containerClick);
 
-    api.input = input;
+    api.associated = input;
     api.getDate = unrequire(api.getDate);
     api.getDateString = unrequire(api.getDateString);
     api.getMoment = unrequire(api.getMoment);
@@ -48,10 +48,7 @@ function calendar (input, calendarOptions) {
 
   function destroy () {
     eventListening(true);
-
-    // reverse order micro-optimization
-    delete api.input;
-
+    delete api.associated;
     raf(events);
   }
 
@@ -133,4 +130,4 @@ function calendar (input, calendarOptions) {
   return api;
 }
 
-module.exports = calendar;
+module.exports = inputCalendar;

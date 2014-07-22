@@ -10,7 +10,7 @@ You can [see a live demo here][3].
 
 [![screenshot.png][4]][3]
 
-Oh, `rome` synchronizes in real-time with the input, never steals focus, and its CSS is entirely customizable!
+Oh, `rome` synchronizes in real-time with inputs, never steals focus, and its CSS is entirely customizable!
 
 <sub>Not dependency free. It depends on [`moment`][6]. Does not depend on jQuery or other weird frameworks, though.
 
@@ -49,9 +49,9 @@ If you need to do anything regarding internationalization, [refer to `moment` fo
 
 The API in `rome` exposes a few properties.
 
-### `rome.find(input)`
+### `rome.find(elem)`
 
-Finds a previously created Rome calendar. Exactly the same as doing `rome(input)` after the first time. The difference is that if the first call made on an input is `.find` you'll get `undefined`, and if the first call is `rome` then a Rome calendar will be created and associated to the input. This association can't be undone even by `.destroy()`ing the `rome` instance, which can be `.restore()`d later.
+Finds a previously created Rome calendar. Exactly the same as doing `rome(elem)` after the first time. The difference is that if the first call made on an element is `.find` you'll get `undefined`, and if the first call is `rome` then a Rome calendar will be created and associated to the element. This association can't be undone even by `.destroy()`ing the `rome` instance, because it can be `.restore()`d later.
 
 ### `rome(elem, options?)`
 
@@ -80,7 +80,7 @@ Option            | Description
 `timeValidator`   | Function to validate that a given time is considered valid. Receives a native `Date` parameter.
 `weekStart`       | Day considered the first of the week. Range: Sunday `0` - Saturday `6`
 
-Note that in the case of input fields, the initial value is inferred from the `input`, in case one isn't provided.
+Note that in the case of input fields, when `initialValue` isn't provided the initial value is inferred from `elem.value` instead. In the case of inline calendars, `Date.now` will be used as a default if none is provided.
 
 #### Inlining the Calendar
 
@@ -99,18 +99,18 @@ If you don't set an option, the default will be used. You can [look up the defau
 
 ```json
 {
-  "autoHideOnClick": true,
   "appendTo": document.body,
   "autoClose": true,
   "autoHideOnBlur": true,
+  "autoHideOnClick": true,
   "date": true,
   "dateValidator": Function.prototype,
   "dayFormat": "DD",
   "initialValue": null,
   "inputFormat": "YYYY-MM-DD HH:mm",
   "invalidate": true,
-  "min": null,
   "max": null,
+  "min": null,
   "monthFormat": "MMMM YYYY",
   "required": false,
   "styles": {
@@ -143,11 +143,11 @@ If you don't set an option, the default will be used. You can [look up the defau
 
 #### Rome API
 
-When you create a calendar with `rome(input)`, you'll get a `cal` instance back. This has a few API methods. Most of these methods return the calendar instance whenever possible, allowing for method chaining.
+When you create a calendar with `rome(elem)`, you'll get a `cal` instance back. This has a few API methods. Most of these methods return the calendar instance whenever possible, allowing for method chaining.
 
 ##### `.show()`
 
-Shows the calendar by absolutely positioning it right below the input field.
+Shows the calendar. If associated with an input, the calendar gets absolutely position right below the input field.
 
 ##### `.hide()`
 
@@ -161,9 +161,9 @@ Auto-generated unique identifier assigned to this instance of Rome.
 
 The DOM element that contains the calendar.
 
-##### `.input`
+##### `.associated`
 
-The input field assigned to this calendar instance.
+The associated DOM element assigned to this calendar instance. This is the input field or parent element that you used to create the calendar.
 
 ##### `.getDate()`
 
@@ -183,7 +183,7 @@ Removes the calendar from the DOM and all of its associated DOM event listeners.
 
 ##### `.restore(options?)`
 
-Restores the calendar, using the provided options (or the default options). The associated input field can't be changed.
+Restores the calendar, using the provided options (or the default options). The associated DOM element can't be changed.
 
 ##### `.options(options?)`
 

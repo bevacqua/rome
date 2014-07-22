@@ -1,3 +1,8 @@
+# 0.7.0 Treasure Goblin
+
+- `rome.find` operates on both inputs and inline calendars
+- Fixed a minor bug when showing and hiding calendars on `'ready'`
+
 # 0.6.1 Diminishing Returns
 
 - Where possible, API methods return the Rome instance for chaining
