@@ -2,7 +2,7 @@
 
 var parse = require('./parse');
 
-function defaults (moment, options, input) {
+function defaults (options, input) {
   var temp;
   var no;
   var o = options || {};
@@ -34,10 +34,10 @@ function defaults (moment, options, input) {
   if (o.initialValue === no) {
     o.initialValue = null;
   } else {
-    o.initialValue = parse(moment, o.initialValue, o.inputFormat);
+    o.initialValue = parse(o.initialValue, o.inputFormat);
   }
-  if (o.min === no) { o.min = null; } else { o.min = parse(moment, o.min, o.inputFormat); }
-  if (o.max === no) { o.max = null; } else { o.max = parse(moment, o.max, o.inputFormat); }
+  if (o.min === no) { o.min = null; } else { o.min = parse(o.min, o.inputFormat); }
+  if (o.max === no) { o.max = null; } else { o.max = parse(o.max, o.inputFormat); }
   if (o.min && o.max) {
     if (o.max.isBefore(o.min)) {
       temp = o.max;

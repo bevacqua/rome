@@ -48,3 +48,27 @@ rome(tim, {
 rome(inl).on('data', function (value) {
   inlv.innerText = value;
 });
+
+rome(left, {
+  time: false,
+  dateValidator: rome.val.before(right)
+});
+
+rome(right, {
+  time: false,
+  dateValidator: rome.val.after(left)
+});
+
+rome(leftInline, {
+  time: false,
+  dateValidator: rome.val.before(rightInline)
+}).on('data', function () {
+  rome.find(rightInline).refresh();
+});
+
+rome(rightInline, {
+  time: false,
+  dateValidator: rome.val.after(leftInline)
+}).on('data', function () {
+  rome.find(leftInline).refresh();
+});

@@ -203,6 +203,10 @@ Emits all of the data events listed below. Mostly used internally, **should be a
 
 Sets the current date to the provided `value`, but only if that value is valid according to the rules defined by the calendar. Takes `string`, `Date`, or `moment`. Mostly used internally, and it doesn't emit any events.
 
+##### `.refresh()`
+
+Forces a refresh of the calendar. This method will redraw the month and update the dates that can be selected in accordance with `dateValidator` and `timeValidator`.
+
 #### Events
 
 Rome calendars also provide a few events you can subscribe to. These events are published through an event emitter created using [`contra`][2]. These events are listed below.
@@ -222,6 +226,30 @@ Event       | Arguments   | Description
 Please note that `dateValidator` and `timeValidator` both receive a native `Date` object as a parameter. These methods are expected to return `undefined` or `true` if the date is deemed valid, and `false` in case the date is invalid. If `dateValidator` returns `false`, the validation process will try to find a valid date near the desired date.
 
 If `dateValidator` passes for a given date, the `timeValidator` will attempt to validate that date as well. If the time is invalid, the day will be probed for a valid time. This validation starts at the desired time, and grows in `timeInterval` increments. When the end of the day is reached, validation resumes at the start of the day instead of leaping to the next day.
+
+### `rome.val`
+
+There are a few default validator factories provided by Rome to make your life easier.
+
+These methods take a `moment`, a `Date`, a `string` that can be parsed into a `moment` using `inputFormat`, or a DOM element that Rome could use to look up another Rome instance. If you passed in a DOM element, the validator will look up the associated Rome instance and compare using its value.
+
+All of these methods expect a native `Date` object and compare it to the provided value. For usage examples you can [refer to the demos][3].
+
+#### `rome.val.after(value)`
+
+Returns whether the date is after the provided value. The comparison uses `>=`, meaning it's inclusive.
+
+#### `rome.val.afterExclusive(value)`
+
+Returns whether the date is after the provided value. The comparison uses `>`, meaning it's exclusive.
+
+#### `rome.val.before(value)`
+
+Returns whether the date is after the provided value. The comparison uses `<=`, meaning it's inclusive.
+
+#### `rome.val.beforeExclusive(value)`
+
+Returns whether the date is after the provided value. The comparison uses `<`, meaning it's exclusive.
 
 ### `rome.moment`
 

@@ -138,6 +138,43 @@ rome(parent).on('data', function (value) {
       </code>
     </pre>
   </div>
+  <div class='parent'>
+    <p>Range between two inputs? Sure!</p>
+    <input id='left' class='input' />
+    <input id='right' class='input' />
+    <pre>
+      <code>
+rome(left, {
+  dateValidator: rome.val.before(right)
+});
+
+rome(right, {
+  dateValidator: rome.val.after(left)
+});
+      </code>
+    </pre>
+  </div>
+  <div class='parent'>
+    <p>Inline? No problem!</p>
+    <p>In this case, calendars have to notify each other when they are updated.</p>
+    <div class='inline' id='leftInline'></div>
+    <div class='inline' id='rightInline'></div>
+    <pre>
+      <code>
+rome(left, {
+  dateValidator: rome.val.before(right)
+}).on('data', function () {
+  rome.find(right).refresh();
+});
+
+rome(right, {
+  dateValidator: rome.val.after(left)
+}).on('data', function () {
+  rome.find(left).refresh();
+});
+      </code>
+    </pre>
+  </div>
 </div>
 <h3>Get it on GitHub! <a href='https://github.com/bevacqua/rome'>bevacqua/rome</a></h3>
 <script src='dist/rome.js'></script>

@@ -1,19 +1,21 @@
 'use strict';
 
-function raw (moment, date, format) {
+var momentum = require('./momentum');
+
+function raw (date, format) {
   if (typeof date === 'string') {
-    return moment(date, format);
+    return momentum.moment(date, format);
   }
   if (Object.prototype.toString.call(date) === '[object Date]') {
-    return moment(date);
+    return momentum.moment(date);
   }
-  if (moment.isMoment(date)) {
+  if (momentum.moment.isMoment(date)) {
     return date;
   }
 }
 
-function parse (moment, date, format) {
-  var m = raw(moment, date, format);
+function parse (date, format) {
+  var m = raw(date, format);
   return m && m.isValid() ? m : null;
 }
 

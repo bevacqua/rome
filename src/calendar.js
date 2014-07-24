@@ -16,6 +16,7 @@ function calendar (calendarOptions) {
   var ref;
   var refCal;
   var container;
+  var rendered = false;
 
   // date variables
   var weekdays = momentum.moment.weekdaysMin();
@@ -38,25 +39,17 @@ function calendar (calendarOptions) {
   });
 
   function init (initOptions) {
-    o = defaults(momentum.moment, initOptions || calendarOptions);
+    o = defaults(initOptions || calendarOptions);
     if (!container) { container = dom({ className: o.styles.container }); }
     lastMonth = no;
     lastYear = no;
     lastDay = no;
     o.appendTo.appendChild(container);
 
+    removeChildren(container);
+    rendered = false;
     ref = o.initialValue ? o.initialValue : momentum.moment();
     refCal = ref.clone();
-    removeChildren(container);
-    renderDates();
-    renderTime();
-    updateCalendar();
-    updateTime();
-    displayValidTimesOnly();
-    hideCalendar();
-    hideTimeList();
-
-    eventListening();
 
     delete api.restore;
     api.show = show;
@@ -70,6 +63,11 @@ function calendar (calendarOptions) {
     api.options.reset = resetOptions;
     api.setValue = setValue;
     api.emitValues = emitValues;
+    api.refresh = refresh;
+
+    hideCalendar();
+    eventListening();
+
     api.emit('ready', clone(o, momentum.moment));
 
     return api;
@@ -81,6 +79,7 @@ function calendar (calendarOptions) {
     eventListening(true);
 
     // reverse order micro-optimization
+    delete api.refresh;
     delete api.emitValues;
     delete api.setValue;
     delete api.options;
@@ -116,6 +115,16 @@ function calendar (calendarOptions) {
 
   function resetOptions () {
     return changeOptions({});
+  }
+
+  function render () {
+    if (rendered) {
+      return;
+    }
+    rendered = true;
+    renderDates();
+    renderTime();
+    api.emit('render');
   }
 
   function renderDates () {
@@ -200,6 +209,8 @@ function calendar (calendarOptions) {
   function hideCalendar () { container.style.display = 'none'; }
 
   function show () {
+    render();
+    refresh();
     toggleTimeList(!o.date);
     showCalendar();
     return api;
@@ -259,10 +270,10 @@ function calendar (calendarOptions) {
     update();
   }
 
-  function update () {
+  function update (silent) {
     updateCalendar();
     updateTime();
-    emitValues();
+    if (silent !== true) { emitValues(); }
     displayValidTimesOnly();
   }
 
@@ -300,16 +311,19 @@ function calendar (calendarOptions) {
     return api;
   }
 
+  function refresh () {
+    lastDay = false; // force calendar repaint
+    update(true);
+  }
+
   function setValue (value) {
-    var date = parse(momentum.moment, value, o.inputFormat);
+    var date = parse(value, o.inputFormat);
     if (date === null) {
       return;
     }
     ref = inRange(date) || ref;
     refCal = ref.clone();
-    updateCalendar();
-    updateTime();
-    displayValidTimesOnly();
+    update(true);
 
     return api;
   }
@@ -446,13 +460,8 @@ function calendar (calendarOptions) {
     ref.date(day); // must run after setting the month
     setTime(ref, inRange(ref) || ref);
     refCal = ref.clone();
-    displayValidTimesOnly();
-    emitValues();
-    updateTime();
     if (o.autoClose) { hideConditionally(); }
-    if (prev || next) {
-      updateCalendar(); // must run after setting the date
-    }
+    update();
   }
 
   function setTime (to, from) {

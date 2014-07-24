@@ -1,3 +1,11 @@
+# 0.9.0
+
+- Calendars are rendered when shown
+- Validation occurs whenever a calendar is shown
+- Fixed a bug where inline calendars couldn't be retrieved with `rome.find`
+- Introduced validator factories for common date comparison use cases
+- Introduced `calendar.refresh` method to refresh a calendar on demand
+
 # 0.8.1 Market Positioning
 
 - Fixed a bug where positioning would fail if the container had `position: relative`
