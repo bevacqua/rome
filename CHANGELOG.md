@@ -1,3 +1,7 @@
+# 0.8.1 Market Positioning
+
+- Fixed a bug where positioning would fail if the container had `position: relative`
+
 # 0.8.0 Small Contraption
 
 - Replaced `contra` with `contra.emitter`, shaving bytes
