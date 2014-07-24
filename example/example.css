@@ -76,3 +76,10 @@ pre code {
 .inline {
   display: inline-block;
 }
+
+.gh-fork {
+  position: fixed;
+  top: 0;
+  right: 0;
+  border: 0;
+}
