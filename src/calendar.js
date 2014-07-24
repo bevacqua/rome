@@ -201,6 +201,9 @@ function calendar (calendarOptions) {
 
   function show () {
     toggleTimeList(!o.date);
+    // reset lastDay to force revalidation
+    lastDay = false;
+    updateCalendar();
     showCalendar();
     return api;
   }

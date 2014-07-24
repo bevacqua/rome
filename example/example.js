@@ -45,6 +45,27 @@ rome(tim, {
   }
 });
 
+rome( rngStart, {
+  time: false,
+  dateValidator: function( startDate ){
+    var endDate = rngEnd && rome.find(rngEnd) && rome.find(rngEnd).getDate && rome.find(rngEnd).getDate();
+    if( ! startDate || ! endDate ) {
+      return;
+    }
+    return startDate <= endDate;
+  }
+} );
+rome( rngEnd, {
+  time: false,
+  dateValidator: function( endDate ){
+    var startDate = rngStart && rome.find(rngStart) && rome.find(rngStart).getDate && rome.find(rngStart).getDate();
+    if( ! startDate || ! endDate ) {
+      return;
+    }
+    return startDate <= endDate;
+  }
+} );
+
 rome(inl).on('data', function (value) {
   inlv.innerText = value;
 });

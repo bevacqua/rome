@@ -124,6 +124,36 @@ rome(input, {
     </pre>
   </div>
   <div class='parent'>
+    <label class='block' for='rngStart'>Erwins test</label>
+    <input id='rngStart' class='input' />
+    <input id='rngEnd' class='input' />
+    <pre>
+      <code>
+rome( rngStart, {
+  time: false,
+  dateValidator: function( startDate ){
+    var endDate = rngEnd && rome.find(rngEnd) && rome.find(rngEnd).getDate && rome.find(rngEnd).getDate();
+    if( ! startDate || ! endDate ) {
+      return;
+    }
+    return startDate <= endDate;
+  }
+} );
+rome( rngEnd, {
+  time: false,
+  dateValidator: function( endDate ){
+    var startDate = rngStart && rome.find(rngStart) && rome.find(rngStart).getDate && rome.find(rngStart).getDate();
+    if( ! startDate || ! endDate ) {
+      return;
+    }
+    return startDate <= endDate;
+  }
+} );
+
+      </code>
+    </pre>
+  </div>
+  <div class='parent'>
     <label class='block' for='inl'>Did I mention you can use Rome inline as well? Just give it a non-input element!</label>
     <div class='inline' id='inl'></div>
     <div class='inline' id='inlvc'>Value: <span id='inlv' class='inline'>(choose)</span></div>
