@@ -100,8 +100,10 @@ function inputCalendar (input, calendarOptions) {
   }
 
   function position () {
-    api.container.style.top = input.offsetTop + input.offsetHeight + 'px';
-    api.container.style.left = input.offsetLeft + 'px';
+    var bounds = input.getBoundingClientRect();
+    var scrollTop = document.body.scrollTop;
+    api.container.style.top  = bounds.top + scrollTop + input.offsetHeight + 'px';
+    api.container.style.left = bounds.left + 'px';
   }
 
   function takeInput () {
