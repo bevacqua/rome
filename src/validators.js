@@ -10,10 +10,10 @@ function pull (value) {
   }
 }
 
-var afterInclusive = builder(function (date, value) { return date >= value; });
-var afterExclusive = builder(function (date, value) { return date > value; });
-var beforeInclusive = builder(function (date, value) { return date <= value; });
-var beforeExclusive = builder(function (date, value) { return date < value; });
+var afterEq = builder(function (date, value) { return date >= value; });
+var after = builder(function (date, value) { return date > value; });
+var beforeEq = builder(function (date, value) { return date <= value; });
+var before = builder(function (date, value) { return date < value; });
 
 function builder (compare) {
   return function factory (value) {
@@ -31,8 +31,8 @@ function builder (compare) {
 }
 
 module.exports = {
-  after: afterInclusive,
-  afterExclusive: afterExclusive,
-  before: beforeInclusive,
-  beforeExclusive: beforeExclusive
+  afterEq: afterEq,
+  after: after,
+  beforeEq: beforeEq,
+  before: before
 };

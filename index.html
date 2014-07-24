@@ -148,11 +148,11 @@ rome(parent).on('data', function (value) {
     <pre>
       <code>
 rome(left, {
-  dateValidator: rome.val.before(right)
+  dateValidator: rome.val.beforeEq(right)
 });
 
 rome(right, {
-  dateValidator: rome.val.after(left)
+  dateValidator: rome.val.afterEq(left)
 });
       </code>
     </pre>
@@ -165,13 +165,13 @@ rome(right, {
     <pre>
       <code>
 rome(left, {
-  dateValidator: rome.val.before(right)
+  dateValidator: rome.val.beforeEq(right)
 }).on('data', function () {
   rome.find(right).refresh();
 });
 
 rome(right, {
-  dateValidator: rome.val.after(left)
+  dateValidator: rome.val.afterEq(left)
 }).on('data', function () {
   rome.find(left).refresh();
 });

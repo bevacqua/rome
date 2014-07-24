@@ -51,24 +51,24 @@ rome(inl).on('data', function (value) {
 
 rome(left, {
   time: false,
-  dateValidator: rome.val.before(right)
+  dateValidator: rome.val.beforeEq(right)
 });
 
 rome(right, {
   time: false,
-  dateValidator: rome.val.after(left)
+  dateValidator: rome.val.afterEq(left)
 });
 
 rome(leftInline, {
   time: false,
-  dateValidator: rome.val.before(rightInline)
+  dateValidator: rome.val.beforeEq(rightInline)
 }).on('data', function () {
   rome.find(rightInline).refresh();
 });
 
 rome(rightInline, {
   time: false,
-  dateValidator: rome.val.after(leftInline)
+  dateValidator: rome.val.afterEq(leftInline)
 }).on('data', function () {
   rome.find(leftInline).refresh();
 });

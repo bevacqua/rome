@@ -1,4 +1,8 @@
-# 0.9.0
+# 0.10.0 Brand Management
+
+- Renamed validator factories
+
+# 0.9.0 Factory Unlocked
 
 - Calendars are rendered when shown
 - Validation occurs whenever a calendar is shown

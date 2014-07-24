@@ -235,19 +235,19 @@ These methods take a `moment`, a `Date`, a `string` that can be parsed into a `m
 
 All of these methods expect a native `Date` object and compare it to the provided value. For usage examples you can [refer to the demos][3].
 
-#### `rome.val.after(value)`
+#### `rome.val.afterEq(value)`
 
 Returns whether the date is after the provided value. The comparison uses `>=`, meaning it's inclusive.
 
-#### `rome.val.afterExclusive(value)`
+#### `rome.val.after(value)`
 
 Returns whether the date is after the provided value. The comparison uses `>`, meaning it's exclusive.
 
-#### `rome.val.before(value)`
+#### `rome.val.beforeEq(value)`
 
 Returns whether the date is after the provided value. The comparison uses `<=`, meaning it's inclusive.
 
-#### `rome.val.beforeExclusive(value)`
+#### `rome.val.before(value)`
 
 Returns whether the date is after the provided value. The comparison uses `<`, meaning it's exclusive.
 
