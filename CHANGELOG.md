@@ -1,3 +1,7 @@
+# 0.8.0 Small Contraption
+
+- Replaced `contra` with `contra.emitter`, shaving bytes
+
 # 0.7.1 Treasure Goblin
 
 - `rome.find` operates on both inputs and inline calendars

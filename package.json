@@ -18,7 +18,7 @@
   },
   "main": "src/rome.moment.js",
   "dependencies": {
-    "contra": "^1.6.8",
+    "contra.emitter": "^1.0.0",
     "lodash.clonedeep": "^2.4.1",
     "lodash.throttle": "^2.4.1",
     "moment": "^2.7.0",

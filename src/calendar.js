@@ -1,6 +1,6 @@
 'use strict';
 
-var contra = require('contra');
+var emitter = require('contra.emitter');
 var raf = require('raf');
 var dom = require('./dom');
 var text = require('./text');
@@ -12,7 +12,7 @@ var no;
 
 function calendar (calendarOptions) {
   var o;
-  var api = contra.emitter({});
+  var api = emitter({});
   var ref;
   var refCal;
   var container;
