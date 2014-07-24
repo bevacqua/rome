@@ -1,6 +1,6 @@
 /**
  * rome - Dependency free, opt-in UI, customizable date _(and time)_ picker!
- * @version v0.8.2
+ * @version v0.9.0
  * @link https://github.com/bevacqua/rome
  * @license MIT
  */
