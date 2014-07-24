@@ -23,7 +23,7 @@ function builder (compare) {
       var ref = parse(date);
       var provided = fixed || pull(value);
       if (!provided) {
-        return false;
+        return true;
       }
       return compare(ref, provided);
     };
