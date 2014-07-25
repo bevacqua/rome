@@ -2,10 +2,11 @@
 
 var input = require('./input');
 var inline = require('./inline');
+var isInput = require('./isInput');
 
 function core (elem, options) {
   var o;
-  if (elem.nodeName.toLowerCase() === 'input') {
+  if (isInput(elem)) {
     return input(elem, options);
   }
   o = options || {};

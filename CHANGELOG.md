@@ -1,3 +1,7 @@
+# 0.11.0 Refurbished Products
+
+- Refactored validator factories so that the consumer doesn't need to bind `'data'` events to `refresh` inline calendars
+
 # 0.10.0 Brand Management
 
 - Renamed validator factories

@@ -231,7 +231,9 @@ If `dateValidator` passes for a given date, the `timeValidator` will attempt to 
 
 There are a few default validator factories provided by Rome to make your life easier.
 
-These methods take a `moment`, a `Date`, a `string` that can be parsed into a `moment` using `inputFormat`, or a DOM element that Rome could use to look up another Rome instance. If you passed in a DOM element, the validator will look up the associated Rome instance and compare using its value.
+These methods take a `moment`, a `Date`, a `string` that can be parsed into a `moment` using `inputFormat`, or a DOM element that Rome could use to look up another Rome instance.
+
+If you passed in a DOM element, the validator will look up the associated Rome instance and validate using its value. The first time the validator is executed on any inline calendar, the `'data'` event for that calendar will be hooked to refresh the related calendar.
 
 All of these methods expect a native `Date` object and compare it to the provided value. For usage examples you can [refer to the demos][3].
 

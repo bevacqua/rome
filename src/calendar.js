@@ -386,7 +386,7 @@ function calendar (calendarOptions) {
     if (max && date.isAfter(max)) {
       return false;
     }
-    var valid = (validator || Function.prototype)(date.toDate());
+    var valid = (validator || Function.prototype).call(api, date.toDate());
     return valid !== false;
   }
 
@@ -417,7 +417,7 @@ function calendar (calendarOptions) {
       if (copy.date() > value.date()) {
         copy.subtract('days', 1);
       }
-      if (o.timeValidator(copy.toDate()) !== false) {
+      if (o.timeValidator.call(api, copy.toDate()) !== false) {
         return copy;
       }
     }
@@ -430,7 +430,7 @@ function calendar (calendarOptions) {
       if (value.month() !== date.month()) {
         break;
       }
-      valid = o.dateValidator(value.toDate());
+      valid = o.dateValidator.call(api, value.toDate());
     }
     return valid !== false;
   }

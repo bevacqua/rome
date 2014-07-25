@@ -2,32 +2,46 @@
 
 var parse = require('./parse');
 var index = require('./index');
+var isInput = require('./isInput');
+var bindings = {};
 
-function pull (value) {
-  var cal = index.find(value);
-  if (cal && cal.getMoment) {
-    return cal.getMoment();
-  }
-}
-
-var afterEq = builder(function (date, value) { return date >= value; });
-var after = builder(function (date, value) { return date > value; });
-var beforeEq = builder(function (date, value) { return date <= value; });
-var before = builder(function (date, value) { return date < value; });
+var afterEq = builder(function (left, right) { return left >= right; });
+var after = builder(function (left, right) { return left > right; });
+var beforeEq = builder(function (left, right) { return left <= right; });
+var before = builder(function (left, right) { return left < right; });
 
 function builder (compare) {
   return function factory (value) {
     var fixed = parse(value);
 
     return function (date) {
-      var ref = parse(date);
-      var provided = fixed || pull(value);
-      if (!provided) {
+      var cal = index.find(value);
+      var left = parse(date);
+      var right = fixed || cal && cal.getMoment();
+      if (!right) {
         return true;
       }
-      return compare(ref, provided);
+      if (cal) {
+        link(this, cal);
+      }
+      return compare(left, right);
     };
   };
+}
+
+function link (source, target) {
+  if (isInput(target.associated) || bindings[source.id]) {
+    return;
+  }
+  bindings[source.id] = target.id;
+  source.on('data', function () {
+    target.refresh();
+  });
+  source.on('destroyed', function () {
+    // when source gets restored the
+    // validator will restore the binding
+    delete bindings[source.id];
+  });
 }
 
 module.exports = {

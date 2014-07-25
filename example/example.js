@@ -62,13 +62,9 @@ rome(right, {
 rome(leftInline, {
   time: false,
   dateValidator: rome.val.beforeEq(rightInline)
-}).on('data', function () {
-  rome.find(rightInline).refresh();
 });
 
 rome(rightInline, {
   time: false,
   dateValidator: rome.val.afterEq(leftInline)
-}).on('data', function () {
-  rome.find(leftInline).refresh();
 });

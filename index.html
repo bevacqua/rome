@@ -159,21 +159,16 @@ rome(right, {
   </div>
   <div class='parent'>
     <p>Inline? No problem!</p>
-    <p>In this case, calendars have to notify each other when they are updated.</p>
     <div class='inline' id='leftInline'></div>
     <div class='inline' id='rightInline'></div>
     <pre>
       <code>
 rome(left, {
   dateValidator: rome.val.beforeEq(right)
-}).on('data', function () {
-  rome.find(right).refresh();
 });
 
 rome(right, {
   dateValidator: rome.val.afterEq(left)
-}).on('data', function () {
-  rome.find(left).refresh();
 });
       </code>
     </pre>
