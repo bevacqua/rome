@@ -51,6 +51,15 @@ function defaults (options, input) {
       throw new Error('`max` must be at least one day after `min`');
     }
   }
+  if (o.disallow) {
+	  var disallow = {};
+	  for(var index = 0; index < o.disallow.length; index++){
+		if(o.disallow[index] != null){
+			disallow[parse(o.disallow[index], o.inputFormat)] = true;
+		}
+	  }
+	  o.disallow = disallow;
+  }
   if (o.timeFormat === no) { o.timeFormat = 'HH:mm'; }
   if (o.timeInterval === no) { o.timeInterval = 60 * 30; } // 30 minutes by default
   if (o.monthFormat === no) { o.monthFormat = 'MMMM YYYY'; }
