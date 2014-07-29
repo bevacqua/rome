@@ -35,7 +35,7 @@ gulp.task('clean', function () {
     .pipe(clean());
 });
 
-gulp.task('build-only', build)
+gulp.task('build-only', build);
 gulp.task('build', ['styles'], build);
 
 function build () {
