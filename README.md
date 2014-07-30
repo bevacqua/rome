@@ -48,6 +48,7 @@ Option            | Description
 `invalidate`      | Ensures the date is valid when the field is blurred
 `min`             | Disallow dates before `min`. Takes `string`, `Date`, `moment`
 `max`             | Disallow dates past `max`. Takes `string`, `Date`, `moment`
+`disallow`        | Disallow an array of dates. Dates can be `string`, `Date`, `moment`
 `monthFormat`     | Format string used by the calendar to display months and their year
 `styles`          | CSS classes applied to elements on the calendar
 `time`            | The calendar shows the current time and allows you to change it using a dropdown
@@ -70,6 +71,7 @@ If you don't set an option, the default will be used. You can [look up the defau
   "invalidate": true,
   "min": null,
   "max": null,
+  "disallow": null,
   "monthFormat": "MMMM YYYY",
   "styles": {
     "back": "rd-back",
