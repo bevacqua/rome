@@ -399,11 +399,12 @@ function calendar (input, calendarOptions) {
   function isSelectable (date, day) {
 	    if (!isInRange(date, day))
 	    	return false;
-	    var disallow = (!o.disallow && o.disallow[date] != true) ? false : (day ? o.disallow[date].clone().startOf('day') : o.disallow[date]);
-	    if (disallow && date.isSame(disallow)) {
-	        return false;
-	    }
-	    return true;
+	    if (day)
+	    	date = date.clone().startOf('day');
+	    
+	    date = date.toString();
+	    
+	    return (!o.disallow || o.disallow[date] != true);
 	  }
 
   function correctDate (date) {
@@ -499,6 +500,6 @@ function calendar (input, calendarOptions) {
   return api;
 };
 
-//calendar.find = find;
+calendar.find = find;
 
-//module.exports = calendar;
+module.exports = calendar;

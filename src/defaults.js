@@ -55,7 +55,7 @@ function defaults (options, input) {
 	  var disallow = {};
 	  for(var index = 0; index < o.disallow.length; index++){
 		if(o.disallow[index] != null){
-			disallow[parse(o.disallow[index], o.inputFormat)] = true;
+			disallow[parse(o.disallow[index], o.inputFormat).toString()] = true;
 		}
 	  }
 	  o.disallow = disallow;
