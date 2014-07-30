@@ -50,11 +50,12 @@ toggle.addEventListener('click', function () {
     </pre>
   </div>
   <div class='parent'>
-    <label for='mm'>Pick a date between <em>2013-12-30</em> and <em>2014-10-01</em>: </label>
-    <input id='mm' class='input' />
+    <label for='mmd'>Pick a date between <em>2013-12-30</em> and <em>2014-10-01</em>: </label>
+    <input id='mmd' class='input' />
     <pre>
       <code>
-rome(input, { min: '2013-12-30', max: '2014-10-01' });
+rome(input, { min: '2013-12-30', max: '2014-10-01', time: false,
+	disallow: ['2014-01-15']});
       </code>
     </pre>
   </div>
@@ -64,7 +65,8 @@ rome(input, { min: '2013-12-30', max: '2014-10-01' });
     <input id='mmt' class='input' />
     <pre>
       <code>
-rome(input, { min: '2014-04-30 19:45', max: '2014-09-01 08:30' });
+rome(input, { min: '2014-04-30 19:45', max: '2014-09-01 08:30',
+	disallow: ['2014-05-15 09:00'] });
       </code>
     </pre>
   </div>
