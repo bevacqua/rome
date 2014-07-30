@@ -281,7 +281,7 @@ These two types of entries can be combined in any way you like. Each entry will 
 
 For instance, `[['2014-04-05', '2014-04-15'], ['2014-04-25', '2014-04-30'], '2014-05-05']` means that April 05 to 15, and April 25 to 30, along with May 05 are all invalid dates.
 
-#### `rome.val.only(left, right`
+#### `rome.val.only(left, right)`
 
 Identical behavior to `rome.val.except`, except for the fact that the selected dates become **the only valid dates**, rather than the **only invalid dates**.
 
