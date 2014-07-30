@@ -1,4 +1,4 @@
-# 0.12.0 Unthrown Exception
+# 0.11.1 Unthrown Exception
 
 - Introduced `except` and `only` validators
 
