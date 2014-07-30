@@ -1,3 +1,7 @@
+# 0.12.0 Unthrown Exception
+
+- Introduced `except` and `only` validators
+
 # 0.11.0 Refurbished Products
 
 - Refactored validator factories so that the consumer doesn't need to bind `'data'` events to `refresh` inline calendars

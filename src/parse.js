@@ -10,12 +10,12 @@ function raw (date, format) {
     return momentum.moment(date);
   }
   if (momentum.moment.isMoment(date)) {
-    return date;
+    return date.clone();
   }
 }
 
 function parse (date, format) {
-  var m = raw(date, format);
+  var m = raw(date, typeof format === 'string' ? format : null);
   return m && m.isValid() ? m : null;
 }
 

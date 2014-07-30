@@ -2,29 +2,26 @@
 
 var raf = require('raf');
 var calendar = require('./calendar');
-var index = require('./index');
 
-function inline (calendarOptions) {
-  var parent = calendarOptions.appendTo;
-  var existing = index.find(parent);
-  if (existing) {
-    return existing;
-  }
-  var cal = calendar(calendarOptions)
+function inline (elem, calendarOptions) {
+  var o = calendarOptions || {};
+
+  o.appendTo = elem;
+
+  var api = calendar(o)
     .on('ready', ready)
     .on('destroyed', destroy);
 
   function ready () {
-    raf(cal.show);
-    cal.associated = parent;
+    raf(api.show);
+    api.associated = elem;
   }
 
   function destroy () {
     delete api.associated;
   }
 
-  index.assign(parent, cal);
-  return cal;
+  return api;
 }
 
 module.exports = inline;

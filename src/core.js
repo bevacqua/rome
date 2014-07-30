@@ -1,17 +1,25 @@
 'use strict';
 
+var index = require('./index');
 var input = require('./input');
 var inline = require('./inline');
 var isInput = require('./isInput');
 
 function core (elem, options) {
-  var o;
-  if (isInput(elem)) {
-    return input(elem, options);
+  var cal;
+  var existing = index.find(input);
+  if (existing) {
+    return existing;
   }
-  o = options || {};
-  o.appendTo = elem;
-  return inline(o);
+
+  if (isInput(elem)) {
+    cal = input(elem, options);
+  } else {
+    cal = inline(elem, options);
+  }
+  index.assign(elem, cal);
+
+  return cal;
 }
 
 module.exports = core;

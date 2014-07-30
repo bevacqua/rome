@@ -1,6 +1,6 @@
 # rome
 
-> Dependency free, opt-in UI, customizable date _(and time)_ picker!
+> Customizable date _(and time)_ picker. Opt-in UI, no jQuery!
 
 Rome wasn't built in a day.
 
@@ -12,7 +12,7 @@ You can [see a live demo here][3].
 
 Oh, `rome` synchronizes in real-time with inputs, never steals focus, and its CSS is entirely customizable!
 
-<sub>Not dependency free. It depends on [`moment`][6]. Does not depend on jQuery or other weird frameworks, though.
+<sub>Rome depends on [`moment`][6]. It doesn't depend on jQuery or other weird frameworks, though.
 
 ## Install
 
@@ -235,7 +235,7 @@ These methods take a `moment`, a `Date`, a `string` that can be parsed into a `m
 
 If you passed in a DOM element, the validator will look up the associated Rome instance and validate using its value. The first time the validator is executed on any inline calendar, the `'data'` event for that calendar will be hooked to refresh the related calendar.
 
-All of these methods expect a native `Date` object and compare it to the provided value. For usage examples you can [refer to the demos][3].
+For usage examples you can [refer to the demos][3].
 
 #### `rome.val.afterEq(value)`
 
@@ -252,6 +252,38 @@ Returns whether the date is after the provided value. The comparison uses `<=`, 
 #### `rome.val.before(value)`
 
 Returns whether the date is after the provided value. The comparison uses `<`, meaning it's exclusive.
+
+#### `rome.val.except(left, right)`
+
+Returns whether the date is any date except the provided value. You can provide a wide variety of input values. Keep in mind `Date`, `string`, `moment`, and the DOM element used to find another calendar are all valid input types.
+
+##### Providing `left` only means **"any date except this one"**
+
+If you use `rome.val.except('2014-08-09')`, then `'2014-08-09'` is invalid.
+
+##### Providing `left` and `right` means **"any date that's not in this range"**
+
+If you use `rome.val.except('2014-08-09', '2014-09-01')`, then anything between `'2014-08-09'` and `'2014-09-01'` is invalid.
+
+##### If `left` is an array, each element in the array is treated as the simple case described above
+
+In this case, `right` is completely ignored. Every item in the array is treated as follows.
+
+###### If the item is single, then a rule is built on that single date
+
+Using `rome.val.except(['2014-08-09', '2014-09-01'])` means that `'2014-08-09'` and `'2014-09-01'` are both invalid dates.
+
+###### If the item is an array, the first two items are used to determine a date range
+
+Using `rome.val.except([['2014-08-09', '2014-09-01']])` means anything between `'2014-08-09'` and `'2014-09-01'` is invalid.
+
+These two types of entries can be combined in any way you like. Each entry will exclude additional dates.
+
+For instance, `[['2014-04-05', '2014-04-15'], ['2014-04-25', '2014-04-30'], '2014-05-05']` means that April 05 to 15, and April 25 to 30, along with May 05 are all invalid dates.
+
+#### `rome.val.only(left, right`
+
+Identical behavior to `rome.val.except`, except for the fact that the selected dates become **the only valid dates**, rather than the **only invalid dates**.
 
 ### `rome.moment`
 

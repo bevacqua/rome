@@ -2,25 +2,18 @@
 
 var throttle = require('lodash.throttle');
 var raf = require('raf');
-var index = require('./index');
 var clone = require('./clone');
 var calendar = require('./calendar');
 var momentum = require('./momentum');
 var no;
 
 function inputCalendar (input, calendarOptions) {
-  var existing = index.find(input);
-  if (existing) {
-    return existing;
-  }
   var o;
   var api = calendar(calendarOptions);
   var throttledTakeInput = throttle(takeInput, 50);
   var throttledPosition = throttle(position, 30);
   var ignoreInvalidation;
   var ignoreShow;
-
-  index.assign(input, api);
 
   events();
 

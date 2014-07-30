@@ -1,6 +1,6 @@
 {
   "name": "rome",
-  "description": "Dependency free, opt-in UI, customizable date _(and time)_ picker!",
+  "description": "Customizable date (and time) picker. Opt-in UI, no jQuery!",
   "homepage": "https://github.com/bevacqua/rome",
   "version": "0.11.0",
   "author": {

@@ -1,16 +1,10 @@
 'use strict';
 
-var parse = require('./parse');
 var index = require('./index');
-var isInput = require('./isInput');
-var bindings = {};
+var parse = require('./parse');
+var association = require('./association');
 
-var afterEq = builder(function (left, right) { return left >= right; });
-var after = builder(function (left, right) { return left > right; });
-var beforeEq = builder(function (left, right) { return left <= right; });
-var before = builder(function (left, right) { return left < right; });
-
-function builder (compare) {
+function compareBuilder (compare) {
   return function factory (value) {
     var fixed = parse(value);
 
@@ -22,31 +16,66 @@ function builder (compare) {
         return true;
       }
       if (cal) {
-        link(this, cal);
+        association.add(this, cal);
       }
       return compare(left, right);
     };
   };
 }
 
-function link (source, target) {
-  if (isInput(target.associated) || bindings[source.id]) {
-    return;
-  }
-  bindings[source.id] = target.id;
-  source.on('data', function () {
-    target.refresh();
-  });
-  source.on('destroyed', function () {
-    // when source gets restored the
-    // validator will restore the binding
-    delete bindings[source.id];
-  });
+function rangeBuilder (how, compare) {
+  return function factory (start, end) {
+    var dates;
+    var len = arguments.length;
+
+    if (Array.isArray(start)) {
+      dates = start;
+    } else {
+      if (len === 1) {
+        dates = [start];
+      } else if (len === 2) {
+        dates = [[start, end]];
+      }
+    }
+
+    return function (date) {
+      return dates.map(expand.bind(this))[how](compare.bind(this, date));
+    };
+
+    function expand (value) {
+      var start, end;
+      var cal = index.find(value);
+      if (cal) {
+        start = end = cal.getMoment();
+      } else if (Array.isArray(value)) {
+        start = value[0]; end = value[1];
+      } else {
+        start = end = value;
+      }
+      if (cal) {
+        association.add(cal, this);
+      }
+      return {
+        start: parse(start).startOf('day').toDate(),
+        end: parse(end).endOf('day').toDate()
+      };
+    }
+  };
 }
+
+var afterEq  = compareBuilder(function (left, right) { return left >= right; });
+var after    = compareBuilder(function (left, right) { return left  > right; });
+var beforeEq = compareBuilder(function (left, right) { return left <= right; });
+var before   = compareBuilder(function (left, right) { return left  < right; });
+
+var except   = rangeBuilder('every', function (left, right) { return right.start  > left || right.end  < left; });
+var only     = rangeBuilder('some',  function (left, right) { return right.start <= left && right.end >= left; });
 
 module.exports = {
   afterEq: afterEq,
   after: after,
   beforeEq: beforeEq,
-  before: before
+  before: before,
+  except: except,
+  only: only
 };
