@@ -11,7 +11,7 @@ function compareBuilder (compare) {
     return function (date) {
       var cal = index.find(value);
       var left = parse(date);
-      var right = fixed || cal && cal.getMoment();
+      var right = fixed || ( cal && cal.getMoment && cal.getMoment() );
       if (!right) {
         return true;
       }
