@@ -177,7 +177,7 @@ function calendar (calendarOptions) {
   }
 
   function displayValidTimesOnly () {
-    if (!o.time) {
+    if (!o.time || ! rendered) {
       return;
     }
     var times = timelist.children;
@@ -287,16 +287,20 @@ function calendar (calendarOptions) {
     if (d === lastDay && m === lastMonth && y === lastYear) {
       return;
     }
-    text(month, refCal.format(o.monthFormat));
+    if( rendered ) {
+      text(month, refCal.format(o.monthFormat));
+    }
     lastDay = refCal.date();
     lastMonth = refCal.month();
     lastYear = refCal.year();
-    removeChildren(datebody);
-    renderDays();
+    if( rendered ) {
+      removeChildren(datebody);
+      renderDays();
+    }
   }
 
   function updateTime () {
-    if (!o.time) {
+    if (!o.time || ! rendered ) {
       return;
     }
     text(time, ref.format(o.timeFormat));
