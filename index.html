@@ -17,6 +17,20 @@ rome(input);
     </pre>
   </div>
   <div class='parent'>
+    <label for='dt'>Works just fine with initial values! </label>
+    <input id='ivi' class='input' value='2014-12-15 21:00' />
+    <input id='ivp' class='input' />
+    <pre>
+      <code>
+&lt;input id=&#39;input&#39; class=&#39;input&#39; value=&#39;2014-12-15 21:00&#39; /&gt;
+&lt;input id=&#39;inputTwo&#39; class=&#39;input&#39; /&gt;
+
+rome(input);
+rome(inputTwo, { initialValue: '2014-12-08 08:36' });
+      </code>
+    </pre>
+  </div>
+  <div class='parent'>
     <label for='sm'>Weeks starting on monday: </label>
     <input id='sm' class='input' />
     <pre>

@@ -1,3 +1,7 @@
+# 0.11.2 King of Sweaters
+
+- Fixed an issue where reference errors occured when setting an `initialValue` or an `input`'s `value`
+
 # 0.11.1 Unthrown Exception
 
 - Introduced `except` and `only` validators

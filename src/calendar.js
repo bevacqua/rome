@@ -177,7 +177,7 @@ function calendar (calendarOptions) {
   }
 
   function displayValidTimesOnly () {
-    if (!o.time) {
+    if (!o.time || !rendered) {
       return;
     }
     var times = timelist.children;
@@ -278,7 +278,7 @@ function calendar (calendarOptions) {
   }
 
   function updateCalendar () {
-    if (!o.date) {
+    if (!o.date || !rendered) {
       return;
     }
     var y = refCal.year();
@@ -296,7 +296,7 @@ function calendar (calendarOptions) {
   }
 
   function updateTime () {
-    if (!o.time) {
+    if (!o.time || !rendered) {
       return;
     }
     text(time, ref.format(o.timeFormat));
@@ -329,7 +329,7 @@ function calendar (calendarOptions) {
   }
 
   function removeChildren (elem) {
-    while (elem.firstChild) {
+    while (elem && elem.firstChild) {
       elem.removeChild(elem.firstChild);
     }
   }
