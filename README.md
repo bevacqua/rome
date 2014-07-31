@@ -293,6 +293,26 @@ Exposes the [`moment`][6] instance used by Rome. To change the `moment` instance
 
 Sets the instance of `moment` used by Rome.
 
+## Development
+
+Start by installing any dependencies.
+
+```shell
+npm install
+```
+
+Then run the Gulp `watch` task.
+
+```shell
+gulp watch
+```
+
+Lastly open the page and any changes you make just need a browser refresh.
+
+```shell
+open index.html
+```
+
 ## License
 
 MIT
