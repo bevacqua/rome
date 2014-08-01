@@ -70,7 +70,7 @@ function calendar (calendarOptions) {
     hideCalendar();
     eventListening();
 
-    api.emit('ready', clone(o, momentum.moment));
+    api.emit('ready', clone(o));
 
     return api;
   }
@@ -108,7 +108,7 @@ function calendar (calendarOptions) {
 
   function changeOptions (options) {
     if (arguments.length === 0) {
-      return clone(o, momentum.moment);
+      return clone(o);
     }
     destroy();
     init(options);

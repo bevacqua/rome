@@ -19,7 +19,7 @@ function inputCalendar (input, calendarOptions) {
   events();
 
   function init (superOptions) {
-    o = clone(superOptions, momentum.moment);
+    o = clone(superOptions);
 
     classes.add(api.container, o.styles.positioned);
     api.container.addEventListener('mousedown', containerMouseDown);

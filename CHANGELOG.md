@@ -1,3 +1,7 @@
+# 0.12.1 Dig Deeper
+
+- Fixed internal clone method
+
 # 0.12 Internet Surfer
 
 - Fixed a myriad of issues in IE8, enabling basic support

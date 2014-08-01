@@ -57,6 +57,8 @@ function defaults (options, input) {
   if (o.dayFormat === no) { o.dayFormat = 'DD'; }
   if (o.styles === no) { o.styles = {}; }
 
+  o.styles._isStylesConfiguration = true;
+
   var styl = o.styles;
   if (styl.back === no) { styl.back = 'rd-back'; }
   if (styl.container === no) { styl.container = 'rd-container'; }
