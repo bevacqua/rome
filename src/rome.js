@@ -2,6 +2,7 @@
 
 require('./polyfills/function.bind');
 require('./polyfills/events');
+require('./polyfills/dataset');
 
 var core = require('./core');
 var index = require('./index');
