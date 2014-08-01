@@ -4,7 +4,7 @@ var clonedeep = require('lodash.clonedeep');
 
 function clone (thing, moment) {
   function transmute (value) {
-    if (moment.isMoment(value)) {
+    if (momentum.isMoment(value)) {
       return value.clone();
     }
   }
