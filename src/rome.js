@@ -1,5 +1,7 @@
 'use strict';
 
+require('./polyfills/events');
+
 var core = require('./core');
 var index = require('./index');
 var use = require('./use');
