@@ -5,6 +5,7 @@ var raf = require('raf');
 var clone = require('./clone');
 var calendar = require('./calendar');
 var momentum = require('./momentum');
+var classes = require('./classes');
 var no;
 
 function inputCalendar (input, calendarOptions) {
@@ -20,7 +21,7 @@ function inputCalendar (input, calendarOptions) {
   function init (superOptions) {
     o = clone(superOptions, momentum.moment);
 
-    api.container.classList.add(o.styles.positioned);
+    classes.add(api.container, o.styles.positioned);
     api.container.addEventListener('mousedown', containerMouseDown);
     api.container.addEventListener('click', containerClick);
 

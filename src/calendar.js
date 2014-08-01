@@ -8,6 +8,7 @@ var parse = require('./parse');
 var clone = require('./clone');
 var defaults = require('./defaults');
 var momentum = require('./momentum');
+var classes = require('./classes');
 var no;
 
 function calendar (calendarOptions) {
@@ -225,7 +226,7 @@ function calendar (calendarOptions) {
   function hideConditionally () {
     hideTimeList();
 
-    var pos = container.classList.contains(o.styles.positioned);
+    var pos = classes.contains(container, o.styles.positioned);
     if (pos) {
       raf(hideCalendar);
     }
@@ -357,7 +358,7 @@ function calendar (calendarOptions) {
       day = first.clone().add('days', i);
       node = dom({ type: 'td', className: test(day, o.styles.dayBodyElem), parent: tr, text: day.format(o.dayFormat) });
       if (day.date() === current) {
-        node.classList.add(o.styles.selectedDay);
+        classes.add(node, o.styles.selectedDay);
       }
     }
     lastMoment = day.clone();
@@ -441,21 +442,21 @@ function calendar (calendarOptions) {
 
   function pickDay (e) {
     var target = e.target;
-    if (target.classList.contains(o.styles.dayDisabled) || !target.classList.contains(o.styles.dayBodyElem)) {
+    if (classes.contains(target, o.styles.dayDisabled) || !classes.contains(target, o.styles.dayBodyElem)) {
       return;
     }
     var day = parseInt(text(target), 10);
     var query = '.' + o.styles.selectedDay;
     var selection = container.querySelector(query);
-    if (selection) { selection.classList.remove(o.styles.selectedDay); }
-    var prev = target.classList.contains(o.styles.dayPrevMonth);
-    var next = target.classList.contains(o.styles.dayNextMonth);
+    if (selection) { classes.remove(selection, o.styles.selectedDay); }
+    var prev = classes.contains(target, o.styles.dayPrevMonth);
+    var next = classes.contains(target, o.styles.dayNextMonth);
     var action;
     if (prev || next) {
       action = prev ? 'subtract' : 'add';
       ref[action]('months', 1);
     } else {
-      target.classList.add(o.styles.selectedDay);
+      classes.add(target, o.styles.selectedDay);
     }
     ref.date(day); // must run after setting the month
     setTime(ref, inRange(ref) || ref);
@@ -471,7 +472,7 @@ function calendar (calendarOptions) {
 
   function pickTime (e) {
     var target = e.target;
-    if (!target.classList.contains(o.styles.timeOption)) {
+    if (!classes.contains(target, o.styles.timeOption)) {
       return;
     }
     var value = momentum.moment(text(target), o.timeFormat);
