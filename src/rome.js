@@ -1,6 +1,5 @@
 'use strict';
 
-
 // these are only required for IE < 9
 // maybe move to IE-specific distro?
 require('./polyfills/node.events');
