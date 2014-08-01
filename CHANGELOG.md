@@ -1,3 +1,7 @@
+# 0.12 Internet Surfer
+
+- Fixed a myriad of issues in IE8, enabling basic support
+
 # 0.11.2 King of Sweaters
 
 - Fixed an issue where reference errors occured when setting an `initialValue` or an `input`'s `value`

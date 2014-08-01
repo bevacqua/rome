@@ -27,6 +27,7 @@ function calendar (calendarOptions) {
   var lastYear;
   var lastMonth;
   var lastDay;
+  var lastDayElement;
   var back;
   var next;
 
@@ -446,9 +447,10 @@ function calendar (calendarOptions) {
       return;
     }
     var day = parseInt(text(target), 10);
-    var query = '.' + o.styles.selectedDay;
-    var selection = container.querySelector(query);
-    if (selection) { classes.remove(selection, o.styles.selectedDay); }
+    if (lastDayElement) {
+      classes.remove(lastDayElement, o.styles.selectedDay);
+      lastDayElement = false;
+    }
     var prev = classes.contains(target, o.styles.dayPrevMonth);
     var next = classes.contains(target, o.styles.dayNextMonth);
     var action;
@@ -457,6 +459,7 @@ function calendar (calendarOptions) {
       ref[action]('months', 1);
     } else {
       classes.add(target, o.styles.selectedDay);
+      lastDayElement = target;
     }
     ref.date(day); // must run after setting the month
     setTime(ref, inRange(ref) || ref);
