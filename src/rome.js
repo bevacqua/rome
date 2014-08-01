@@ -1,5 +1,6 @@
 'use strict';
 
+require('./polyfills/function.bind');
 require('./polyfills/events');
 
 var core = require('./core');
