@@ -1,5 +1,6 @@
 'use strict';
 
+var momentum = require('./momentum');
 var clonedeep = require('lodash.clonedeep');
 
 function clone (thing, moment) {
