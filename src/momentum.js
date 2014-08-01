@@ -1,7 +1,7 @@
 'use strict';
 
 function isMoment (value) {
-  return Object.prototype.hasOwnProperty.call(value, '_isAMomentObject');
+  return value && Object.prototype.hasOwnProperty.call(value, '_isAMomentObject');
 }
 
 var api = {
