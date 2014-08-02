@@ -2,7 +2,6 @@
 
 // these are only required for IE < 9
 // maybe move to IE-specific distro?
-require('./polyfills/node.events');
 require('./polyfills/function.bind');
 require('./polyfills/array.foreach');
 require('./polyfills/array.map');

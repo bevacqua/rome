@@ -2,7 +2,7 @@
 
 > Customizable date _(and time)_ picker. Opt-in UI, no jQuery!
 
-Rome wasn't built in a day.
+Rome wasn't built in a day. Browser support includes every sane browser and **IE7+**.
 
 #### Demo!
 
@@ -179,11 +179,15 @@ Returns a copy of the `moment` object underlying the current date in the calenda
 
 ##### `.destroy()`
 
-Removes the calendar from the DOM and all of its associated DOM event listeners. The API is reduced to provide only the `.restore` method described below. After emitting the `destroyed` event, all event listeners are removed from the instance.
+Removes the calendar from the DOM and all of its associated DOM event listeners. The only responsive API method becomes the `.restore` method described below, the rest of the API becomes no-op methods. After emitting the `destroyed` event, all event listeners are removed from the instance.
+
+##### `.destroyed`
+
+Returns `true` when the calendar is in a destroyed state and `false` otherwise.
 
 ##### `.restore(options?)`
 
-Restores the calendar, using the provided options (or the default options). The associated DOM element can't be changed.
+Restores the calendar, using the provided options (or the default options). The associated DOM element can't be changed. The API methods are restored to their original functionality.
 
 ##### `.options(options?)`
 

@@ -9,6 +9,8 @@ var clone = require('./clone');
 var defaults = require('./defaults');
 var momentum = require('./momentum');
 var classes = require('./classes');
+var events = require('./events');
+var noop = require('./noop');
 var no;
 
 function calendar (calendarOptions) {
@@ -53,19 +55,20 @@ function calendar (calendarOptions) {
     ref = o.initialValue ? o.initialValue : momentum.moment();
     refCal = ref.clone();
 
-    delete api.restore;
-    api.show = show;
-    api.hide = hide;
     api.container = container;
+    api.destroyed = false;
+    api.destroy = destroy;
+    api.emitValues = emitValues;
     api.getDate = getDate;
     api.getDateString = getDateString;
     api.getMoment = getMoment;
-    api.destroy = destroy;
+    api.hide = hide;
     api.options = changeOptions;
     api.options.reset = resetOptions;
-    api.setValue = setValue;
-    api.emitValues = emitValues;
     api.refresh = refresh;
+    api.restore = noop;
+    api.setValue = setValue;
+    api.show = show;
 
     hideCalendar();
     eventListening();
@@ -80,19 +83,20 @@ function calendar (calendarOptions) {
 
     eventListening(true);
 
-    // reverse order micro-optimization
-    delete api.refresh;
-    delete api.emitValues;
-    delete api.setValue;
-    delete api.options;
-    delete api.destroy;
-    delete api.getMoment;
-    delete api.getDateString;
-    delete api.getDate;
-    delete api.container;
-    delete api.hide;
-    delete api.show;
+    api.destroyed = true;
+    api.destroy = noop;
+    api.emitValues = noop;
+    api.getDate = noop;
+    api.getDateString = noop;
+    api.getMoment = noop;
+    api.hide = noop;
+    api.options = noop;
+    api.options.reset = noop;
+    api.refresh = noop;
     api.restore = init;
+    api.setValue = noop;
+    api.show = noop;
+
     api.emit('destroyed');
     api.off();
 
@@ -100,10 +104,9 @@ function calendar (calendarOptions) {
   }
 
   function eventListening (remove) {
-    var prefix = remove ? 'remove' : 'add';
-    var op = prefix + 'EventListener';
-    if (o.autoHideOnBlur) { window[op]('focusin', hideOnBlur); }
-    if (o.autoHideOnClick) { window[op]('click', hideOnClick); }
+    var op = remove ? 'remove' : 'add';
+    if (o.autoHideOnBlur) { events[op](document, 'focusin', hideOnBlur); }
+    if (o.autoHideOnClick) { events[op](document, 'click', hideOnClick); }
   }
 
   function changeOptions (options) {
@@ -147,9 +150,9 @@ function calendar (calendarOptions) {
       dom({ type: 'th', className: o.styles.dayHeadElem, parent: dateheadrow, text: weekdays[weekday(i)] });
     }
 
-    back.addEventListener('click', subtractMonth);
-    next.addEventListener('click', addMonth);
-    datebody.addEventListener('click', pickDay);
+    events.add(back, 'click', subtractMonth);
+    events.add(next, 'click', addMonth);
+    events.add(datebody, 'click', pickDay);
   }
 
   function renderTime () {
@@ -158,9 +161,9 @@ function calendar (calendarOptions) {
     }
     var timewrapper = dom({ className: o.styles.time, parent: container });
     time = dom({ className: o.styles.selectedTime, parent: timewrapper, text: ref.format(o.timeFormat) });
-    time.addEventListener('click', toggleTimeList);
+    events.add(time, 'click', toggleTimeList);
     timelist = dom({ className: o.styles.timeList, parent: timewrapper });
-    timelist.addEventListener('click', pickTime);
+    events.add(timelist, 'click', pickTime);
     var next = momentum.moment('00:00:00', 'HH:mm:ss');
     var latest = next.clone().add('days', 1);
     while (next.isBefore(latest)) {

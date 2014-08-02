@@ -1,3 +1,10 @@
+# 0.13.0 Dora the Explorer
+
+- Fixed `scrollTop` issues in IE8
+- Fixed click-to-hide issues in IE8
+- Improved demo conformance by adding a `DOCTYPE`
+- When destroying a calendar, API methods become a no-op instead of getting deleted
+
 # 0.12.1 Dig Deeper
 
 - Fixed internal clone method

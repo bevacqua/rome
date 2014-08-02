@@ -9,16 +9,10 @@ function inline (elem, calendarOptions) {
   o.appendTo = elem;
 
   var api = calendar(o)
-    .on('ready', ready)
-    .on('destroyed', destroy);
+    .on('ready', ready);
 
   function ready () {
     raf(api.show);
-    api.associated = elem;
-  }
-
-  function destroy () {
-    delete api.associated;
   }
 
   return api;

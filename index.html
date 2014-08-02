@@ -67,7 +67,7 @@ rome(input, { date: false });
 var picker = rome(input); // rome.find(input) also returns picker
 
 toggle.addEventListener('click', function () {
-  if (picker.restore) {
+  if (picker.destroyed) {
     picker.restore();
   } else {
     picker.destroy();

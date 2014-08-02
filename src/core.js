@@ -17,6 +17,7 @@ function core (elem, options) {
   } else {
     cal = inline(elem, options);
   }
+  cal.associated = elem;
   index.assign(elem, cal);
 
   return cal;

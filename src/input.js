@@ -6,6 +6,7 @@ var clone = require('./clone');
 var calendar = require('./calendar');
 var momentum = require('./momentum');
 var classes = require('./classes');
+var events = require('./events');
 var no;
 
 function inputCalendar (input, calendarOptions) {
@@ -16,16 +17,15 @@ function inputCalendar (input, calendarOptions) {
   var ignoreInvalidation;
   var ignoreShow;
 
-  events();
+  bindEvents();
 
   function init (superOptions) {
     o = clone(superOptions);
 
     classes.add(api.container, o.styles.positioned);
-    api.container.addEventListener('mousedown', containerMouseDown);
-    api.container.addEventListener('click', containerClick);
+    events.add(api.container, 'mousedown', containerMouseDown);
+    events.add(api.container, 'click', containerClick);
 
-    api.associated = input;
     api.getDate = unrequire(api.getDate);
     api.getDateString = unrequire(api.getDateString);
     api.getMoment = unrequire(api.getMoment);
@@ -42,26 +42,24 @@ function inputCalendar (input, calendarOptions) {
 
   function destroy () {
     eventListening(true);
-    delete api.associated;
-    raf(events);
+    raf(bindEvents);
   }
 
-  function events () {
+  function bindEvents () {
     api.once('ready', init);
     api.once('destroyed', destroy);
   }
 
   function eventListening (remove) {
-    var prefix = remove ? 'remove' : 'add';
-    var op = prefix + 'EventListener';
-    input[op]('click', show);
-    input[op]('focusin', show);
-    input[op]('change', throttledTakeInput);
-    input[op]('keypress', throttledTakeInput);
-    input[op]('keydown', throttledTakeInput);
-    input[op]('input', throttledTakeInput);
-    if (o.invalidate) { input[op]('blur', invalidateInput); }
-    window[op]('resize', throttledPosition);
+    var op = remove ? 'remove' : 'add';
+    events[op](input, 'click', show);
+    events[op](input, 'focusin', show);
+    events[op](input, 'change', throttledTakeInput);
+    events[op](input, 'keypress', throttledTakeInput);
+    events[op](input, 'keydown', throttledTakeInput);
+    events[op](input, 'input', throttledTakeInput);
+    if (o.invalidate) { events[op](input, 'blur', invalidateInput); }
+    events[op](window, 'resize', throttledPosition);
   }
 
   function containerClick () {
@@ -95,7 +93,7 @@ function inputCalendar (input, calendarOptions) {
 
   function position () {
     var bounds = input.getBoundingClientRect();
-    var scrollTop = document.body.scrollTop;
+    var scrollTop = document.body.scrollTop || document.documentElement.scrollTop;
     api.container.style.top  = bounds.top + scrollTop + input.offsetHeight + 'px';
     api.container.style.left = bounds.left + 'px';
   }
