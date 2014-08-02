@@ -1,3 +1,7 @@
+# 0.14.0 Rome For Export
+
+- Fixed an issue where the standalone version didn't export an API
+
 # 0.13.0 Dora the Explorer
 
 - Fixed `scrollTop` issues in IE8
