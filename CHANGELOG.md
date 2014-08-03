@@ -1,3 +1,7 @@
+# 1.0.0
+
+- Fixed an issue where tapping the input field wouldn't re-open the calendar on mobile ()
+
 # 0.14.0 Rome For Export
 
 - Fixed an issue where the standalone version didn't export an API
