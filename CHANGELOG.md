@@ -1,6 +1,6 @@
-# 1.0.0
+# 1.0.0 Roman Empire
 
-- Fixed an issue where tapping the input field wouldn't re-open the calendar on mobile ()
+- Fixed an issue where tapping the input field wouldn't re-open the calendar on mobile ([fb8fc070][2])
 
 # 0.14.0 Rome For Export
 
@@ -150,3 +150,4 @@ Changes
 - Initial Public Release
 
 [1]: https://github.com/bevacqua/rome/commit/952e714b4e818bd6261621b53fe1f24c01aeba96
+[2]: https://github.com/bevacqua/rome/commit/fb8fc070fd4bc8b49009bff4b34c1b904f80a025
