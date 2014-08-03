@@ -53,6 +53,7 @@ function inputCalendar (input, calendarOptions) {
   function eventListening (remove) {
     var op = remove ? 'remove' : 'add';
     events[op](input, 'click', show);
+    events[op](input, 'touchend', show);
     events[op](input, 'focusin', show);
     events[op](input, 'change', throttledTakeInput);
     events[op](input, 'keypress', throttledTakeInput);
