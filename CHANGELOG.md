@@ -1,6 +1,6 @@
 # 1.0.1 Wasteland
 
-- Fixed a bug where calendars would be cached but never found again (9d7c003)
+- Fixed a bug where calendars would be cached but never found again
 - `rome.find` returns `null` if no calendar is found
 
 # 1.0.0 Roman Empire
