@@ -7,7 +7,7 @@ var isInput = require('./isInput');
 
 function core (elem, options) {
   var cal;
-  var existing = index.find(input);
+  var existing = index.find(elem);
   if (existing) {
     return existing;
   }

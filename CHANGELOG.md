@@ -1,3 +1,8 @@
+# 1.0.1 Wasteland
+
+- Fixed a bug where calendars would be cached but never found again (9d7c003)
+- `rome.find` returns `null` if no calendar is found
+
 # 1.0.0 Roman Empire
 
 - Fixed an issue where tapping the input field wouldn't re-open the calendar on mobile ([fb8fc070][2])

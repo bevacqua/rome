@@ -11,6 +11,7 @@ function find (thing) { // can be a DOM element or a number
   if (existing !== no) {
     return existing;
   }
+  return null;
 }
 
 function assign (elem, instance) {

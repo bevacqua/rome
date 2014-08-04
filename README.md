@@ -51,11 +51,13 @@ The API in `rome` exposes a few properties.
 
 ### `rome.find(elem)`
 
-Finds a previously created Rome calendar. Exactly the same as doing `rome(elem)` after the first time. The difference is that if the first call made on an element is `.find` you'll get `undefined`, and if the first call is `rome` then a Rome calendar will be created and associated to the element. This association can't be undone even by `.destroy()`ing the `rome` instance, because it can be `.restore()`d later.
+If a calendar is associated to the provided `elem`, then that calendar is returned, otherwise returns `null`. DOM elements can only have one associated calendar.
 
-### `rome(elem, options?)`
+### `rome(elem, options={})`
 
-Creates a Rome calendar using a ton of options. These have reasonable defaults that are easy to adjust, too. The options are listed below.
+This method creates a calendar instance and associates it to the provided `elem`. This association can't be undone even by `.destroy()`ing the `rome` instance, because it can be `.restore()`d later. Subsequent calls to `rome(elem)` will return the associated calendar, instead of creating a new one _<sub>(see `rome.find(elem)`)</sub>_. Think of this as a _"caching feature"_.
+
+Creating a calendar has a ton of options. These have reasonable defaults that are easy to adjust, too. The options are listed below.
 
 Option            | Description
 ------------------|--------------------------------------------------------------------------------------------------
@@ -324,6 +326,6 @@ MIT
 [1]: https://github.com/bevacqua/rome/blob/master/src/defaults.js
 [2]: https://github.com/bevacqua/contra
 [3]: https://bevacqua.github.io/rome
-[4]: https://cloud.githubusercontent.com/assets/934293/3627112/a635c562-0e85-11e4-8b57-2ec2d8be9af2.png
+[4]: https://cloud.githubusercontent.com/assets/934293/3803583/387125ea-1c1c-11e4-974e-467984e4d1f0.png
 [5]: http://momentjs.com/docs/#/i18n/
 [6]: http://momentjs.com
