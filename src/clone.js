@@ -6,11 +6,9 @@ var momentum = require('./momentum');
 function clone (thing) {
   var copy = {};
   var value;
-  var type;
 
   for (var key in thing) {
     value = thing[key];
-    type = Object.prototype.toString.call(value);
 
     if (!value) {
       copy[key] = value;
