@@ -1,3 +1,7 @@
+# 1.0.2 Clock Tick
+
+- Fixed a bug where you couldn't set `appendTo: 'parent'` for calendar associated to input fields
+
 # 1.0.1 Wasteland
 
 - Fixed a bug where calendars would be cached but never found again

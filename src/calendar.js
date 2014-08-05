@@ -43,7 +43,7 @@ function calendar (calendarOptions) {
   });
 
   function init (initOptions) {
-    o = defaults(initOptions || calendarOptions);
+    o = defaults(initOptions || calendarOptions, api);
     if (!container) { container = dom({ className: o.styles.container }); }
     lastMonth = no;
     lastYear = no;

@@ -1,8 +1,9 @@
 'use strict';
 
 var parse = require('./parse');
+var isInput = require('./isInput');
 
-function defaults (options, input) {
+function defaults (options, cal) {
   var temp;
   var no;
   var o = options || {};
@@ -11,8 +12,8 @@ function defaults (options, input) {
   if (o.autoClose === no) { o.autoClose = true; }
   if (o.appendTo === no) { o.appendTo = document.body; }
   if (o.appendTo === 'parent') {
-    if (input) {
-      o.appendTo = input.parentNode;
+    if (isInput(cal.associated)) {
+      o.appendTo = cal.associated.parentNode;
     } else {
       throw new Error('Inline calendars must be appended to a parent node explicitly.');
     }
