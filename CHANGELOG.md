@@ -1,3 +1,7 @@
+# 1.1.0 Calendar Press
+
+- Introduced ability to display as many months in a calendar as you want
+
 # 1.0.3 Happy Pony
 
 - Fixed issues when setting an initial value on calendars that also validate their inputs

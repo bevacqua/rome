@@ -59,6 +59,15 @@ rome(input, { date: false });
     </pre>
   </div>
   <div class='parent'>
+    <label for='mms'>Want to display two contiguous months instead of just one?</label>
+    <input id='mms' class='input' />
+    <pre>
+      <code>
+rome(input, { monthsInCalendar: 2 });
+      </code>
+    </pre>
+  </div>
+  <div class='parent'>
     <label for='ind'>Remove and restore <code>rome</code> at will: </label>
     <input id='ind' class='input' />
     <button id='toggle'>Destroy <code>rome</code> instance!</button>

@@ -54,6 +54,7 @@ function defaults (options, cal) {
   if (o.timeFormat === no) { o.timeFormat = 'HH:mm'; }
   if (o.timeInterval === no) { o.timeInterval = 60 * 30; } // 30 minutes by default
   if (o.weekStart === no) { o.weekStart = 0; }
+  if (o.monthsInCalendar === no) { o.monthsInCalendar = 1; }
   if (o.monthFormat === no) { o.monthFormat = 'MMMM YYYY'; }
   if (o.dayFormat === no) { o.dayFormat = 'DD'; }
   if (o.styles === no) { o.styles = {}; }

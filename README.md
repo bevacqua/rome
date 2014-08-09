@@ -59,28 +59,29 @@ This method creates a calendar instance and associates it to the provided `elem`
 
 Creating a calendar has a ton of options. These have reasonable defaults that are easy to adjust, too. The options are listed below.
 
-Option            | Description
-------------------|--------------------------------------------------------------------------------------------------
-`appendTo`        | DOM element where the calendar will be appended to. Takes `'parent'` as the parent element
-`autoClose`       | Closes the calendar when picking a day or a time
-`autoHideOnBlur`  | Hides the calendar when focusing something other than the input field
-`autoHideOnClick` | Hides the calendar when clicking away
-`date`            | The calendar shows days and allows you to navigate between months
-`dateValidator`   | Function to validate that a given date is considered valid. Receives a native `Date` parameter.
-`dayFormat`       | Format string used to display days on the calendar
-`initialValue`    | Value used to initialize calendar. Takes `string`, `Date`, or `moment`
-`inputFormat`     | Format string used for the input field as well as the results of `rome`
-`invalidate`      | Ensures the date is valid when the field is blurred
-`max`             | Disallow dates past `max`. Takes `string`, `Date`, or `moment`
-`min`             | Disallow dates before `min`. Takes `string`, `Date`, or `moment`
-`monthFormat`     | Format string used by the calendar to display months and their year
-`required`        | Is the field required or do you allow empty values?
-`styles`          | CSS classes applied to elements on the calendar
-`time`            | The calendar shows the current time and allows you to change it using a dropdown
-`timeFormat`      | Format string used to display the time on the calendar
-`timeInterval`    | Seconds between each option in the time dropdown
-`timeValidator`   | Function to validate that a given time is considered valid. Receives a native `Date` parameter.
-`weekStart`       | Day considered the first of the week. Range: Sunday `0` - Saturday `6`
+Option             | Description
+-------------------|--------------------------------------------------------------------------------------------------
+`appendTo`         | DOM element where the calendar will be appended to. Takes `'parent'` as the parent element
+`autoClose`        | Closes the calendar when picking a day or a time
+`autoHideOnBlur`   | Hides the calendar when focusing something other than the input field
+`autoHideOnClick`  | Hides the calendar when clicking away
+`date`             | The calendar shows days and allows you to navigate between months
+`dateValidator`    | Function to validate that a given date is considered valid. Receives a native `Date` parameter.
+`dayFormat`        | Format string used to display days on the calendar
+`initialValue`     | Value used to initialize calendar. Takes `string`, `Date`, or `moment`
+`inputFormat`      | Format string used for the input field as well as the results of `rome`
+`invalidate`       | Ensures the date is valid when the field is blurred
+`max`              | Disallow dates past `max`. Takes `string`, `Date`, or `moment`
+`min`              | Disallow dates before `min`. Takes `string`, `Date`, or `moment`
+`monthFormat`      | Format string used by the calendar to display months and their year
+`monthsInCalendar` | How many months get rendered in the calendar
+`required`         | Is the field required or do you allow empty values?
+`styles`           | CSS classes applied to elements on the calendar
+`time`             | The calendar shows the current time and allows you to change it using a dropdown
+`timeFormat`       | Format string used to display the time on the calendar
+`timeInterval`     | Seconds between each option in the time dropdown
+`timeValidator`    | Function to validate that a given time is considered valid. Receives a native `Date` parameter.
+`weekStart`        | Day considered the first of the week. Range: Sunday `0` - Saturday `6`
 
 Note that in the case of input fields, when `initialValue` isn't provided the initial value is inferred from `elem.value` instead. In the case of inline calendars, `Date.now` will be used as a default if none is provided.
 
@@ -114,6 +115,7 @@ If you don't set an option, the default will be used. You can [look up the defau
   "max": null,
   "min": null,
   "monthFormat": "MMMM YYYY",
+  "monthsInCalendar": 1,
   "required": false,
   "styles": {
     "back": "rd-back",

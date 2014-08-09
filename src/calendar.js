@@ -276,7 +276,7 @@ function calendar (calendarOptions) {
   function addMonth () { changeMonth('add'); }
   function changeMonth (op) {
     var bound;
-    refCal[op]('months', 1);
+    refCal[op]('months', o.monthsInCalendar);
     bound = inRange(refCal.clone());
     ref = bound || ref;
     if (bound) { refCal = bound.clone(); }
