@@ -38,6 +38,8 @@ function calendar (calendarOptions) {
   var time;
   var timelist;
 
+  destroy(true);
+
   raf(function () {
     init();
   });
@@ -57,7 +59,7 @@ function calendar (calendarOptions) {
 
     api.container = container;
     api.destroyed = false;
-    api.destroy = destroy;
+    api.destroy = destroy.bind(api, false);
     api.emitValues = emitValues;
     api.getDate = getDate;
     api.getDateString = getDateString;
@@ -78,10 +80,14 @@ function calendar (calendarOptions) {
     return api;
   }
 
-  function destroy () {
-    container.parentNode.removeChild(container);
+  function destroy (silent) {
+    if (container) {
+      container.parentNode.removeChild(container);
+    }
 
-    eventListening(true);
+    if (o) {
+      eventListening(true);
+    }
 
     api.destroyed = true;
     api.destroy = noop;
@@ -97,7 +103,9 @@ function calendar (calendarOptions) {
     api.setValue = noop;
     api.show = noop;
 
-    api.emit('destroyed');
+    if (silent !== true) {
+      api.emit('destroyed');
+    }
     api.off();
 
     return api;

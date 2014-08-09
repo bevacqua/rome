@@ -8,7 +8,7 @@ function compareBuilder (compare) {
   return function factory (value) {
     var fixed = parse(value);
 
-    return function (date) {
+    return function validate (date) {
       var cal = index.find(value);
       var left = parse(date);
       var right = fixed || cal && cal.getMoment();
@@ -38,7 +38,7 @@ function rangeBuilder (how, compare) {
       }
     }
 
-    return function (date) {
+    return function validate (date) {
       return dates.map(expand.bind(this))[how](compare.bind(this, date));
     };
 

@@ -1,3 +1,7 @@
+# 1.0.3 Happy Pony
+
+- Fixed issues when setting an initial value on calendars that also validate their inputs
+
 # 1.0.2 Clock Tick
 
 - Fixed a bug where you couldn't set `appendTo: 'parent'` for calendar associated to input fields
