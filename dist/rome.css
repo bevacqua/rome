@@ -89,3 +89,8 @@
 .rd-time-option {
   padding: 5px;
 }
+.rd-hide {
+  opacity: 0;
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+  filter: alpha(opacity=0);
+}

@@ -5,7 +5,6 @@
 TODO:
 
 - make it not always render in left side
-- dont render grayed out dates between months that displayed in the calendar
 
 # 1.0.3 Happy Pony
 

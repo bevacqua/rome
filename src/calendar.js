@@ -397,10 +397,12 @@ function calendar (calendarOptions) {
     var prevMonth = o.styles.dayBodyElem + ' ' + o.styles.dayPrevMonth;
     var nextMonth = o.styles.dayBodyElem + ' ' + o.styles.dayNextMonth;
     var disabled = ' ' + o.styles.dayDisabled;
+    var hidden;
 
+    hidden = offset !== 0;
     for (i = 0; i < firstDay; i++) {
       day = first.clone().subtract('days', firstDay - i);
-      node = dom({ type: 'td', className: test(day, prevMonth), parent: tr, text: day.format(o.dayFormat) });
+      node = dom({ type: 'td', className: test(day, prevMonth) + (hidden ? ' rd-hide' : ''), parent: tr, text: day.format(o.dayFormat) });
     }
     for (i = 0; i < total; i++) {
       if (tr.children.length === weekdayCount) {
@@ -413,9 +415,10 @@ function calendar (calendarOptions) {
       }
     }
     lastMoment = day.clone();
+    hidden = offset !== o.monthsInCalendar - 1;
     for (i = 1; tr.children.length < weekdayCount; i++) {
       day = lastMoment.clone().add('days', i);
-      node = dom({ type: 'td', className: test(day, nextMonth), parent: tr, text: day.format(o.dayFormat) });
+      node = dom({ type: 'td', className: test(day, nextMonth) + (hidden ? ' rd-hide' : ''), parent: tr, text: day.format(o.dayFormat) });
     }
 
     back.disabled = !isInRange(first, true);
