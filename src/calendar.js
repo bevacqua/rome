@@ -51,6 +51,7 @@ function calendar (calendarOptions) {
     lastMonth = no;
     lastYear = no;
     lastDay = no;
+    lastDayElement = no;
     o.appendTo.appendChild(container);
 
     removeChildren(container);
@@ -322,9 +323,11 @@ function calendar (calendarOptions) {
     if (d === lastDay && m === lastMonth && y === lastYear) {
       return;
     }
+    var canStay = isDisplayed(m, y);
     lastDay = refCal.date();
     lastMonth = refCal.month();
     lastYear = refCal.year();
+    if (canStay) { return; }
     calendarMonths.forEach(updateMonth);
     renderAllDays();
 
@@ -332,6 +335,17 @@ function calendar (calendarOptions) {
       var offsetCal = refCal.clone().add('months', i);
       text(month.label, offsetCal.format(o.monthFormat));
       removeChildren(month.body);
+    }
+  }
+
+  function isDisplayed (m, y) {
+    return calendarMonths.some(matches);
+
+    function matches (cal, i) {
+      if (lastYear === no) { return false; }
+      var cm = cal.date.month();
+      var cy = cal.date.year();
+      return cm === m && cy === y;
     }
   }
 
@@ -419,6 +433,7 @@ function calendar (calendarOptions) {
 
     back.disabled = !isInRange(first, true);
     next.disabled = !isInRange(lastDay, true);
+    month.date = offsetCal.clone();
 
     function part (data) {
       var i, day, node;
@@ -434,22 +449,18 @@ function calendar (calendarOptions) {
           className: validationTest(day, data.cell).join(' ')
         });
         if (day.date() === current) {
-          classes.add(node, o.styles.selectedDay);
+          selectDayElement(node);
         }
       }
     }
 
     function validationTest (day, cell) {
-      if (!isInRange(day, true, o.dateValidator)) {
-        cell.push(disabled);
-      }
+      if (!isInRange(day, true, o.dateValidator)) { cell.push(disabled); }
       return cell;
     }
 
     function hiddenWhen (value, cell) {
-      if (value) {
-        cell.push(o.styles.dayConcealed);
-      }
+      if (value) { cell.push(o.styles.dayConcealed); }
       return cell;
     }
   }
@@ -518,27 +529,33 @@ function calendar (calendarOptions) {
       return;
     }
     var day = parseInt(text(target), 10);
-    if (lastDayElement) {
-      classes.remove(lastDayElement, o.styles.selectedDay);
-      lastDayElement = false;
-    }
     var prev = classes.contains(target, o.styles.dayPrevMonth);
     var next = classes.contains(target, o.styles.dayNextMonth);
     var action;
-    var offset = getMonthOffset(target);
+    var offset = getMonthOffset(target) - getMonthOffset(lastDayElement);
     ref.add('months', offset);
+    selectDayElement(false);
     if (prev || next) {
       action = prev ? 'subtract' : 'add';
       ref[action]('months', 1);
     } else {
-      classes.add(target, o.styles.selectedDay);
-      lastDayElement = target;
+      selectDayElement(target);
     }
     ref.date(day); // must run after setting the month
     setTime(ref, inRange(ref) || ref);
     refCal = ref.clone();
     if (o.autoClose) { hideConditionally(); }
     update();
+  }
+
+  function selectDayElement (node) {
+    if (lastDayElement) {
+      classes.remove(lastDayElement, o.styles.selectedDay);
+    }
+    if (node) {
+      classes.add(node, o.styles.selectedDay);
+    }
+    lastDayElement = node;
   }
 
   function getMonthOffset (elem) {

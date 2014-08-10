@@ -2,10 +2,6 @@
 
 - Introduced ability to display as many months in a calendar as you want
 
-TODO:
-
-- make it not always render in left side
-
 # 1.0.3 Happy Pony
 
 - Fixed issues when setting an initial value on calendars that also validate their inputs
