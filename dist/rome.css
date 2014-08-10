@@ -15,7 +15,11 @@
   position: absolute;
 }
 .rd-month {
-  display: block;
+  display: inline-block;
+  margin-right: 25px;
+}
+.rd-month:last-child {
+  margin-right: 0;
 }
 .rd-back,
 .rd-next {

@@ -24,12 +24,12 @@ function calendar (calendarOptions) {
   // date variables
   var weekdays = momentum.moment.weekdaysMin();
   var weekdayCount = weekdays.length;
-  var month;
-  var datebody;
+  var calendarMonths = [];
   var lastYear;
   var lastMonth;
   var lastDay;
   var lastDayElement;
+  var datewrapper;
   var back;
   var next;
 
@@ -144,23 +144,39 @@ function calendar (calendarOptions) {
     if (!o.date) {
       return;
     }
-    var datewrapper = dom({ className: o.styles.date, parent: container });
+    var i;
+    calendarMonths = [];
+
+    datewrapper = dom({ className: o.styles.date, parent: container });
     back = dom({ type: 'button', className: o.styles.back, parent: datewrapper });
     next = dom({ type: 'button', className: o.styles.next, parent: datewrapper });
-    month = dom({ className: o.styles.month, parent: datewrapper });
-    var date = dom({ type: 'table', className: o.styles.dayTable, parent: datewrapper });
-    var datehead = dom({ type: 'thead', className: o.styles.dayHead, parent: date });
-    var dateheadrow = dom({ type: 'tr', className: o.styles.dayRow, parent: datehead });
-    datebody = dom({ type: 'tbody', className: o.styles.dayBody, parent: date });
-    var i;
 
-    for (i = 0; i < weekdayCount; i++) {
-      dom({ type: 'th', className: o.styles.dayHeadElem, parent: dateheadrow, text: weekdays[weekday(i)] });
+    for (i = 0; i < o.monthsInCalendar; i++) {
+      renderMonth(i);
     }
 
     events.add(back, 'click', subtractMonth);
     events.add(next, 'click', addMonth);
-    events.add(datebody, 'click', pickDay);
+    events.add(datewrapper, 'click', pickDay);
+
+    function renderMonth (i) {
+      var month = dom({ className: o.styles.month, parent: datewrapper });
+      var label = dom({ className: o.styles.monthLabel, parent: month });
+      var date = dom({ type: 'table', className: o.styles.dayTable, parent: month });
+      var datehead = dom({ type: 'thead', className: o.styles.dayHead, parent: date });
+      var dateheadrow = dom({ type: 'tr', className: o.styles.dayRow, parent: datehead });
+      var datebody = dom({ type: 'tbody', className: o.styles.dayBody, parent: date });
+      var j;
+
+      for (j = 0; j < weekdayCount; j++) {
+        dom({ type: 'th', className: o.styles.dayHeadElem, parent: dateheadrow, text: weekdays[weekday(j)] });
+      }
+
+      calendarMonths.push({
+        label: label,
+        body: datebody
+      });
+    }
   }
 
   function renderTime () {
@@ -300,12 +316,16 @@ function calendar (calendarOptions) {
     if (d === lastDay && m === lastMonth && y === lastYear) {
       return;
     }
-    text(month, refCal.format(o.monthFormat));
+    calendarMonths.forEach(function (month) {
+      text(month.label, refCal.format(o.monthFormat));
+    });
     lastDay = refCal.date();
     lastMonth = refCal.month();
     lastYear = refCal.year();
-    removeChildren(datebody);
-    renderDays();
+    calendarMonths.forEach(function (month) {
+      removeChildren(month.body);
+    });
+    renderAllDays();
   }
 
   function updateTime () {
@@ -341,20 +361,32 @@ function calendar (calendarOptions) {
     return api;
   }
 
-  function removeChildren (elem) {
+  function removeChildren (elem, self) {
     while (elem && elem.firstChild) {
       elem.removeChild(elem.firstChild);
     }
+    if (self === true) {
+      elem.parentNode.removeChild(elem);
+    }
   }
 
-  function renderDays () {
-    var total = refCal.daysInMonth();
-    var current = refCal.month() !== ref.month() ? -1 : ref.date(); // 1..31
-    var first = refCal.clone().date(1);
+  function renderAllDays () {
+    var i;
+    for (i = 0; i < o.monthsInCalendar; i++) {
+      renderDays(i);
+    }
+  }
+
+  function renderDays (offset) {
+    var month = calendarMonths[offset];
+    var offsetRef = refCal.clone().add('months', offset);
+    var total = offsetRef.daysInMonth();
+    var current = offsetRef.month() !== ref.month() ? -1 : ref.date(); // -1 : 1..31
+    var first = offsetRef.clone().date(1);
     var firstDay = weekday(first.day(), true); // 0..6
     var lastMoment;
     var i, day, node;
-    var tr = row();
+    var tr = dom({ type: 'tr', className: o.styles.dayRow, parent: month.body });
     var prevMonth = o.styles.dayBodyElem + ' ' + o.styles.dayPrevMonth;
     var nextMonth = o.styles.dayBodyElem + ' ' + o.styles.dayNextMonth;
     var disabled = ' ' + o.styles.dayDisabled;
@@ -365,7 +397,7 @@ function calendar (calendarOptions) {
     }
     for (i = 0; i < total; i++) {
       if (tr.children.length === weekdayCount) {
-        tr = row();
+        tr = dom({ type: 'tr', className: o.styles.dayRow, parent: month.body });
       }
       day = first.clone().add('days', i);
       node = dom({ type: 'td', className: test(day, o.styles.dayBodyElem), parent: tr, text: day.format(o.dayFormat) });
@@ -446,10 +478,6 @@ function calendar (calendarOptions) {
       valid = o.dateValidator.call(api, value.toDate());
     }
     return valid !== false;
-  }
-
-  function row () {
-    return dom({ type: 'tr', className: o.styles.dayRow, parent: datebody });
   }
 
   function pickDay (e) {

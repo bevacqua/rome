@@ -76,6 +76,7 @@ function defaults (options, cal) {
   if (styl.dayRow === no) { styl.dayRow = 'rd-days-row'; }
   if (styl.dayTable === no) { styl.dayTable = 'rd-days'; }
   if (styl.month === no) { styl.month = 'rd-month'; }
+  if (styl.monthLabel === no) { styl.monthLabel = 'rd-month-label'; }
   if (styl.next === no) { styl.next = 'rd-next'; }
   if (styl.selectedDay === no) { styl.selectedDay = 'rd-day-selected'; }
   if (styl.selectedTime === no) { styl.selectedTime = 'rd-time-selected'; }
