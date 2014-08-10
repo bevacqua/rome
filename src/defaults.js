@@ -71,6 +71,7 @@ function defaults (options, cal) {
   if (styl.dayPrevMonth === no) { styl.dayPrevMonth = 'rd-day-prev-month'; }
   if (styl.dayNextMonth === no) { styl.dayNextMonth = 'rd-day-next-month'; }
   if (styl.dayDisabled === no) { styl.dayDisabled = 'rd-day-disabled'; }
+  if (styl.dayConcealed === no) { styl.dayConcealed = 'rd-day-concealed'; }
   if (styl.dayHead === no) { styl.dayHead = 'rd-days-head'; }
   if (styl.dayHeadElem === no) { styl.dayHeadElem = 'rd-day-head'; }
   if (styl.dayRow === no) { styl.dayRow = 'rd-days-row'; }

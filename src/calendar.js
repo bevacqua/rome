@@ -391,44 +391,66 @@ function calendar (calendarOptions) {
     var current = offsetCal.month() !== ref.month() ? -1 : ref.date(); // -1 : 1..31
     var first = offsetCal.clone().date(1);
     var firstDay = weekday(first.day(), true); // 0..6
-    var lastMoment;
-    var i, day, node;
     var tr = dom({ type: 'tr', className: o.styles.dayRow, parent: month.body });
-    var prevMonth = o.styles.dayBodyElem + ' ' + o.styles.dayPrevMonth;
-    var nextMonth = o.styles.dayBodyElem + ' ' + o.styles.dayNextMonth;
-    var disabled = ' ' + o.styles.dayDisabled;
-    var hidden;
+    var prevMonth = hiddenWhen(offset !== 0, [o.styles.dayBodyElem, o.styles.dayPrevMonth]);
+    var nextMonth = hiddenWhen(offset !== o.monthsInCalendar - 1, [o.styles.dayBodyElem, o.styles.dayNextMonth]);
+    var disabled = o.styles.dayDisabled;
+    var lastDay;
 
-    hidden = offset !== 0;
-    for (i = 0; i < firstDay; i++) {
-      day = first.clone().subtract('days', firstDay - i);
-      node = dom({ type: 'td', className: test(day, prevMonth) + (hidden ? ' rd-hide' : ''), parent: tr, text: day.format(o.dayFormat) });
-    }
-    for (i = 0; i < total; i++) {
-      if (tr.children.length === weekdayCount) {
-        tr = dom({ type: 'tr', className: o.styles.dayRow, parent: month.body });
-      }
-      day = first.clone().add('days', i);
-      node = dom({ type: 'td', className: test(day, o.styles.dayBodyElem), parent: tr, text: day.format(o.dayFormat) });
-      if (day.date() === current) {
-        classes.add(node, o.styles.selectedDay);
-      }
-    }
-    lastMoment = day.clone();
-    hidden = offset !== o.monthsInCalendar - 1;
-    for (i = 1; tr.children.length < weekdayCount; i++) {
-      day = lastMoment.clone().add('days', i);
-      node = dom({ type: 'td', className: test(day, nextMonth) + (hidden ? ' rd-hide' : ''), parent: tr, text: day.format(o.dayFormat) });
-    }
+    part({
+      base: first.clone().subtract('days', firstDay),
+      length: firstDay,
+      cell: prevMonth
+    });
+
+    part({
+      base: first.clone(),
+      length: total,
+      cell: [o.styles.dayBodyElem]
+    });
+
+    lastDay = first.clone().add('days', total);
+
+    part({
+      base: lastDay,
+      length: weekdayCount - tr.children.length,
+      cell: nextMonth
+    });
 
     back.disabled = !isInRange(first, true);
-    next.disabled = !isInRange(lastMoment, true);
+    next.disabled = !isInRange(lastDay, true);
 
-    function test (day, classes) {
-      if (isInRange(day, true, o.dateValidator)) {
-        return classes;
+    function part (data) {
+      var i, day, node;
+      for (i = 0; i < data.length; i++) {
+        if (tr.children.length === weekdayCount) {
+          tr = dom({ type: 'tr', className: o.styles.dayRow, parent: month.body });
+        }
+        day = data.base.clone().add('days', i);
+        node = dom({
+          type: 'td',
+          parent: tr,
+          text: day.format(o.dayFormat),
+          className: validationTest(day, data.cell).join(' ')
+        });
+        if (day.date() === current) {
+          classes.add(node, o.styles.selectedDay);
+        }
       }
-      return classes + disabled;
+    }
+
+    function validationTest (day, cell) {
+      if (!isInRange(day, true, o.dateValidator)) {
+        cell.push(disabled);
+      }
+      return cell;
+    }
+
+    function hiddenWhen (value, cell) {
+      if (value) {
+        cell.push(o.styles.dayConcealed);
+      }
+      return cell;
     }
   }
 
