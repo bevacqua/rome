@@ -22,6 +22,7 @@ function calendar (calendarOptions) {
   var rendered = false;
 
   // date variables
+  var monthOffsetAttribute = 'data-rome-offset';
   var weekdays = momentum.moment.weekdaysMin();
   var weekdayCount = weekdays.length;
   var calendarMonths = [];
@@ -172,6 +173,7 @@ function calendar (calendarOptions) {
         dom({ type: 'th', className: o.styles.dayHeadElem, parent: dateheadrow, text: weekdays[weekday(j)] });
       }
 
+      datebody.setAttribute(monthOffsetAttribute, i);
       calendarMonths.push({
         label: label,
         body: datebody
@@ -316,16 +318,17 @@ function calendar (calendarOptions) {
     if (d === lastDay && m === lastMonth && y === lastYear) {
       return;
     }
-    calendarMonths.forEach(function (month) {
-      text(month.label, refCal.format(o.monthFormat));
-    });
     lastDay = refCal.date();
     lastMonth = refCal.month();
     lastYear = refCal.year();
-    calendarMonths.forEach(function (month) {
-      removeChildren(month.body);
-    });
+    calendarMonths.forEach(updateMonth);
     renderAllDays();
+
+    function updateMonth (month, i) {
+      var offsetCal = refCal.clone().add('months', i);
+      text(month.label, offsetCal.format(o.monthFormat));
+      removeChildren(month.body);
+    }
   }
 
   function updateTime () {
@@ -379,10 +382,10 @@ function calendar (calendarOptions) {
 
   function renderDays (offset) {
     var month = calendarMonths[offset];
-    var offsetRef = refCal.clone().add('months', offset);
-    var total = offsetRef.daysInMonth();
-    var current = offsetRef.month() !== ref.month() ? -1 : ref.date(); // -1 : 1..31
-    var first = offsetRef.clone().date(1);
+    var offsetCal = refCal.clone().add('months', offset);
+    var total = offsetCal.daysInMonth();
+    var current = offsetCal.month() !== ref.month() ? -1 : ref.date(); // -1 : 1..31
+    var first = offsetCal.clone().date(1);
     var firstDay = weekday(first.day(), true); // 0..6
     var lastMoment;
     var i, day, node;
@@ -493,6 +496,8 @@ function calendar (calendarOptions) {
     var prev = classes.contains(target, o.styles.dayPrevMonth);
     var next = classes.contains(target, o.styles.dayNextMonth);
     var action;
+    var offset = getMonthOffset(target);
+    ref.add('months', offset);
     if (prev || next) {
       action = prev ? 'subtract' : 'add';
       ref[action]('months', 1);
@@ -505,6 +510,18 @@ function calendar (calendarOptions) {
     refCal = ref.clone();
     if (o.autoClose) { hideConditionally(); }
     update();
+  }
+
+  function getMonthOffset (elem) {
+    var offset;
+    while (elem && elem.getAttribute) {
+      offset = elem.getAttribute(monthOffsetAttribute);
+      if (typeof offset === 'string') {
+        return parseInt(offset, 10);
+      }
+      elem = elem.parentNode;
+    }
+    return 0;
   }
 
   function setTime (to, from) {
