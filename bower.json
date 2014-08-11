@@ -2,7 +2,7 @@
   "name": "rome",
   "description": "Customizable date (and time) picker. Opt-in UI, no jQuery!",
   "homepage": "https://github.com/bevacqua/rome",
-  "version": "1.0.3",
+  "version": "1.1.0",
   "author": {
     "name": "Nicolas Bevacqua",
     "email": "hello@bevacqua.io",
