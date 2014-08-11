@@ -1,3 +1,7 @@
+# 1.1.1 First Date
+
+- Fixed an issue where date validation resulted in the wrong dates being disabled
+
 # 1.1.0 Calendar Press
 
 - Introduced ability to display months side-by-side in a single calendar

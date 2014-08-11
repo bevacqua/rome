@@ -366,13 +366,13 @@ function calendar (calendarOptions) {
     return calendarMonths.some(matches);
 
     function matches (cal, i) {
-      if (lastYear === no) { return false; }
+      if (!lastYear) { return false; }
       return sameCalendarMonth(cal.date, refCal);
     }
   }
 
   function sameCalendarMonth (left, right) {
-    return left.year() === right.year() && left.month() === right.month();
+    return left && right && left.year() === right.year() && left.month() === right.month();
   }
 
   function updateTime () {
@@ -392,7 +392,9 @@ function calendar (calendarOptions) {
   }
 
   function refresh () {
-    lastDay = false; // force calendar repaint
+    lastYear = false;
+    lastMonth = false;
+    lastDay = false;
     update(true);
   }
 
@@ -473,7 +475,7 @@ function calendar (calendarOptions) {
           type: 'td',
           parent: tr,
           text: day.format(o.dayFormat),
-          className: validationTest(day, data.cell).join(' ')
+          className: validationTest(day, data.cell.join(' ').split(' ')).join(' ')
         });
         if (data.selectable && day.date() === current) {
           selectDayElement(node);
