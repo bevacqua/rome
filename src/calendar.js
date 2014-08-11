@@ -346,14 +346,23 @@ function calendar (calendarOptions) {
     calendarMonths.forEach(function (cal) {
       var days;
       if (sameCalendarMonth(cal.date, refCal)) {
-        days = Array.prototype.map.call(cal.body.children, aggregate);
+        days = cast(cal.body.children).map(aggregate);
         days = Array.prototype.concat.apply([], days).filter(inside);
         selectDayElement(days[day]);
       }
     });
 
+    function cast (like) {
+      var dest = [];
+      var i;
+      for (i = 0; i < like.length; i++) {
+        dest.push(like[i]);
+      }
+      return dest;
+    }
+
     function aggregate (child) {
-      return Array.prototype.slice.call(child.children);
+      return cast(child.children);
     }
 
     function inside (child) {
