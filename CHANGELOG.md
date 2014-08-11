@@ -1,3 +1,7 @@
+# 1.1.2 Internet Savvy
+
+- Fixed an issue in old IE browsers
+
 # 1.1.1 First Date
 
 - Fixed an issue where date validation resulted in the wrong dates being disabled
