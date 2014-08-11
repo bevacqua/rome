@@ -1,6 +1,6 @@
 # 1.1.0 Calendar Press
 
-- Introduced ability to display as many months in a calendar as you want
+- Introduced ability to display months side-by-side in a single calendar
 
 # 1.0.3 Happy Pony
 

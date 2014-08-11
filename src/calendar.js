@@ -299,7 +299,9 @@ function calendar (calendarOptions) {
   function addMonth () { changeMonth('add'); }
   function changeMonth (op) {
     var bound;
-    refCal[op]('months', o.monthsInCalendar);
+    var direction = op === 'add' ? -1 : 1;
+    var offset = o.monthsInCalendar + direction * getMonthOffset(lastDayElement);
+    refCal[op]('months', offset);
     bound = inRange(refCal.clone());
     ref = bound || ref;
     if (bound) { refCal = bound.clone(); }
@@ -323,11 +325,11 @@ function calendar (calendarOptions) {
     if (d === lastDay && m === lastMonth && y === lastYear) {
       return;
     }
-    var canStay = isDisplayed(m, y);
+    var canStay = isDisplayed();
     lastDay = refCal.date();
     lastMonth = refCal.month();
     lastYear = refCal.year();
-    if (canStay) { return; }
+    if (canStay) { updateCalendarSelection(); return; }
     calendarMonths.forEach(updateMonth);
     renderAllDays();
 
@@ -338,15 +340,39 @@ function calendar (calendarOptions) {
     }
   }
 
-  function isDisplayed (m, y) {
+  function updateCalendarSelection () {
+    var day = refCal.date() - 1;
+    selectDayElement(false);
+    calendarMonths.forEach(function (cal) {
+      var days;
+      if (sameCalendarMonth(cal.date, refCal)) {
+        days = Array.prototype.map.call(cal.body.children, aggregate);
+        days = Array.prototype.concat.apply([], days).filter(inside);
+        selectDayElement(days[day]);
+      }
+    });
+
+    function aggregate (child) {
+      return Array.prototype.slice.call(child.children);
+    }
+
+    function inside (child) {
+      return !classes.contains(child, o.styles.dayPrevMonth) &&
+             !classes.contains(child, o.styles.dayNextMonth);
+    }
+  }
+
+  function isDisplayed () {
     return calendarMonths.some(matches);
 
     function matches (cal, i) {
       if (lastYear === no) { return false; }
-      var cm = cal.date.month();
-      var cy = cal.date.year();
-      return cm === m && cy === y;
+      return sameCalendarMonth(cal.date, refCal);
     }
+  }
+
+  function sameCalendarMonth (left, right) {
+    return left.year() === right.year() && left.month() === right.month();
   }
 
   function updateTime () {
@@ -420,7 +446,8 @@ function calendar (calendarOptions) {
     part({
       base: first.clone(),
       length: total,
-      cell: [o.styles.dayBodyElem]
+      cell: [o.styles.dayBodyElem],
+      selectable: true
     });
 
     lastDay = first.clone().add('days', total);
@@ -448,7 +475,7 @@ function calendar (calendarOptions) {
           text: day.format(o.dayFormat),
           className: validationTest(day, data.cell).join(' ')
         });
-        if (day.date() === current) {
+        if (data.selectable && day.date() === current) {
           selectDayElement(node);
         }
       }
@@ -531,16 +558,12 @@ function calendar (calendarOptions) {
     var day = parseInt(text(target), 10);
     var prev = classes.contains(target, o.styles.dayPrevMonth);
     var next = classes.contains(target, o.styles.dayNextMonth);
-    var action;
     var offset = getMonthOffset(target) - getMonthOffset(lastDayElement);
     ref.add('months', offset);
-    selectDayElement(false);
     if (prev || next) {
-      action = prev ? 'subtract' : 'add';
-      ref[action]('months', 1);
-    } else {
-      selectDayElement(target);
+      ref.add('months', prev ? -1 : 1);
     }
+    selectDayElement(target);
     ref.date(day); // must run after setting the month
     setTime(ref, inRange(ref) || ref);
     refCal = ref.clone();
