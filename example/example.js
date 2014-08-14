@@ -57,7 +57,7 @@ rome(tim, {
 });
 
 rome(inl).on('data', function (value) {
-  inlv.innerText = value;
+  inlv.innerText = inlv.textContent = value;
 });
 
 rome(left, {
