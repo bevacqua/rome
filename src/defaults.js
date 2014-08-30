@@ -39,20 +39,24 @@ function defaults (options, cal) {
   }
   if (o.min === no) { o.min = null; } else { o.min = parse(o.min, o.inputFormat); }
   if (o.max === no) { o.max = null; } else { o.max = parse(o.max, o.inputFormat); }
+  if (o.timeInterval === no) { o.timeInterval = 60 * 30; } // 30 minutes by default
   if (o.min && o.max) {
     if (o.max.isBefore(o.min)) {
       temp = o.max;
       o.max = o.min;
       o.min = temp;
     }
-    if (o.max.clone().subtract('days', 1).isBefore(o.min)) {
-      throw new Error('`max` must be at least one day after `min`');
+    if (o.date === true) {
+      if (o.max.clone().subtract('days', 1).isBefore(o.min)) {
+        throw new Error('`max` must be at least one day after `min`');
+      }
+    } else if (o.timeInterval * 1000 - o.min % (o.timeInterval * 1000) > o.max - o.min) {
+      throw new Error('`min` to `max` range must allow for at least one time option that matches `timeInterval`');
     }
   }
   if (o.dateValidator === no) { o.dateValidator = Function.prototype; }
   if (o.timeValidator === no) { o.timeValidator = Function.prototype; }
   if (o.timeFormat === no) { o.timeFormat = 'HH:mm'; }
-  if (o.timeInterval === no) { o.timeInterval = 60 * 30; } // 30 minutes by default
   if (o.weekStart === no) { o.weekStart = 0; }
   if (o.monthsInCalendar === no) { o.monthsInCalendar = 1; }
   if (o.monthFormat === no) { o.monthFormat = 'MMMM YYYY'; }
