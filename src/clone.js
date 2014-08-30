@@ -2,7 +2,7 @@
 
 var momentum = require('./momentum');
 
-// naïve implementation, only meant to clone `options` objects
+// naïve implementation, specifically meant to clone `options` objects
 function clone (thing) {
   var copy = {};
   var value;
