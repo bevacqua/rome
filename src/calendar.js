@@ -45,6 +45,8 @@ function calendar (calendarOptions) {
     init();
   });
 
+  function napi () { return api; }
+
   function init (initOptions) {
     o = defaults(initOptions || calendarOptions, api);
     if (!container) { container = dom({ className: o.styles.container }); }
@@ -70,7 +72,7 @@ function calendar (calendarOptions) {
     api.options = changeOptions;
     api.options.reset = resetOptions;
     api.refresh = refresh;
-    api.restore = noop;
+    api.restore = napi;
     api.setValue = setValue;
     api.show = show;
 
@@ -92,18 +94,18 @@ function calendar (calendarOptions) {
     }
 
     api.destroyed = true;
-    api.destroy = noop;
-    api.emitValues = noop;
+    api.destroy = napi;
+    api.emitValues = napi;
     api.getDate = noop;
     api.getDateString = noop;
     api.getMoment = noop;
-    api.hide = noop;
-    api.options = noop;
-    api.options.reset = noop;
-    api.refresh = noop;
+    api.hide = napi;
+    api.options = napi;
+    api.options.reset = napi;
+    api.refresh = napi;
     api.restore = init;
-    api.setValue = noop;
-    api.show = noop;
+    api.setValue = napi;
+    api.show = napi;
 
     if (silent !== true) {
       api.emit('destroyed');
@@ -241,8 +243,8 @@ function calendar (calendarOptions) {
 
   function showTimeList () { if (timelist) { timelist.style.display = 'block'; } }
   function hideTimeList () { if (timelist) { timelist.style.display = 'none'; } }
-  function showCalendar () { container.style.display = 'inline-block'; }
-  function hideCalendar () { container.style.display = 'none'; }
+  function showCalendar () { container.style.display = 'inline-block'; api.emit('show'); }
+  function hideCalendar () { container.style.display = 'none'; api.emit('hide'); }
 
   function show () {
     render();
@@ -405,6 +407,7 @@ function calendar (calendarOptions) {
     lastMonth = false;
     lastDay = false;
     update(true);
+    return api;
   }
 
   function setValue (value) {

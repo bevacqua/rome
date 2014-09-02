@@ -231,6 +231,16 @@ Event       | Arguments   | Description
 `month`     | `[month]`   | The month may have been updated by the calendar. Value of `moment.month()` is provided
 `day`       | `[day]`     | The day may have been updated by the calendar. Value of `moment.date()` is provided
 `time`      | `[time]`    | The time may have been updated by the calendar. Formatted time string is provided
+`show`      | `[]`        | The calendar has been displayed
+`hide`      | `[]`        | The calendar has been hidden
+
+Please note that you may need to wait for the calendar's `'ready'` event before interacting with it, otherwise most of the API will result in a no-op.
+
+```js
+rome(elem).once('ready', function () {
+  this.show();
+});
+```
 
 #### Date and Time Validator
 

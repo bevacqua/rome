@@ -1,3 +1,10 @@
+# 1.1.4 Show Time
+
+- API methods now allow for chaining even when the operation is a no-op
+- Fixed an issue ([#27][4]) where inline calendars wouldn't get positioned using the `.show` API method
+- Created a `'show'` event, emitted whenever the calendar is displayed
+- Created a `'hide'` event, emitted whenever the calendar is hidden
+
 # 1.1.3 Time Sieve
 
 - Fixed an issue ([#25][3]) which prevented you from using `min` and `max` when `date` is `false`
@@ -181,3 +188,4 @@ Changes
 [1]: https://github.com/bevacqua/rome/commit/952e714b4e818bd6261621b53fe1f24c01aeba96
 [2]: https://github.com/bevacqua/rome/commit/fb8fc070fd4bc8b49009bff4b34c1b904f80a025
 [3]: https://github.com/bevacqua/rome/issues/25
+[4]: https://github.com/bevacqua/rome/issues/27

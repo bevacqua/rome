@@ -35,6 +35,7 @@ function inputCalendar (input, calendarOptions) {
     }
 
     api.on('data', updateInput);
+    api.on('show', throttledPosition);
 
     eventListening();
     throttledTakeInput();
@@ -89,7 +90,6 @@ function inputCalendar (input, calendarOptions) {
       return;
     }
     api.show();
-    position();
   }
 
   function position () {
