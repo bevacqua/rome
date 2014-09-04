@@ -7,7 +7,6 @@ var calendar = require('./calendar');
 var momentum = require('./momentum');
 var classes = require('./classes');
 var events = require('./events');
-var no;
 
 function inputCalendar (input, calendarOptions) {
   var o;

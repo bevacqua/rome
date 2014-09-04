@@ -1,3 +1,7 @@
+# 1.1.5 Moment of Truth
+
+- Bumped `moment` to `v2.8.2`
+
 # 1.1.4 Show Time
 
 - API methods now allow for chaining even when the operation is a no-op

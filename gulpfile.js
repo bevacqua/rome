@@ -37,7 +37,7 @@ gulp.task('clean', function () {
 
 gulp.task('build-only-broad', bab);
 
-gulp.task('build-only', build)
+gulp.task('build-only', build);
 gulp.task('build', ['styles'], bab);
 
 function buildSource (src, dest) {

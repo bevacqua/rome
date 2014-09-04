@@ -1,3 +1,5 @@
+'use strict';
+
 var addEvent = addEventEasy;
 var removeEvent = removeEventEasy;
 
@@ -14,11 +16,11 @@ function addEventEasy (element, evt, fn) {
 }
 
 function addEventHard (element, evt, fn) {
-  return element.attachEvent('on' + evt, function (e) {
-    var e = e || window.event;
+  return element.attachEvent('on' + evt, function (ae) {
+    var e = ae || window.event;
     e.target = e.target || e.srcElement;
-    e.preventDefault  = e.preventDefault  || function preventDefault () { e.returnValue = false; }
-    e.stopPropagation = e.stopPropagation || function stopPropagation () { e.cancelBubble = true; }
+    e.preventDefault  = e.preventDefault || function preventDefault () { e.returnValue = false; };
+    e.stopPropagation = e.stopPropagation || function stopPropagation () { e.cancelBubble = true; };
     fn.call(element, e);
   });
 }

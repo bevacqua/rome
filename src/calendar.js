@@ -198,10 +198,10 @@ function calendar (calendarOptions) {
     timelist = dom({ className: o.styles.timeList, parent: timewrapper });
     events.add(timelist, 'click', pickTime);
     var next = momentum.moment('00:00:00', 'HH:mm:ss');
-    var latest = next.clone().add('days', 1);
+    var latest = next.clone().add(1, 'days');
     while (next.isBefore(latest)) {
       dom({ className: o.styles.timeOption, parent: timelist, text: next.format(o.timeFormat) });
-      next.add('seconds', o.timeInterval);
+      next.add(o.timeInterval, 'seconds');
     }
   }
 
@@ -336,7 +336,7 @@ function calendar (calendarOptions) {
     renderAllDays();
 
     function updateMonth (month, i) {
-      var offsetCal = refCal.clone().add('months', i);
+      var offsetCal = refCal.clone().add(i, 'months');
       text(month.label, offsetCal.format(o.monthFormat));
       removeChildren(month.body);
     }
@@ -376,7 +376,7 @@ function calendar (calendarOptions) {
   function isDisplayed () {
     return calendarMonths.some(matches);
 
-    function matches (cal, i) {
+    function matches (cal) {
       if (!lastYear) { return false; }
       return sameCalendarMonth(cal.date, refCal);
     }
@@ -440,7 +440,7 @@ function calendar (calendarOptions) {
 
   function renderDays (offset) {
     var month = calendarMonths[offset];
-    var offsetCal = refCal.clone().add('months', offset);
+    var offsetCal = refCal.clone().add(offset, 'months');
     var total = offsetCal.daysInMonth();
     var current = offsetCal.month() !== ref.month() ? -1 : ref.date(); // -1 : 1..31
     var first = offsetCal.clone().date(1);
@@ -452,7 +452,7 @@ function calendar (calendarOptions) {
     var lastDay;
 
     part({
-      base: first.clone().subtract('days', firstDay),
+      base: first.clone().subtract(firstDay, 'days'),
       length: firstDay,
       cell: prevMonth
     });
@@ -464,7 +464,7 @@ function calendar (calendarOptions) {
       selectable: true
     });
 
-    lastDay = first.clone().add('days', total);
+    lastDay = first.clone().add(total, 'days');
 
     part({
       base: lastDay,
@@ -482,7 +482,7 @@ function calendar (calendarOptions) {
         if (tr.children.length === weekdayCount) {
           tr = dom({ type: 'tr', className: o.styles.dayRow, parent: month.body });
         }
-        day = data.base.clone().add('days', i);
+        day = data.base.clone().add(i, 'days');
         node = dom({
           type: 'td',
           parent: tr,
@@ -525,8 +525,7 @@ function calendar (calendarOptions) {
     } else if (o.max && date.isAfter(o.max)) {
       return inRange(o.max.clone());
     }
-    var days = date.daysInMonth();
-    var value = date.clone().subtract('days', 1);
+    var value = date.clone().subtract(1, 'days');
     if (validateTowards(value, date, 'add')) {
       return inTimeRange(value);
     }
@@ -537,14 +536,13 @@ function calendar (calendarOptions) {
   }
 
   function inTimeRange (value) {
-    var valid = false;
-    var copy = value.clone().subtract('seconds', o.timeInterval);
+    var copy = value.clone().subtract(o.timeInterval, 'seconds');
     var times = Math.ceil(secondsInDay / o.timeInterval);
     var i;
     for (i = 0; i < times; i++) {
-      copy.add('seconds', o.timeInterval);
+      copy.add(o.timeInterval, 'seconds');
       if (copy.date() > value.date()) {
-        copy.subtract('days', 1);
+        copy.subtract(1, 'days');
       }
       if (o.timeValidator.call(api, copy.toDate()) !== false) {
         return copy;
@@ -573,9 +571,9 @@ function calendar (calendarOptions) {
     var prev = classes.contains(target, o.styles.dayPrevMonth);
     var next = classes.contains(target, o.styles.dayNextMonth);
     var offset = getMonthOffset(target) - getMonthOffset(lastDayElement);
-    ref.add('months', offset);
+    ref.add(offset, 'months');
     if (prev || next) {
-      ref.add('months', prev ? -1 : 1);
+      ref.add(prev ? -1 : 1, 'months');
     }
     selectDayElement(target);
     ref.date(day); // must run after setting the month
