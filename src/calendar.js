@@ -553,7 +553,7 @@ function calendar (calendarOptions) {
   function validateTowards (value, date, op) {
     var valid = false;
     while (valid === false) {
-      value[op]('days', 1);
+      value[op](1, 'days');
       if (value.month() !== date.month()) {
         break;
       }

@@ -1,3 +1,7 @@
+# 1.1.6 Warner Brothers
+
+- Circumvented a deprecation warning from `moment`
+
 # 1.1.5 Moment of Truth
 
 - Bumped `moment` to `v2.8.2`
