@@ -997,7 +997,7 @@ function calendar (calendarOptions) {
     var bound;
     var direction = op === 'add' ? -1 : 1;
     var offset = o.monthsInCalendar + direction * getMonthOffset(lastDayElement);
-    refCal[op]('months', offset);
+    refCal[op](offset, 'months');
     bound = inRange(refCal.clone());
     ref = bound || ref;
     if (bound) { refCal = bound.clone(); }
