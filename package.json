@@ -39,5 +39,8 @@
     "gulp-watch": "^0.6.8",
     "nib": "^1.0.3",
     "vinyl-source-stream": "^0.1.1"
+  },
+  "spm": {
+    "main": "src/rome.js"
   }
 }
