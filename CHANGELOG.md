@@ -1,3 +1,7 @@
+# 1.2.0 Week Starts
+
+- Changed `weekStart` default value to `moment().weekday(0).day()`
+
 # 1.1.6 Warner Brothers
 
 - Circumvented a deprecation warning from `moment`
