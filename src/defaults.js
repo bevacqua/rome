@@ -59,6 +59,7 @@ function defaults (options, cal) {
   if (o.timeValidator === no) { o.timeValidator = Function.prototype; }
   if (o.timeFormat === no) { o.timeFormat = 'HH:mm'; }
   if (o.weekStart === no) { o.weekStart = momentum.moment().weekday(0).day(); }
+  if (o.monthsInputs === no) { o.monthsInputs = 'button'; }
   if (o.monthsInCalendar === no) { o.monthsInCalendar = 1; }
   if (o.monthFormat === no) { o.monthFormat = 'MMMM YYYY'; }
   if (o.dayFormat === no) { o.dayFormat = 'DD'; }
