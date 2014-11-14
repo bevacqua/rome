@@ -118,7 +118,7 @@ If you don't set an option, the default will be used. You can [look up the defau
   "min": null,
   "monthFormat": "MMMM YYYY",
   "monthsInCalendar": 1,
-  "monthsInputs": 'button'
+  "monthsInputs": 'button',
   "required": false,
   "styles": {
     "back": "rd-back",
