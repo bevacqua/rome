@@ -11,6 +11,7 @@ require('./polyfills/array.indexof');
 require('./polyfills/array.every');
 require('./polyfills/array.some');
 require('./polyfills/string.trim');
+require('./polyfills/object.keys');
 
 var core = require('./core');
 var index = require('./index');
