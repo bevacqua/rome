@@ -1,3 +1,7 @@
+# 1.2.1 Time Matters
+
+- Changed navigation buttons to `button` type
+
 # 1.2.0 Week Starts
 
 - Changed `weekStart` default value to `moment().weekday(0).day()`
