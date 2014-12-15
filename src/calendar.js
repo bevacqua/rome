@@ -23,8 +23,8 @@ function calendar (calendarOptions) {
 
   // date variables
   var monthOffsetAttribute = 'data-rome-offset';
-  var weekdays = momentum.moment.weekdaysMin();
-  var weekdayCount = weekdays.length;
+  var weekdays;
+  var weekdayCount;
   var calendarMonths = [];
   var lastYear;
   var lastMonth;
@@ -50,6 +50,8 @@ function calendar (calendarOptions) {
   function init (initOptions) {
     o = defaults(initOptions || calendarOptions, api);
     if (!container) { container = dom({ className: o.styles.container }); }
+    weekdays = o.weekdayFormat;
+    weekdayCount = weekdays.length;
     lastMonth = no;
     lastYear = no;
     lastDay = no;

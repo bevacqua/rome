@@ -83,6 +83,7 @@ Option             | Description
 `timeFormat`       | Format string used to display the time on the calendar
 `timeInterval`     | Seconds between each option in the time dropdown
 `timeValidator`    | Function to validate that a given time is considered valid. Receives a native `Date` parameter.
+`weekdayFormat`    | Format used to display weekdays. Takes `min` -> Mo, `short` -> Mon, or `long` -> Monday.
 `weekStart`        | Day considered the first of the week. Range: Sunday `0` - Saturday `6`
 
 Note that in the case of input fields, when `initialValue` isn't provided the initial value is inferred from `elem.value` instead. In the case of inline calendars, `Date.now` will be used as a default if none is provided.
@@ -144,6 +145,7 @@ If you don't set an option, the default will be used. You can [look up the defau
   "timeFormat": "HH:mm",
   "timeInterval": 1800,
   "timeValidator": Function.prototype,
+  "weekdayFormat": "min"
   "weekStart": moment().weekday(0).day()
 }
 ```
