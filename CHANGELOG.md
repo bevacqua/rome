@@ -1,3 +1,7 @@
+# 1.2.2 Fill Form at the Counter
+
+- Added ability to change weekdays format
+
 # 1.2.1 Time Matters
 
 - Changed navigation buttons to `button` type
