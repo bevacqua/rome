@@ -145,7 +145,7 @@ If you don't set an option, the default will be used. You can [look up the defau
   "timeFormat": "HH:mm",
   "timeInterval": 1800,
   "timeValidator": Function.prototype,
-  "weekdayFormat": "min"
+  "weekdayFormat": "min",
   "weekStart": moment().weekday(0).day()
 }
 ```
