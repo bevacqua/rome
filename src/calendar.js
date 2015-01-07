@@ -474,8 +474,8 @@ function calendar (calendarOptions) {
       cell: nextMonth
     });
 
-    back.disabled = !isInRange(first, true);
-    next.disabled = !isInRange(lastDay, true);
+    back.disabled = !isInRangeLeft(first, true);
+    next.disabled = !isInRangeRight(lastDay, true);
     month.date = offsetCal.clone();
 
     function part (data) {
@@ -509,16 +509,24 @@ function calendar (calendarOptions) {
   }
 
   function isInRange (date, allday, validator) {
-    var min = !o.min ? false : (allday ? o.min.clone().startOf('day') : o.min);
-    var max = !o.max ? false : (allday ? o.max.clone().endOf('day') : o.max);
-    if (min && date.isBefore(min)) {
+    if (!isInRangeLeft(date, allday)) {
       return false;
     }
-    if (max && date.isAfter(max)) {
+    if (!isInRangeRight(date, allday)) {
       return false;
     }
     var valid = (validator || Function.prototype).call(api, date.toDate());
     return valid !== false;
+  }
+
+  function isInRangeLeft (date, allday) {
+    var min = !o.min ? false : (allday ? o.min.clone().startOf('day') : o.min);
+    return !min || !date.isBefore(min);
+  }
+
+  function isInRangeRight (date, allday) {
+    var max = !o.max ? false : (allday ? o.max.clone().endOf('day') : o.max);
+    return !max || !date.isAfter(max);
   }
 
   function inRange (date) {
