@@ -1,3 +1,7 @@
+# 1.2.3 Park Bully
+
+- Fixed an issue where you couldn't navigate months if the calendar was out of range
+
 # 1.2.2 Fill Form at the Counter
 
 - Added ability to change weekdays format
