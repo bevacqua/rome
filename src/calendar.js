@@ -119,7 +119,7 @@ function calendar (calendarOptions) {
 
   function eventListening (remove) {
     var op = remove ? 'remove' : 'add';
-    if (o.autoHideOnBlur) { events[op](document, 'focusin', hideOnBlur); }
+    if (o.autoHideOnBlur) { events[op](document.documentElement, 'focus', hideOnBlur, true); }
     if (o.autoHideOnClick) { events[op](document, 'click', hideOnClick); }
   }
 

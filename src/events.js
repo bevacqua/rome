@@ -11,18 +11,18 @@ if (!window.removeEventListener) {
   removeEvent = removeEventHard;
 }
 
-function addEventEasy (element, evt, fn) {
-  return element.addEventListener(evt, fn);
+function addEventEasy (element, evt, fn, capture) {
+  return element.addEventListener(evt, fn, capture);
 }
 
-function addEventHard (element, evt, fn) {
+function addEventHard (element, evt, fn, capture) {
   return element.attachEvent('on' + evt, function (ae) {
     var e = ae || window.event;
     e.target = e.target || e.srcElement;
     e.preventDefault  = e.preventDefault || function preventDefault () { e.returnValue = false; };
     e.stopPropagation = e.stopPropagation || function stopPropagation () { e.cancelBubble = true; };
     fn.call(element, e);
-  });
+  }, capture);
 }
 
 function removeEventEasy (element, evt, fn) {
