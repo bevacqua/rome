@@ -1,3 +1,10 @@
+# 2.0.1 Reset Mayhem
+
+- Fixed an issue where input calendars wouldn't be hidden upon initialization
+- Fixed an issue where `.options()` would forget an internal setting that identifies inputs
+- Fixed an issue where `.options.reset()` would forget the container for an inline calendar
+- Fixed an issue where `.options.reset()` would hide an inline calendar
+
 # 2.0.0 Invasion
 
 - Removed necessity to wait until `'ready'` event was fired in order to interact with calendar

@@ -206,7 +206,7 @@ If no options object is provided, a copy of the current options is returned.
 
 ##### `.options.reset()`
 
-Resets the options to the factory defaults. Effectively the same as calling `.options({})`.
+Resets the options to the factory defaults. Effectively the same as calling `.options({})` while preserving the `appendTo` option.
 
 ##### `.emitValues()`
 

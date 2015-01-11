@@ -77,10 +77,7 @@ function calendar (calendarOptions) {
     api.setValue = setValue;
     api.show = show;
 
-    if (o._input !== true) {
-      show();
-    }
-
+    show();
     eventListening();
     ready();
 
@@ -139,7 +136,7 @@ function calendar (calendarOptions) {
   }
 
   function resetOptions () {
-    return changeOptions({});
+    return changeOptions({ appendTo: o.appendTo });
   }
 
   function render () {

@@ -11,7 +11,7 @@ var events = require('./events');
 
 function inputCalendar (input, calendarOptions) {
   var o;
-  var api = calendar(asInput(calendarOptions));
+  var api = calendar(calendarOptions);
   var throttledTakeInput = throttle(takeInput, 50);
   var throttledPosition = throttle(position, 30);
   var ignoreInvalidation;
@@ -21,14 +21,8 @@ function inputCalendar (input, calendarOptions) {
 
   return api;
 
-  function asInput (options) {
-    var o = options || {};
-    o._input = true;
-    return o;
-  }
-
   function init (initOptions) {
-    o = defaults(asInput(initOptions || calendarOptions), api);
+    o = defaults(initOptions || calendarOptions, api);
 
     classes.add(api.container, o.styles.positioned);
     events.add(api.container, 'mousedown', containerMouseDown);
@@ -47,6 +41,8 @@ function inputCalendar (input, calendarOptions) {
 
     eventListening();
     throttledTakeInput();
+
+    api.hide();
   }
 
   function destroy () {
