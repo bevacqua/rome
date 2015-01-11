@@ -1,3 +1,7 @@
+# 1.2.4 Tunnel Vision
+
+- Fixed [an issue](https://github.com/bevacqua/rome/issues/30) where `autoHideOnBlur` wouldn't work on Firefox
+
 # 1.2.3 Park Bully
 
 - Fixed an issue where you couldn't navigate months if the calendar was out of range
