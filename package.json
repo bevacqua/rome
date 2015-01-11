@@ -19,7 +19,6 @@
   "main": "src/rome.moment.js",
   "dependencies": {
     "contra.emitter": "^1.1.0",
-    "lodash.throttle": "^2.4.1",
     "moment": "^2.8.2",
     "raf": "^2.0.1"
   },

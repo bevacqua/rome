@@ -1,6 +1,6 @@
 'use strict';
 
-var throttle = require('lodash.throttle');
+var throttle = require('./throttle');
 var raf = require('raf');
 var clone = require('./clone');
 var defaults = require('./defaults');
@@ -12,7 +12,7 @@ var events = require('./events');
 function inputCalendar (input, calendarOptions) {
   var o;
   var api = calendar(calendarOptions);
-  var throttledTakeInput = throttle(takeInput, 50);
+  var throttledTakeInput = throttle(takeInput, 30);
   var throttledPosition = throttle(position, 30);
   var ignoreInvalidation;
   var ignoreShow;

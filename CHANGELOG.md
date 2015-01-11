@@ -1,3 +1,7 @@
+# 2.0.3 Full Throttle
+
+- Remove dependency on `lodash.throttle`
+
 # 2.0.2 Terror
 
 - Removed unnecessary `'ready'` event listener from inline calendars
