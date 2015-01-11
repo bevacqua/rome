@@ -1,3 +1,5 @@
+'use strict';
+
 if (!Array.prototype.some) {
   Array.prototype.some = function (fn, ctx) {
     var context, i;

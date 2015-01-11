@@ -66,7 +66,7 @@ function defaults (options, cal) {
     o.weekdayFormat = momentum.moment.weekdaysShort();
   } else if (o.weekdayFormat === 'min') {
     o.weekdayFormat = momentum.moment.weekdaysMin();
-  } else {
+  } else if (!Array.isArray(o.weekdayFormat) || o.weekdayFormat.length < 7) {
     throw new Error('`weekdays` must be `min`, `short`, or `long`');
   }
   if (o.monthsInCalendar === no) { o.monthsInCalendar = 1; }

@@ -3,6 +3,7 @@
 var throttle = require('lodash.throttle');
 var raf = require('raf');
 var clone = require('./clone');
+var defaults = require('./defaults');
 var calendar = require('./calendar');
 var momentum = require('./momentum');
 var classes = require('./classes');
@@ -10,16 +11,24 @@ var events = require('./events');
 
 function inputCalendar (input, calendarOptions) {
   var o;
-  var api = calendar(calendarOptions);
+  var api = calendar(asInput(calendarOptions));
   var throttledTakeInput = throttle(takeInput, 50);
   var throttledPosition = throttle(position, 30);
   var ignoreInvalidation;
   var ignoreShow;
 
-  bindEvents();
+  init(calendarOptions);
 
-  function init (superOptions) {
-    o = clone(superOptions);
+  return api;
+
+  function asInput (options) {
+    var o = options || {};
+    o._input = true;
+    return o;
+  }
+
+  function init (initOptions) {
+    o = defaults(asInput(initOptions || calendarOptions), api);
 
     classes.add(api.container, o.styles.positioned);
     events.add(api.container, 'mousedown', containerMouseDown);
@@ -42,12 +51,6 @@ function inputCalendar (input, calendarOptions) {
 
   function destroy () {
     eventListening(true);
-    raf(bindEvents);
-  }
-
-  function bindEvents () {
-    api.once('ready', init);
-    api.once('destroyed', destroy);
   }
 
   function eventListening (remove) {
@@ -61,6 +64,14 @@ function inputCalendar (input, calendarOptions) {
     events[op](input, 'input', throttledTakeInput);
     if (o.invalidate) { events[op](input, 'blur', invalidateInput); }
     events[op](window, 'resize', throttledPosition);
+
+    if (remove) {
+      api.once('ready', init);
+      api.off('destroyed', destroy);
+    } else {
+      api.off('ready', init);
+      api.once('destroyed', destroy);
+    }
   }
 
   function containerClick () {
@@ -120,8 +131,6 @@ function inputCalendar (input, calendarOptions) {
       return isEmpty() ? null : fn.apply(this, arguments);
     };
   }
-
-  return api;
 }
 
 module.exports = inputCalendar;

@@ -1,3 +1,5 @@
+'use strict';
+
 if (!Array.prototype.map) {
   Array.prototype.map = function (fn, ctx) {
     var context, result, i;

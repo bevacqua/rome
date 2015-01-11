@@ -18,5 +18,6 @@
   "quotmark": "single",
   "validthis": true,
   "indent": 2,
-  "node": true
+  "node": true,
+  "browser": true
 }

@@ -8,7 +8,6 @@ require('./polyfills/array.map');
 require('./polyfills/array.filter');
 require('./polyfills/array.isarray');
 require('./polyfills/array.indexof');
-require('./polyfills/array.every');
 require('./polyfills/array.some');
 require('./polyfills/string.trim');
 require('./polyfills/object.keys');

@@ -39,11 +39,10 @@ function calendar (calendarOptions) {
   var time;
   var timelist;
 
-  destroy(true);
+  init();
+  raf(ready);
 
-  raf(function () {
-    init();
-  });
+  return api;
 
   function napi () { return api; }
 
@@ -78,12 +77,18 @@ function calendar (calendarOptions) {
     api.setValue = setValue;
     api.show = show;
 
-    hideCalendar();
-    eventListening();
+    if (o._input !== true) {
+      show();
+    }
 
-    api.emit('ready', clone(o));
+    eventListening();
+    ready();
 
     return api;
+  }
+
+  function ready () {
+    api.emit('ready', clone(o));
   }
 
   function destroy (silent) {
@@ -95,6 +100,7 @@ function calendar (calendarOptions) {
       eventListening(true);
     }
 
+    var destroyed = api.emitterSnapshot('destroyed');
     api.destroyed = true;
     api.destroy = napi;
     api.emitValues = napi;
@@ -108,11 +114,11 @@ function calendar (calendarOptions) {
     api.restore = init;
     api.setValue = napi;
     api.show = napi;
+    api.off();
 
     if (silent !== true) {
-      api.emit('destroyed');
+      destroyed();
     }
-    api.off();
 
     return api;
   }
@@ -305,7 +311,7 @@ function calendar (calendarOptions) {
     var bound;
     var direction = op === 'add' ? -1 : 1;
     var offset = o.monthsInCalendar + direction * getMonthOffset(lastDayElement);
-    refCal[op]('months', offset);
+    refCal[op](offset, 'months');
     bound = inRange(refCal.clone());
     ref = bound || ref;
     if (bound) { refCal = bound.clone(); }
@@ -648,8 +654,6 @@ function calendar (calendarOptions) {
   function getMoment () {
     return ref.clone();
   }
-
-  return api;
 }
 
 module.exports = calendar;

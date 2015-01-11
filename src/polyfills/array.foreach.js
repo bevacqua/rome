@@ -1,3 +1,5 @@
+'use strict';
+
 if (!Array.prototype.forEach) {
   Array.prototype.forEach = function (fn, ctx) {
     if (this === void 0 || this === null || typeof fn !== 'function') {

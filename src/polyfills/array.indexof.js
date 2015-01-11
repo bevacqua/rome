@@ -1,3 +1,5 @@
+'use strict';
+
 if (!Array.prototype.indexOf) {
   Array.prototype.indexOf = function (what, start) {
     if (this === undefined || this === null) {

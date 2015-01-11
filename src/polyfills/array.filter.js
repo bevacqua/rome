@@ -1,3 +1,5 @@
+'use strict';
+
 if (!Array.prototype.filter) {
   Array.prototype.filter = function (fn, ctx) {
     var f = [];

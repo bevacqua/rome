@@ -1,3 +1,9 @@
+# 2.0.0 Invasion
+
+- Removed necessity to wait until `'ready'` event was fired in order to interact with calendar
+- Event listeners registered on a `'destroy'` event handler will no longer be immediately removed
+- Introduced ability to pass `weekdayFormat` as an array with 7 strings
+
 # 1.2.4 Tunnel Vision
 
 - Fixed [an issue](https://github.com/bevacqua/rome/issues/30) where `autoHideOnBlur` wouldn't work on Firefox

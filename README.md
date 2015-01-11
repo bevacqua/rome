@@ -83,7 +83,7 @@ Option             | Description
 `timeFormat`       | Format string used to display the time on the calendar
 `timeInterval`     | Seconds between each option in the time dropdown
 `timeValidator`    | Function to validate that a given time is considered valid. Receives a native `Date` parameter.
-`weekdayFormat`    | Format used to display weekdays. Takes `min` -> Mo, `short` -> Mon, or `long` -> Monday.
+`weekdayFormat`    | Format used to display weekdays. Takes `min` _(Mo)_, `short` _(Mon)_, `long` _(Monday)_, or an array with seven strings of your choosing.
 `weekStart`        | Day considered the first of the week. Range: Sunday `0` - Saturday `6`
 
 Note that in the case of input fields, when `initialValue` isn't provided the initial value is inferred from `elem.value` instead. In the case of inline calendars, `Date.now` will be used as a default if none is provided.
@@ -235,14 +235,6 @@ Event       | Arguments   | Description
 `time`      | `[time]`    | The time may have been updated by the calendar. Formatted time string is provided
 `show`      | `[]`        | The calendar has been displayed
 `hide`      | `[]`        | The calendar has been hidden
-
-Please note that you may need to wait for the calendar's `'ready'` event before interacting with it, otherwise most of the API will result in a no-op.
-
-```js
-rome(elem).once('ready', function () {
-  this.show();
-});
-```
 
 #### Date and Time Validator
 
