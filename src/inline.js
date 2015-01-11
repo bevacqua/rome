@@ -8,14 +8,7 @@ function inline (elem, calendarOptions) {
 
   o.appendTo = elem;
 
-  var api = calendar(o)
-    .on('ready', ready);
-
-  function ready () {
-    raf(api.show);
-  }
-
-  return api;
+  return calendar(o);
 }
 
 module.exports = inline;

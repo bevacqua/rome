@@ -1,3 +1,7 @@
+# 2.0.2 Terror
+
+- Removed unnecessary `'ready'` event listener from inline calendars
+
 # 2.0.1 Reset Mayhem
 
 - Fixed an issue where input calendars wouldn't be hidden upon initialization
