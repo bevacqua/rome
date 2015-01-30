@@ -110,7 +110,7 @@ function inputCalendar (input, calendarOptions) {
     if (isEmpty()) {
       return;
     }
-    var date = momentum.moment(value, o.inputFormat);
+    var date = momentum.moment(value, o.inputFormat, o.strictParse);
     api.setValue(date);
   }
 
