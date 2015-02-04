@@ -262,11 +262,11 @@ Returns whether the date is after the provided value. The comparison uses `>`, m
 
 #### `rome.val.beforeEq(value)`
 
-Returns whether the date is after the provided value. The comparison uses `<=`, meaning it's inclusive.
+Returns whether the date is before the provided value. The comparison uses `<=`, meaning it's inclusive.
 
 #### `rome.val.before(value)`
 
-Returns whether the date is after the provided value. The comparison uses `<`, meaning it's exclusive.
+Returns whether the date is before the provided value. The comparison uses `<`, meaning it's exclusive.
 
 #### `rome.val.except(left, right)`
 
