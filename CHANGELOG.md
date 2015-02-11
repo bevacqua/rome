@@ -1,3 +1,7 @@
+# 2.0.4 Strictosaur
+
+- Added `strictParse` option to avoid partial matches against `inputFormat`
+
 # 2.0.3 Full Throttle
 
 - Remove dependency on `lodash.throttle`
