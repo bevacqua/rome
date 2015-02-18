@@ -592,7 +592,7 @@ function calendar (calendarOptions) {
     ref.date(day); // must run after setting the month
     setTime(ref, inRange(ref) || ref);
     refCal = ref.clone();
-    if (o.autoClose) { hideConditionally(); }
+    if (o.autoClose === true) { hideConditionally(); }
     update();
   }
 
@@ -633,7 +633,7 @@ function calendar (calendarOptions) {
     refCal = ref.clone();
     emitValues();
     updateTime();
-    if (!o.date && o.autoClose) {
+    if ((!o.date && o.autoClose === true) || o.autoClose === 'time') {
       hideConditionally();
     } else {
       hideTimeList();

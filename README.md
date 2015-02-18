@@ -64,7 +64,7 @@ Creating a calendar has a ton of options. These have reasonable defaults that ar
 Option             | Description
 -------------------|--------------------------------------------------------------------------------------------------
 `appendTo`         | DOM element where the calendar will be appended to. Takes `'parent'` as the parent element
-`autoClose`        | Closes the calendar when picking a day or a time
+`autoClose`        | When set to true, the calendar is closed when picking a day (or a time if time: true and date: false). A value of `time` will only close the calendar when a time is picked.
 `autoHideOnBlur`   | Hides the calendar when focusing something other than the input field
 `autoHideOnClick`  | Hides the calendar when clicking away
 `date`             | The calendar shows days and allows you to navigate between months
