@@ -1,3 +1,7 @@
+# 2.1.0 Garage Band
+
+- Added the ability to set `autoClose` to `'time'`, which only automatically hides the calendar when and if a time is picked
+
 # 2.0.4 Strictosaur
 
 - Added `strictParse` option to avoid partial matches against `inputFormat`
