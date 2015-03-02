@@ -2,7 +2,7 @@
   "name": "rome",
   "description": "Customizable date (and time) picker. Opt-in UI, no jQuery!",
   "homepage": "https://github.com/bevacqua/rome",
-  "version": "2.1.5",
+  "version": "2.1.6",
   "author": {
     "name": "Nicolas Bevacqua",
     "email": "hello@bevacqua.io",
@@ -19,6 +19,7 @@
   "main": "src/rome.moment.js",
   "dependencies": {
     "contra.emitter": "^1.1.0",
+    "crossvent": "^1.0.0",
     "moment": "^2.8.2"
   },
   "devDependencies": {
