@@ -1,8 +1,8 @@
-# 2.1.2 Rat's Nest
+# 2.1.3 Rat's Nest
 
 - Fixed a bug where inline date pickers would blink for a brief moment on the screen, when initialized
 
-# 2.1.0 Life Raft
+# 2.1.1 Life Raft
 
 - Removed dependency on `raf`
 
