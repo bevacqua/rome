@@ -19,8 +19,7 @@
   "main": "src/rome.moment.js",
   "dependencies": {
     "contra.emitter": "^1.1.0",
-    "moment": "^2.8.2",
-    "raf": "^2.0.1"
+    "moment": "^2.8.2"
   },
   "devDependencies": {
     "browserify": "^4.2.1",
