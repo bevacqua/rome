@@ -1,7 +1,6 @@
 'use strict';
 
 var emitter = require('contra.emitter');
-var raf = require('raf');
 var dom = require('./dom');
 var text = require('./text');
 var parse = require('./parse');
@@ -40,7 +39,7 @@ function calendar (calendarOptions) {
   var timelist;
 
   init();
-  raf(ready);
+  setTimeout(ready, 0);
 
   return api;
 
@@ -261,7 +260,7 @@ function calendar (calendarOptions) {
 
   function hide () {
     hideTimeList();
-    raf(hideCalendar);
+    setTimeout(hideCalendar, 0);
     return api;
   }
 
@@ -270,7 +269,7 @@ function calendar (calendarOptions) {
 
     var pos = classes.contains(container, o.styles.positioned);
     if (pos) {
-      raf(hideCalendar);
+      setTimeout(hideCalendar, 0);
     }
     return api;
   }

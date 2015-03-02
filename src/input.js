@@ -1,7 +1,6 @@
 'use strict';
 
 var throttle = require('./throttle');
-var raf = require('raf');
 var clone = require('./clone');
 var defaults = require('./defaults');
 var calendar = require('./calendar');
@@ -78,7 +77,7 @@ function inputCalendar (input, calendarOptions) {
 
   function containerMouseDown () {
     ignoreInvalidation = true;
-    raf(unignore);
+    setTimeout(unignore, 0);
 
     function unignore () {
       ignoreInvalidation = false;

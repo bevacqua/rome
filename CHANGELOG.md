@@ -1,3 +1,7 @@
+# 2.1.0 Life Raft
+
+- Removed dependency on `raf`
+
 # 2.1.0 Garage Band
 
 - Added the ability to set `autoClose` to `'time'`, which only automatically hides the calendar when and if a time is picked

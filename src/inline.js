@@ -1,6 +1,5 @@
 'use strict';
 
-var raf = require('raf');
 var calendar = require('./calendar');
 
 function inline (elem, calendarOptions) {
