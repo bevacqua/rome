@@ -1,5 +1,6 @@
 'use strict';
 
+var crossvent = require('crossvent');
 var emitter = require('contra.emitter');
 var dom = require('./dom');
 var text = require('./text');
@@ -8,7 +9,6 @@ var clone = require('./clone');
 var defaults = require('./defaults');
 var momentum = require('./momentum');
 var classes = require('./classes');
-var events = require('./events');
 var noop = require('./noop');
 var no;
 
@@ -120,8 +120,8 @@ function calendar (calendarOptions) {
 
   function eventListening (remove) {
     var op = remove ? 'remove' : 'add';
-    if (o.autoHideOnBlur) { events[op](document.documentElement, 'focus', hideOnBlur, true); }
-    if (o.autoHideOnClick) { events[op](document, 'click', hideOnClick); }
+    if (o.autoHideOnBlur) { crossvent[op](document.documentElement, 'focus', hideOnBlur, true); }
+    if (o.autoHideOnClick) { crossvent[op](document, 'click', hideOnClick); }
   }
 
   function changeOptions (options) {
@@ -160,9 +160,9 @@ function calendar (calendarOptions) {
       renderMonth(i);
     }
 
-    events.add(back, 'click', subtractMonth);
-    events.add(next, 'click', addMonth);
-    events.add(datewrapper, 'click', pickDay);
+    crossvent.add(back, 'click', subtractMonth);
+    crossvent.add(next, 'click', addMonth);
+    crossvent.add(datewrapper, 'click', pickDay);
 
     function renderMonth (i) {
       var month = dom({ className: o.styles.month, parent: datewrapper });
@@ -197,9 +197,9 @@ function calendar (calendarOptions) {
     }
     var timewrapper = dom({ className: o.styles.time, parent: container });
     time = dom({ className: o.styles.selectedTime, parent: timewrapper, text: ref.format(o.timeFormat) });
-    events.add(time, 'click', toggleTimeList);
+    crossvent.add(time, 'click', toggleTimeList);
     timelist = dom({ className: o.styles.timeList, parent: timewrapper });
-    events.add(timelist, 'click', pickTime);
+    crossvent.add(timelist, 'click', pickTime);
     var next = momentum.moment('00:00:00', 'HH:mm:ss');
     var latest = next.clone().add(1, 'days');
     while (next.isBefore(latest)) {

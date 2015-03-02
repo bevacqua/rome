@@ -1,12 +1,12 @@
 'use strict';
 
+var crossvent = require('crossvent');
 var throttle = require('./throttle');
 var clone = require('./clone');
 var defaults = require('./defaults');
 var calendar = require('./calendar');
 var momentum = require('./momentum');
 var classes = require('./classes');
-var events = require('./events');
 
 function inputCalendar (input, calendarOptions) {
   var o;
@@ -24,8 +24,8 @@ function inputCalendar (input, calendarOptions) {
     o = defaults(initOptions || calendarOptions, api);
 
     classes.add(api.container, o.styles.positioned);
-    events.add(api.container, 'mousedown', containerMouseDown);
-    events.add(api.container, 'click', containerClick);
+    crossvent.add(api.container, 'mousedown', containerMouseDown);
+    crossvent.add(api.container, 'click', containerClick);
 
     api.getDate = unrequire(api.getDate);
     api.getDateString = unrequire(api.getDateString);
@@ -48,15 +48,15 @@ function inputCalendar (input, calendarOptions) {
 
   function eventListening (remove) {
     var op = remove ? 'remove' : 'add';
-    events[op](input, 'click', show);
-    events[op](input, 'touchend', show);
-    events[op](input, 'focusin', show);
-    events[op](input, 'change', throttledTakeInput);
-    events[op](input, 'keypress', throttledTakeInput);
-    events[op](input, 'keydown', throttledTakeInput);
-    events[op](input, 'input', throttledTakeInput);
-    if (o.invalidate) { events[op](input, 'blur', invalidateInput); }
-    events[op](window, 'resize', throttledPosition);
+    crossvent[op](input, 'click', show);
+    crossvent[op](input, 'touchend', show);
+    crossvent[op](input, 'focusin', show);
+    crossvent[op](input, 'change', throttledTakeInput);
+    crossvent[op](input, 'keypress', throttledTakeInput);
+    crossvent[op](input, 'keydown', throttledTakeInput);
+    crossvent[op](input, 'input', throttledTakeInput);
+    if (o.invalidate) { crossvent[op](input, 'blur', invalidateInput); }
+    crossvent[op](window, 'resize', throttledPosition);
 
     if (remove) {
       api.once('ready', init);

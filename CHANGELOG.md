@@ -1,3 +1,7 @@
+# 2.1.6 Cross Ventures
+
+- Replaced `./events` with `crossvent` for code reuse
+
 # 2.1.5 Rat's Nest
 
 - Fixed a bug where inline date pickers would blink for a brief moment on the screen, when initialized
