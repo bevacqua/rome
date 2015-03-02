@@ -1,4 +1,4 @@
-# 2.1.3 Rat's Nest
+# 2.1.4 Rat's Nest
 
 - Fixed a bug where inline date pickers would blink for a brief moment on the screen, when initialized
 

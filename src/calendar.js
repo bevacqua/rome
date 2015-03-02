@@ -76,7 +76,6 @@ function calendar (calendarOptions) {
     api.setValue = setValue;
     api.show = show;
 
-    show();
     eventListening();
     ready();
 

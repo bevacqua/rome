@@ -7,7 +7,9 @@ function inline (elem, calendarOptions) {
 
   o.appendTo = elem;
 
-  return calendar(o);
+  var cal = calendar(o);
+  cal.show();
+  return cal;
 }
 
 module.exports = inline;
