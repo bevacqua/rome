@@ -1,6 +1,6 @@
 /**
  * rome - Customizable date (and time) picker. Opt-in UI, no jQuery!
- * @version v2.1.7
+ * @version v2.1.8
  * @link https://github.com/bevacqua/rome
  * @license MIT
  */
