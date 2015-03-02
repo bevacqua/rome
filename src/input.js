@@ -17,6 +17,7 @@ function inputCalendar (input, calendarOptions) {
   var ignoreShow;
 
   init(calendarOptions);
+  api.hide();
 
   return api;
 
@@ -40,8 +41,6 @@ function inputCalendar (input, calendarOptions) {
 
     eventListening();
     throttledTakeInput();
-
-    api.hide();
   }
 
   function destroy () {
