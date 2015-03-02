@@ -1,11 +1,11 @@
 /**
  * rome - Customizable date (and time) picker. Opt-in UI, no jQuery!
- * @version v2.1.4
+ * @version v2.1.5
  * @link https://github.com/bevacqua/rome
  * @license MIT
  */
 .rd-container {
-  display: inline-block;
+  display: none;
   border: 1px solid #333;
   background-color: #fff;
   padding: 10px;
