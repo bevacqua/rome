@@ -18,7 +18,7 @@
   },
   "main": "src/rome.moment.js",
   "dependencies": {
-    "bullseye": "^1.0.1",
+    "bullseye": "^1.0.4",
     "contra.emitter": "^1.1.0",
     "crossvent": "^1.1.0",
     "moment": "^2.8.2"
