@@ -20,7 +20,7 @@
   "dependencies": {
     "bullseye": "^1.0.1",
     "contra.emitter": "^1.1.0",
-    "crossvent": "^1.0.0",
+    "crossvent": "^1.1.0",
     "moment": "^2.8.2"
   },
   "devDependencies": {

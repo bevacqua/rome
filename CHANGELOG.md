@@ -1,4 +1,4 @@
-# 2.1.10 Now is not the Time
+# 2.1.11 Now is not the Time
 
 - Replaced use of `Date.now` with `new Date()` because browser support
 
