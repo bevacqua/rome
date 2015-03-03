@@ -1,6 +1,8 @@
 # 2.1.12 Now is not the Time
 
 - Replaced use of `Date.now` with `new Date()` because browser support
+- Bumped `bullseye@1.0.5`
+- Bumped `cross@1.1.0`
 
 # 2.1.9 Eye of the Tiger
 
