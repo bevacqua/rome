@@ -87,7 +87,7 @@ Option             | Description
 `weekdayFormat`    | Format used to display weekdays. Takes `min` _(Mo)_, `short` _(Mon)_, `long` _(Monday)_, or an array with seven strings of your choosing.
 `weekStart`        | Day considered the first of the week. Range: Sunday `0` - Saturday `6`
 
-Note that in the case of input fields, when `initialValue` isn't provided the initial value is inferred from `elem.value` instead. In the case of inline calendars, `Date.now` will be used as a default if none is provided.
+Note that in the case of input fields, when `initialValue` isn't provided the initial value is inferred from `elem.value` instead. In the case of inline calendars, `new Date()` will be used as a default if none is provided.
 
 #### Inlining the Calendar
 

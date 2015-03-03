@@ -1,3 +1,7 @@
+# 2.1.10 Now is not the Time
+
+- Replaced use of `Date.now` with `new Date()` because browser support
+
 # 2.1.9 Eye of the Tiger
 
 - Extracted positioning API into `bullseye`

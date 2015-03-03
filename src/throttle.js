@@ -13,7 +13,7 @@ module.exports = function throttle (fn, boundary) {
       clearTimeout(timer);
       timer = null;
       var next = last + boundary;
-      var now = Date.now();
+      var now = new Date();
       if (now > next) {
         last = now;
         fn.apply(this, arguments);
