@@ -1,6 +1,7 @@
 'use strict';
 
 var crossvent = require('crossvent');
+var bullseye = require('bullseye');
 var throttle = require('./throttle');
 var clone = require('./clone');
 var defaults = require('./defaults');
@@ -9,19 +10,22 @@ var momentum = require('./momentum');
 var classes = require('./classes');
 
 function inputCalendar (input, calendarOptions) {
-  var o;
-  var api = calendar(calendarOptions);
+  var o = calendarOptions || {};
+
+  o.associated = input;
+
+  var api = calendar(o);
   var throttledTakeInput = throttle(takeInput, 30);
-  var throttledPosition = throttle(position, 30);
   var ignoreInvalidation;
   var ignoreShow;
+  var eye;
 
-  init(calendarOptions);
+  init(o);
 
   return api;
 
   function init (initOptions) {
-    o = defaults(initOptions || calendarOptions, api);
+    o = defaults(initOptions || o, api);
 
     classes.add(api.container, o.styles.positioned);
     crossvent.add(api.container, 'mousedown', containerMouseDown);
@@ -35,8 +39,9 @@ function inputCalendar (input, calendarOptions) {
       input.value = o.initialValue.format(o.inputFormat);
     }
 
+    eye = bullseye(api.container, input);
     api.on('data', updateInput);
-    api.on('show', throttledPosition);
+    api.on('show', eye.refresh);
 
     eventListening();
     throttledTakeInput();
@@ -44,6 +49,8 @@ function inputCalendar (input, calendarOptions) {
 
   function destroy () {
     eventListening(true);
+    eye.destroy();
+    eye = null;
   }
 
   function eventListening (remove) {
@@ -56,7 +63,6 @@ function inputCalendar (input, calendarOptions) {
     crossvent[op](input, 'keydown', throttledTakeInput);
     crossvent[op](input, 'input', throttledTakeInput);
     if (o.invalidate) { crossvent[op](input, 'blur', invalidateInput); }
-    crossvent[op](window, 'resize', throttledPosition);
 
     if (remove) {
       api.once('ready', init);
@@ -93,13 +99,6 @@ function inputCalendar (input, calendarOptions) {
       return;
     }
     api.show();
-  }
-
-  function position () {
-    var bounds = input.getBoundingClientRect();
-    var scrollTop = document.body.scrollTop || document.documentElement.scrollTop;
-    api.container.style.top  = bounds.top + scrollTop + input.offsetHeight + 'px';
-    api.container.style.left = bounds.left + 'px';
   }
 
   function takeInput () {

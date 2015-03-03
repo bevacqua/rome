@@ -14,7 +14,6 @@ var no;
 
 function calendar (calendarOptions) {
   var o;
-  var api = emitter({});
   var ref;
   var refCal;
   var container;
@@ -37,6 +36,10 @@ function calendar (calendarOptions) {
   var secondsInDay = 60 * 60 * 24;
   var time;
   var timelist;
+
+  var api = emitter({
+    associated: calendarOptions.associated
+  });
 
   init();
   setTimeout(ready, 0);

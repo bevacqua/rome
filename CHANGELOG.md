@@ -1,3 +1,8 @@
+# 2.1.9 Eye of the Tiger
+
+- Extracted positioning API into `bullseye`
+- Fixed a bug where inline calendars couldn't be instantiated
+
 # 2.1.8 Cross Ventures
 
 - Replaced `./events` with `crossvent` for code reuse
