@@ -20,6 +20,7 @@ function defaults (options, cal) {
     }
   }
   if (o.invalidate === no) { o.invalidate = true; }
+  if (o.allowUserInput === no) { o.allowUserInput = false; }
   if (o.required === no) { o.required = false; }
   if (o.date === no) { o.date = true; }
   if (o.time === no) { o.time = true; }
