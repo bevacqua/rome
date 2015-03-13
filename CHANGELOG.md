@@ -1,3 +1,7 @@
+# 2.1.14 We The People
+
+- Fixed regression caused by `2.1.10` where you could no longer enter a valid date typing manually
+
 # 2.1.13 Bugcatcher
 
 - Bumped `crossvent@1.2.0`, fixing a bug removing `focus` event listener
