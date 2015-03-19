@@ -36,7 +36,7 @@ gulp.task('clean', function () {
 });
 
 gulp.task('build-only-broad', bab);
-
+gulp.task('buildAlone', buildAlone);
 gulp.task('build-only', build);
 gulp.task('build', ['styles'], bab);
 
@@ -45,8 +45,7 @@ function buildSource (src, dest) {
   var min = dest.split('.');
   min.splice(min.length - 1, 0, 'min');
   min = min.join('.');
-  return browserify('./src/' + src)
-    .bundle({ debug: true, standalone: 'rome' })
+  return browserify('./src/' + src).bundle({ debug: true, standalone: 'rome'})//{ debug: true, standalone: 'rome' }
     .pipe(source(dest))
     .pipe(streamify(header(extended, { pkg : pkg } )))
     .pipe(gulp.dest('./dist'))

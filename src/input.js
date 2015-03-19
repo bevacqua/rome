@@ -1,7 +1,7 @@
 'use strict';
 
 var crossvent = require('crossvent');
-var bullseye = require('bullseye');
+var bullseye = require('./popup');
 var throttle = require('./throttle');
 var clone = require('./clone');
 var defaults = require('./defaults');
