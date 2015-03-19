@@ -30,7 +30,7 @@ function popup (el, target, options) {
 	  var top = bounds.top + scrollTop + target.offsetHeight;
 	  var elBottom = bounds.bottom + elSize.h;
 	  if (elBottom > pageHeight){
-		  top = top - elSize.h - target.offsetHeight;// bounds.top + scrollTop + target.offsetHeight;
+		  top = top - elSize.h - target.offsetHeight;
 	  }
     el.style.top  = top +'px';
     el.style.left = bounds.left + 'px';
@@ -53,7 +53,7 @@ function popup (el, target, options) {
 		clone.style.display = 'block';
 		var tempEl = document.getElementsByClassName(tempId)[0];
 		var elementSize = { h: tempEl.clientHeight,
-							 w: tempEl.clientWidth};
+							w: tempEl.clientWidth};
 		//remove
 		tempEl.parentNode.removeChild(tempEl);
 
