@@ -73,6 +73,7 @@ function defaults (options, cal) {
   if (o.monthFormat === no) { o.monthFormat = 'MMMM YYYY'; }
   if (o.dayFormat === no) { o.dayFormat = 'DD'; }
   if (o.styles === no) { o.styles = {}; }
+  if (o.monthsInputs === no){o.monthsInputs = 'button'}
 
   o.styles._isStylesConfiguration = true;
 

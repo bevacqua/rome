@@ -170,10 +170,10 @@ function calendar (calendarOptions) {
     function renderMonth (i) {
       var month = dom({ className: o.styles.month, parent: datewrapper });
       if (i === 0) {
-        back = dom({ type: 'button', className: o.styles.back, attributes: { type: 'button' }, parent: month });
+        back = dom({ type: o.monthsInputs, className: o.styles.back, attributes: { type: 'button' }, parent: month });
       }
       if (i === o.monthsInCalendar -1) {
-        next = dom({ type: 'button', className: o.styles.next, attributes: { type: 'button' }, parent: month });
+        next = dom({ type: o.monthsInputs, className: o.styles.next, attributes: { type: 'button' }, parent: month });
       }
       var label = dom({ className: o.styles.monthLabel, parent: month });
       var date = dom({ type: 'table', className: o.styles.dayTable, parent: month });
