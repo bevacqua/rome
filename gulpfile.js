@@ -46,7 +46,7 @@ function buildSource (src, dest) {
   min.splice(min.length - 1, 0, 'min');
   min = min.join('.');
   return browserify('./src/' + src)
-    .bundle({ debug: true, standalone: 'rome' })
+	  .bundle({ debug: true, standalone: 'rome'})
     .pipe(source(dest))
     .pipe(streamify(header(extended, { pkg : pkg } )))
     .pipe(gulp.dest('./dist'))
