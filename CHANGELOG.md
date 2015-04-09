@@ -1,3 +1,7 @@
+# 2.1.15 Bull Run
+
+- Updated `bullseye@1.4.1`
+
 # 2.1.14 We The People
 
 - Fixed regression caused by `2.1.10` where you could no longer enter a valid date typing manually
