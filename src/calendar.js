@@ -90,7 +90,7 @@ function calendar (calendarOptions) {
   }
 
   function destroy (silent) {
-    if (container) {
+    if (container && container.parentNode) {
       container.parentNode.removeChild(container);
     }
 
