@@ -1,6 +1,6 @@
-# 2.1.16 Bull Run
+# 2.1.17 Bull Run
 
-- Updated `bullseye@1.4.1`
+- Updated `bullseye@1.4.3`
 
 # 2.1.14 We The People
 
