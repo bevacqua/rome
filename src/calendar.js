@@ -165,7 +165,7 @@ function calendar (calendarOptions) {
 
     crossvent.add(back, 'click', subtractMonth);
     crossvent.add(next, 'click', addMonth);
-    crossvent.add(datewrapper, 'click', pickDay);
+    if (!o.freeNav) crossvent.add(datewrapper, 'click', pickDay);
 
     function renderMonth (i) {
       var month = dom({ className: o.styles.month, parent: datewrapper });
@@ -310,9 +310,11 @@ function calendar (calendarOptions) {
     var direction = op === 'add' ? -1 : 1;
     var offset = o.monthsInCalendar + direction * getMonthOffset(lastDayElement);
     refCal[op](offset, 'months');
-    bound = inRange(refCal.clone());
-    ref = bound || ref;
-    if (bound) { refCal = bound.clone(); }
+    if (!o.freeNav) {
+      bound = inRange(refCal.clone());
+      ref = bound || ref;
+      if (bound) { refCal = bound.clone(); }
+    }
     update();
   }
 
@@ -478,8 +480,8 @@ function calendar (calendarOptions) {
       cell: nextMonth
     });
 
-    back.disabled = !isInRangeLeft(first, true);
-    next.disabled = !isInRangeRight(lastDay, true);
+    back.disabled = !o.freeNav && !isInRange(first, true);
+    next.disabled = !o.freeNav && !isInRange(lastDay, true);
     month.date = offsetCal.clone();
 
     function part (data) {
