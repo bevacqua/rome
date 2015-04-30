@@ -222,6 +222,16 @@ Sets the current date to the provided `value`, but only if that value is valid a
 
 Forces a refresh of the calendar. This method will redraw the month and update the dates that can be selected in accordance with `dateValidator` and `timeValidator`.
 
+##### `.back()`
+
+Steps the calendar display back by one month. Equivalent to clicking the 'back' button.
+Returns `undefined`.
+
+##### `.next()`
+
+Steps the calendar display forward by one month. Equivalent to clicking the 'next' button.
+Returns `undefined`.
+
 #### Events
 
 Rome calendars also provide a few events you can subscribe to. These events are published through an event emitter created using [`contra`][2]. These events are listed below.
@@ -237,6 +247,8 @@ Event       | Arguments   | Description
 `time`      | `[time]`    | The time may have been updated by the calendar. Formatted time string is provided
 `show`      | `[]`        | The calendar has been displayed
 `hide`      | `[]`        | The calendar has been hidden
+`back`      | `[month]`   | The calendar view has been moved back a month to the value `moment.month()`
+`next`      | `[month]`   | The calendar view has been moved forward a month to the value `moment.month()`
 
 #### Date and Time Validator
 
