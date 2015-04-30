@@ -64,6 +64,7 @@ function calendar (calendarOptions) {
     ref = o.initialValue ? o.initialValue : momentum.moment();
     refCal = ref.clone();
 
+    api.back = subtractMonth;
     api.container = container;
     api.destroyed = false;
     api.destroy = destroy.bind(api, false);
@@ -72,6 +73,7 @@ function calendar (calendarOptions) {
     api.getDateString = getDateString;
     api.getMoment = getMoment;
     api.hide = hide;
+    api.next = addMonth;
     api.options = changeOptions;
     api.options.reset = resetOptions;
     api.refresh = refresh;
@@ -99,6 +101,7 @@ function calendar (calendarOptions) {
     }
 
     var destroyed = api.emitterSnapshot('destroyed');
+    api.back = noop;
     api.destroyed = true;
     api.destroy = napi;
     api.emitValues = napi;
@@ -106,6 +109,7 @@ function calendar (calendarOptions) {
     api.getDateString = noop;
     api.getMoment = noop;
     api.hide = napi;
+    api.next = noop;
     api.options = napi;
     api.options.reset = napi;
     api.refresh = napi;
