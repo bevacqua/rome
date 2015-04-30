@@ -247,6 +247,8 @@ Event       | Arguments   | Description
 `time`      | `[time]`    | The time may have been updated by the calendar. Formatted time string is provided
 `show`      | `[]`        | The calendar has been displayed
 `hide`      | `[]`        | The calendar has been hidden
+`back`      | `[month]`   | The calendar view has been moved back a month to the value `moment.month()`
+`next`      | `[month]`   | The calendar view has been moved forward a month to the value `moment.month()`
 
 #### Date and Time Validator
 

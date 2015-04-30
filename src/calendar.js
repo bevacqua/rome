@@ -318,6 +318,7 @@ function calendar (calendarOptions) {
     ref = bound || ref;
     if (bound) { refCal = bound.clone(); }
     update();
+    api.emit(op === 'add' ? 'next' : 'back', ref.month());
   }
 
   function update (silent) {
