@@ -39,9 +39,14 @@ function inputCalendar (input, calendarOptions) {
       input.value = o.initialValue.format(o.inputFormat);
     }
 
-    eye = bullseye(api.container, input);
+    if (o.bullseye) {
+      eye = bullseye(api.container, input);
+      api.on('show', function () {
+        eye.refresh();
+      });
+    }
     api.on('data', updateInput);
-    api.on('show', eye.refresh);
+    
 
     eventListening();
     throttledTakeInput();
@@ -49,7 +54,9 @@ function inputCalendar (input, calendarOptions) {
 
   function destroy () {
     eventListening(true);
-    eye.destroy();
+    if (eye && eye.destroy) {
+      eye.destroy();
+    }
     eye = null;
   }
 
