@@ -1,3 +1,7 @@
+# 2.1.18 Aural Emission
+
+- Replaced `contra.emitter` with `contra@1.9.0/emitter`
+
 # 2.1.17 Bull Run
 
 - Updated `bullseye@1.4.3`

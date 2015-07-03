@@ -4,8 +4,8 @@
   "homepage": "https://github.com/bevacqua/rome",
   "version": "2.1.17",
   "author": {
-    "name": "Nicolas Bevacqua",
     "email": "hello@bevacqua.io",
+    "name": "Nicolas Bevacqua",
     "url": "http://ponyfoo.com"
   },
   "license": "MIT",
@@ -19,7 +19,7 @@
   "main": "src/rome.moment.js",
   "dependencies": {
     "bullseye": "^1.4.3",
-    "contra.emitter": "^1.1.0",
+    "contra": "1.9.0",
     "crossvent": "^1.2.0",
     "moment": "^2.8.2"
   },
