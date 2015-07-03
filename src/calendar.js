@@ -1,7 +1,7 @@
 'use strict';
 
 var crossvent = require('crossvent');
-var emitter = require('contra.emitter');
+var emitter = require('contra/emitter');
 var dom = require('./dom');
 var text = require('./text');
 var parse = require('./parse');
