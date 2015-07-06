@@ -256,7 +256,8 @@ function calendar (calendarOptions) {
   function showCalendar () { container.style.display = 'inline-block'; api.emit('show'); }
   function hideCalendar () {
     if (container.style.display !== 'none') {
-      container.style.display = 'none'; api.emit('hide');
+      container.style.display = 'none';
+      api.emit('hide');
     }
   }
 
