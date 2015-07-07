@@ -24,7 +24,7 @@
     "moment": "^2.8.2"
   },
   "devDependencies": {
-    "browserify": "^4.2.1",
+    "browserify": "^10.2.4",
     "gulp": "^3.8.6",
     "gulp-bump": "^0.1.8",
     "gulp-clean": "^0.2.4",
@@ -36,8 +36,11 @@
     "gulp-streamify": "0.0.5",
     "gulp-stylus": "^1.0.0",
     "gulp-uglify": "^0.3.0",
+    "gulp-util": "^3.0.6",
     "gulp-watch": "^0.6.8",
+    "lodash.assign": "^3.2.0",
     "nib": "^1.0.3",
-    "vinyl-source-stream": "^0.1.1"
+    "vinyl-source-stream": "^0.1.1",
+    "watchify": "^3.2.3"
   }
 }

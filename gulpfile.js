@@ -15,6 +15,9 @@ var streamify = require('gulp-streamify');
 var watch = require('gulp-watch');
 var source = require('vinyl-source-stream');
 var size = require('gulp-size');
+var watchify = require('watchify');
+var assign = require('lodash.assign');
+var gutil = require('gulp-util');
 
 var extended = [
   '/**',
@@ -37,26 +40,50 @@ gulp.task('clean', function () {
 
 gulp.task('build-only-broad', bab);
 
-gulp.task('build-only', build);
+gulp.task('build-only', buildDev);
 gulp.task('build', ['styles'], bab);
 
-function buildSource (src, dest) {
+function buildSource (src, dest, devMode) {
   var pkg = require('./package.json');
+  var opts;
+  var b;
   var min = dest.split('.');
   min.splice(min.length - 1, 0, 'min');
   min = min.join('.');
-  return browserify('./src/' + src)
-    .bundle({ debug: true, standalone: 'rome' })
-    .pipe(source(dest))
-    .pipe(streamify(header(extended, { pkg : pkg } )))
-    .pipe(gulp.dest('./dist'))
-    .pipe(streamify(rename(min)))
-    .pipe(streamify(uglify()))
-    .pipe(streamify(header(succjs, { pkg : pkg } )))
-    .pipe(streamify(size()))
-    .pipe(gulp.dest('./dist'));
+
+  // browserify options
+  opts = {
+      entries: ['./src/' + src],
+      debug: true,
+      standalone: 'rome'
+  };
+
+  if (devMode) {
+    opts = assign({}, watchify.args, opts);
+    b = watchify(browserify(opts));
+    b.on('update', bundle);
+  } else {
+    b = browserify(opts);
+  }
+
+  b.on('log', gutil.log);
+
+  function bundle() {
+    return b.bundle()
+      .pipe(source(dest))
+      .pipe(streamify(header(extended, { pkg : pkg } )))
+      .pipe(gulp.dest('./dist'))
+      .pipe(streamify(rename(min)))
+      .pipe(streamify(uglify()))
+      .pipe(streamify(header(succjs, { pkg : pkg } )))
+      .pipe(streamify(size()))
+      .pipe(gulp.dest('./dist'));
+  }
+
+  return bundle();
 }
 
+function buildDev () { return buildSource('rome.moment.js', 'rome.js', true); }
 function build () { return buildSource('rome.moment.js', 'rome.js'); }
 function buildAlone () { return buildSource('rome.standalone.js', 'rome.standalone.js'); }
 function bab () {
@@ -64,6 +91,9 @@ function bab () {
   return build();
 }
 
+gulp.task('styles:dev', function() {
+  watch({ glob: 'src/**/*.styl' }, function () { gulp.start('styles-only'); });
+});
 gulp.task('styles-only', styles);
 gulp.task('styles', ['clean', 'bump'], styles);
 
@@ -83,10 +113,7 @@ function styles () {
     .pipe(gulp.dest('./dist'));
 }
 
-gulp.task('watch', function() {
-  watch({ glob: 'src/**/*.js' }, function () { gulp.start('build-only'); });
-  watch({ glob: 'src/**/*.styl' }, function () { gulp.start('styles-only'); });
-});
+gulp.task('watch', ['styles:dev', 'build-only']);
 
 gulp.task('bump', function () {
   var bumpType = process.env.BUMP || 'patch'; // major.minor.patch
