@@ -1,3 +1,5 @@
+'use strict';
+
 var path = require('path');
 var gulp = require('gulp');
 var bump = require('gulp-bump');
@@ -38,7 +40,7 @@ gulp.task('clean', function () {
 
 gulp.task('build-only-broad', bab);
 
-gulp.task('build:dev', buildDev);
+gulp.task('build-only', buildDev);
 gulp.task('build', ['styles'], bab);
 
 function buildSource (src, dest, devMode) {
@@ -111,7 +113,7 @@ function styles () {
     .pipe(gulp.dest('./dist'));
 }
 
-gulp.task('watch', ['styles:dev', 'build:dev']);
+gulp.task('watch', ['styles:dev', 'build-only']);
 
 gulp.task('bump', function () {
   var bumpType = process.env.BUMP || 'patch'; // major.minor.patch
