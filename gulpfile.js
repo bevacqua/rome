@@ -38,8 +38,7 @@ gulp.task('clean', function () {
 
 gulp.task('build-only-broad', bab);
 
-gulp.task('build-only', build);
-gulp.task('build-only:dev', buildDev);
+gulp.task('build:dev', buildDev);
 gulp.task('build', ['styles'], bab);
 
 function buildSource (src, dest, devMode) {
@@ -93,7 +92,6 @@ function bab () {
 gulp.task('styles:dev', function() {
   watch({ glob: 'src/**/*.styl' }, function () { gulp.start('styles-only'); });
 });
-
 gulp.task('styles-only', styles);
 gulp.task('styles', ['clean', 'bump'], styles);
 
@@ -113,7 +111,7 @@ function styles () {
     .pipe(gulp.dest('./dist'));
 }
 
-gulp.task('watch', ['styles:dev', 'build-only:dev']);
+gulp.task('watch', ['styles:dev', 'build:dev']);
 
 gulp.task('bump', function () {
   var bumpType = process.env.BUMP || 'patch'; // major.minor.patch
