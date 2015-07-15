@@ -28,6 +28,7 @@ function calendar (calendarOptions) {
   var lastMonth;
   var lastDay;
   var lastDayElement;
+  var today;
   var datewrapper;
   var back;
   var next;
@@ -57,6 +58,7 @@ function calendar (calendarOptions) {
     lastYear = no;
     lastDay = no;
     lastDayElement = no;
+    today = momentum.moment();
     o.appendTo.appendChild(container);
 
     removeChildren(container);
@@ -508,6 +510,9 @@ function calendar (calendarOptions) {
         if (data.selectable && day.date() === current) {
           selectDayElement(node);
         }
+        if (day.isSame(today, 'd')) {
+          setToday(node);
+        }
       }
     }
 
@@ -615,6 +620,12 @@ function calendar (calendarOptions) {
       classes.add(node, o.styles.selectedDay);
     }
     lastDayElement = node;
+  }
+
+  function setToday (node) {
+    if (node) {
+      classes.add(node, o.styles.today);
+    }
   }
 
   function getMonthOffset (elem) {
