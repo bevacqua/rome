@@ -63,6 +63,9 @@
 .rd-day-next-month {
   color: #999;
 }
+.rd-day-today {
+  text-decoration: underline;
+}
 .rd-day-disabled {
   cursor: default;
   color: #fcc;
