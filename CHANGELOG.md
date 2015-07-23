@@ -1,3 +1,8 @@
+# 2.1.19 Bumpy Road
+
+- Updated `bullseye@1.4.6`
+- Updated `crossvent@1.5.0`
+
 # 2.1.18 Aural Emission
 
 - Replaced `contra.emitter` with `contra@1.9.0/emitter`
