@@ -508,6 +508,9 @@ function calendar (calendarOptions) {
         if (data.selectable && day.date() === current) {
           selectDayElement(node);
         }
+        if (isHighlightedDay(day)) {
+          highlightDay(node);
+        }
       }
     }
 
@@ -520,6 +523,21 @@ function calendar (calendarOptions) {
       if (value) { cell.push(o.styles.dayConcealed); }
       return cell;
     }
+  }
+
+  function isHighlightedDay(day) {
+    day = moment(day).startOf('day');
+    for (var i = 0; i < o.highlightedDays.length; i++) {
+      var target = moment(o.highlightedDays[i]).startOf('day');
+      if (day.diff(target, 'days') === 0) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  function highlightDay(node) {
+    classes.add(node, o.styles.highlightedDay);
   }
 
   function isInRange (date, allday, validator) {

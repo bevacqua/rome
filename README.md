@@ -70,6 +70,7 @@ Option             | Description
 `date`             | The calendar shows days and allows you to navigate between months
 `dateValidator`    | Function to validate that a given date is considered valid. Receives a native `Date` parameter.
 `dayFormat`        | Format string used to display days on the calendar
+`highlightedDays`  | An array of dates (or moments) that are highlighted by the calendar
 `initialValue`     | Value used to initialize calendar. Takes `string`, `Date`, or `moment`
 `inputFormat`      | Format string used for the input field as well as the results of `rome`
 `invalidate`       | Ensures the date is valid when the field is blurred
@@ -113,6 +114,7 @@ If you don't set an option, the default will be used. You can [look up the defau
   "date": true,
   "dateValidator": Function.prototype,
   "dayFormat": "DD",
+  "highlightedDays": [],
   "initialValue": null,
   "inputFormat": "YYYY-MM-DD HH:mm",
   "invalidate": true,
@@ -137,6 +139,7 @@ If you don't set an option, the default will be used. You can [look up the defau
     "month": "rd-month",
     "next": "rd-next",
     "positioned": "rd-container-attachment",
+    "highlightedDay": "rd-day-highlight",
     "selectedDay": "rd-day-selected",
     "selectedTime": "rd-time-selected",
     "time": "rd-time",
