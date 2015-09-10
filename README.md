@@ -142,6 +142,7 @@ If you don't set an option, the default will be used. You can [look up the defau
     "selectedTime": "rd-time-selected",
     "time": "rd-time",
     "timeList": "rd-time-list",
+    "timeListActive": "rd-time-list-active",
     "timeOption": "rd-time-option"
   },
   "time": true,
