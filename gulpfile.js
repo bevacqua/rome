@@ -4,7 +4,7 @@ var path = require('path');
 var gulp = require('gulp');
 var bump = require('gulp-bump');
 var git = require('gulp-git');
-var clean = require('gulp-clean');
+var clean = require('del');
 var rename = require('gulp-rename');
 var header = require('gulp-header');
 var uglify = require('gulp-uglify');
@@ -33,9 +33,8 @@ var succint = ' <%= pkg.name %>@v<%= pkg.version %>, <%= pkg.license %> licensed
 var succjs = '//' + succint + '\n';
 var succss = '/*' + succint + ' */\n';
 
-gulp.task('clean', function () {
-  gulp.src('./dist', { read: false })
-    .pipe(clean());
+gulp.task('clean', function (cb) {
+  del(['./dist'], cb);
 });
 
 gulp.task('build-only-broad', bab);
