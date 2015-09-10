@@ -98,6 +98,7 @@ function defaults (options, cal) {
   if (styl.selectedTime === no) { styl.selectedTime = 'rd-time-selected'; }
   if (styl.time === no) { styl.time = 'rd-time'; }
   if (styl.timeList === no) { styl.timeList = 'rd-time-list'; }
+  if (styl.timeListActive === no) { styl.timeListActive = 'rd-time-list-active'; }
   if (styl.timeOption === no) { styl.timeOption = 'rd-time-option'; }
 
   return o;
