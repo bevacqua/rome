@@ -253,10 +253,10 @@ function calendar (calendarOptions) {
 
   function showTimeList () { if (timelist) { classes.add(timelist, o.styles.timeListActive); } }
   function hideTimeList () { if (timelist) { classes.remove(timelist, o.styles.timeListActive); } }
-  function showCalendar () { container.style.display = 'inline-block'; api.emit('show'); }
+  function showCalendar () { classes.add(container, o.styles.containerActive); api.emit('show'); }
   function hideCalendar () {
-    if (container.style.display !== 'none') {
-      container.style.display = 'none';
+    if (classes.contains(container, o.styles.containerActive)) {
+      classes.remove(container, o.styles.containerActive);
       api.emit('hide');
     }
   }
