@@ -25,9 +25,9 @@
   },
   "devDependencies": {
     "browserify": "^10.2.4",
+    "del": "^2.0.2",
     "gulp": "^3.8.6",
     "gulp-bump": "^0.1.8",
-    "gulp-clean": "^0.2.4",
     "gulp-git": "^0.4.2",
     "gulp-header": "^1.0.2",
     "gulp-minify-css": "^0.3.4",
