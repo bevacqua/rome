@@ -9,7 +9,7 @@ var clone = require('./clone');
 var defaults = require('./defaults');
 var momentum = require('./momentum');
 var classes = require('./classes');
-var isInput = require('./isInput.js');
+var isInput = require('./isInput');
 var noop = require('./noop');
 var no;
 
