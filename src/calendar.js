@@ -9,6 +9,7 @@ var clone = require('./clone');
 var defaults = require('./defaults');
 var momentum = require('./momentum');
 var classes = require('./classes');
+var isInput = require('./isInput');
 var noop = require('./noop');
 var no;
 
@@ -266,6 +267,9 @@ function calendar (calendarOptions) {
     refresh();
     toggleTimeList(!o.date);
     showCalendar();
+    if (!o.date && !isInput(this.associated)) {
+      hideTimeList();
+    }
     return api;
   }
 
