@@ -24,6 +24,7 @@ function calendar (calendarOptions) {
   var weekdays;
   var weekdayCount;
   var calendarMonths = [];
+  var currentYear;
   var lastYear;
   var lastMonth;
   var lastDay;
@@ -31,6 +32,7 @@ function calendar (calendarOptions) {
   var datewrapper;
   var back;
   var next;
+  var showYears;
 
   // time variables
   var secondsInDay = 60 * 60 * 24;
@@ -53,6 +55,7 @@ function calendar (calendarOptions) {
     if (!container) { container = dom({ className: o.styles.container }); }
     weekdays = o.weekdayFormat;
     weekdayCount = weekdays.length;
+    showYears = o.showYears;
     lastMonth = no;
     lastYear = no;
     lastDay = no;
@@ -80,6 +83,8 @@ function calendar (calendarOptions) {
     api.restore = napi;
     api.setValue = setValue;
     api.show = show;
+    api.nextYear = addYear;
+    api.backYear = subtractYear;
 
     eventListening();
     ready();
@@ -158,10 +163,13 @@ function calendar (calendarOptions) {
     if (!o.date) {
       return;
     }
+
     var i;
     calendarMonths = [];
 
     datewrapper = dom({ className: o.styles.date, parent: container });
+
+    renderYear(datewrapper);
 
     for (i = 0; i < o.monthsInCalendar; i++) {
       renderMonth(i);
@@ -196,6 +204,22 @@ function calendar (calendarOptions) {
         body: datebody
       });
     }
+  }
+
+  function renderYear (parent) {
+    if(!o.showYears) {
+      return;
+    }
+    var y = ref.year();
+    var yearWrapper = dom({ className: o.styles.year, parent: parent});
+
+    back = dom({ type: 'button', className: o.styles.back, attributes: { type: 'button' }, parent: yearWrapper });
+    next = dom({ type: 'button', className: o.styles.next, attributes: { type: 'button' }, parent: yearWrapper });
+
+    currentYear = dom({ className: o.styles.yearLabel, parent: yearWrapper});
+
+    crossvent.add(back, 'click', subtractYear);
+    crossvent.add(next, 'click', addYear);
   }
 
   function renderTime () {
@@ -326,6 +350,18 @@ function calendar (calendarOptions) {
     api.emit(op === 'add' ? 'next' : 'back', ref.month());
   }
 
+  function subtractYear () { changeYear('subtract'); }
+  function addYear () { changeYear('add'); }
+  function changeYear (op) {
+    var bound;
+    refCal[op](1, 'years');
+    bound = inRange(refCal.clone());
+    ref = bound || ref;
+    if (bound) { refCal = bound.clone(); }
+    update();
+    api.emit(op === 'add' ? 'nextYear' : 'backYear', ref.year());
+  }
+
   function update (silent) {
     updateCalendar();
     updateTime();
@@ -348,13 +384,19 @@ function calendar (calendarOptions) {
     lastMonth = refCal.month();
     lastYear = refCal.year();
     if (canStay) { updateCalendarSelection(); return; }
+    if (o.showYears) { updateYear(); }
     calendarMonths.forEach(updateMonth);
     renderAllDays();
 
     function updateMonth (month, i) {
       var offsetCal = refCal.clone().add(i, 'months');
-      text(month.label, offsetCal.format(o.monthFormat));
+      var monthFormat = o.showYears ? o.monthFormat.replace(/(y|Y| )/g, '') : o.monthFormat;
+      text(month.label, offsetCal.format(monthFormat));
       removeChildren(month.body);
+    }
+
+    function updateYear () {
+      text(currentYear, lastYear);
     }
   }
 

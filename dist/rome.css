@@ -14,6 +14,9 @@
 .rd-container-attachment {
   position: absolute;
 }
+.rd-year {
+  display: block;
+}
 .rd-month {
   display: inline-block;
   margin-right: 25px;

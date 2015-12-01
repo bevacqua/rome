@@ -7,6 +7,7 @@ rome(sm, { weekStart: 1 });
 rome(d, { time: false });
 rome(t, { date: false });
 rome(mms, { monthsInCalendar: 2 });
+rome(bby, { showYears: true });
 
 var picker = rome(ind);
 
