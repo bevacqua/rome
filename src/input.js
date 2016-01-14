@@ -39,7 +39,7 @@ function inputCalendar (input, calendarOptions) {
       input.value = o.initialValue.format(o.inputFormat);
     }
 
-    eye = bullseye(api.container, input);
+    eye = bullseye(api.container, input, { horizontalAlignment: o.horizontalAlignment });
     api.on('data', updateInput);
     api.on('show', eye.refresh);
 
