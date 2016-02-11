@@ -279,7 +279,7 @@ function calendar (calendarOptions) {
     hideTimeList();
 
     var pos = classes.contains(container, o.styles.positioned);
-    if (pos) {
+    if (pos && o.autoClose) {
       setTimeout(hideCalendar, 0);
     }
     return api;
