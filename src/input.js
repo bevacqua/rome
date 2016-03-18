@@ -9,6 +9,9 @@ var calendar = require('./calendar');
 var momentum = require('./momentum');
 var classes = require('./classes');
 
+var swipeDetected = false;
+var startPos = null;
+
 function inputCalendar (input, calendarOptions) {
   var o = calendarOptions || {};
 
@@ -56,6 +59,8 @@ function inputCalendar (input, calendarOptions) {
   function eventListening (remove) {
     var op = remove ? 'remove' : 'add';
     crossvent[op](input, 'click', show);
+    crossvent[op](input, 'touchstart', swipeStart);
+    crossvent[op](input, 'touchmove', swipeMove);
     crossvent[op](input, 'touchend', show);
     crossvent[op](input, 'focusin', show);
     crossvent[op](input, 'change', throttledTakeInput);
@@ -94,8 +99,22 @@ function inputCalendar (input, calendarOptions) {
     }
   }
 
+  function swipeStart(event) {
+    swipeDetected = false;
+    startPos = {
+      pageX: event.touches[0].pageX,
+      pageY: event.touches[0].pageY
+    };
+  }
+
+  function swipeMove (event) {
+    if (Math.abs(startPos.pageX - event.touches[0].pageX) > 10 || Math.abs(startPos.pageY - event.touches[0].pageY) > 10) {
+      swipeDetected = true;
+    }
+  }
+
   function show () {
-    if (ignoreShow) {
+    if (ignoreShow || swipeDetected) {
       return;
     }
     api.show();
