@@ -5403,8 +5403,8 @@ function calendar (calendarOptions) {
       return;
     }
     var timewrapper = dom({ className: o.styles.time, parent: container });
-    time = dom({ className: o.styles.selectedTime, parent: timewrapper, text: ref.format(o.timeFormat) });
-    crossvent.add(time, 'click', toggleTimeList);
+    time = dom({ className: o.date ? o.styles.selectedTime : o.styles.timeOption, parent: timewrapper, text: ref.format(o.timeFormat) });
+    crossvent.add(time, 'click', pickDefaultTime);
     timelist = dom({ className: o.styles.timeList, parent: timewrapper });
     crossvent.add(timelist, 'click', pickTime);
     var next = momentum.moment('00:00:00', 'HH:mm:ss');
@@ -5839,6 +5839,7 @@ function calendar (calendarOptions) {
     if (!classes.contains(target, o.styles.timeOption)) {
       return;
     }
+
     var value = momentum.moment(text(target), o.timeFormat);
     setTime(ref, value);
     refCal = ref.clone();
@@ -5848,6 +5849,27 @@ function calendar (calendarOptions) {
       hideConditionally();
     } else {
       hideTimeList();
+    }
+  }
+
+  function pickDefaultTime(e) {
+    var target = e.target;
+    if  ((e.target.toggled && o.date) || (!e.target.toggled && !o.date)) {
+      e.target.toggled = false;
+      var value = momentum.moment(text(target), o.timeFormat);
+      setTime(ref, value);
+      refCal = ref.clone();
+      emitValues();
+      updateTime();
+      if ((!o.date && o.autoClose === true) || o.autoClose === 'time') {
+        hideConditionally();
+      } else {
+        hideTimeList();
+      }
+    }
+    else{
+      e.target.toggled = true;
+      toggleTimeList();
     }
   }
 
