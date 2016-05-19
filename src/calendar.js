@@ -17,7 +17,6 @@ function calendar (calendarOptions) {
   var ref;
   var refCal;
   var container;
-  var defaultTime
   var rendered = false;
 
   // date variables
@@ -64,7 +63,6 @@ function calendar (calendarOptions) {
     rendered = false;
     ref = o.initialValue ? o.initialValue : momentum.moment();
     refCal = ref.clone();
-    defaultTime = o.defaultTime ? o.defaultTime : momentum.moment().format(o.timeFormat);
 
     api.back = subtractMonth;
     api.container = container;
