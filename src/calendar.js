@@ -61,7 +61,8 @@ function calendar (calendarOptions) {
 
     removeChildren(container);
     rendered = false;
-    ref = o.initialValue ? o.initialValue : momentum.moment();
+    ref = o.initialValue ? o.initialValue : (o.defaultTime ? momentum.moment(o.defaultTime, o.timeFormat) : momentum.moment());
+    
     refCal = ref.clone();
 
     api.back = subtractMonth;
