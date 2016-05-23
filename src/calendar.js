@@ -36,6 +36,7 @@ function calendar (calendarOptions) {
   var secondsInDay = 60 * 60 * 24;
   var time;
   var timelist;
+  var timeToggled
 
   var api = emitter({
     associated: calendarOptions.associated
@@ -204,14 +205,14 @@ function calendar (calendarOptions) {
       return;
     }
     var timewrapper = dom({ className: o.styles.time, parent: container });
-    time = dom({ className: o.date ? o.styles.selectedTime : o.styles.timeOption, parent: timewrapper, text: ref.format(o.timeFormat) });
-    crossvent.add(time, 'click', pickDefaultTime);
-    timelist = dom({ className: o.styles.timeList, parent: timewrapper });
+    time = dom({ className: o.styles.selectedTime, parent: timewrapper, text: ref.format(o.timeFormat) });
+    crossvent.add(time, 'click', toggleTimeList);
+    timelist = dom({className: o.styles.timeList, parent: timewrapper});
     crossvent.add(timelist, 'click', pickTime);
     var next = momentum.moment('00:00:00', 'HH:mm:ss');
     var latest = next.clone().add(1, 'days');
     while (next.isBefore(latest)) {
-      dom({ className: o.styles.timeOption, parent: timelist, text: next.format(o.timeFormat) });
+      dom({className: o.styles.timeOption, parent: timelist, text: next.format(o.timeFormat) });
       next.add(o.timeInterval, 'seconds');
     }
   }
@@ -247,13 +248,20 @@ function calendar (calendarOptions) {
     var display = typeof show === 'boolean' ? show : timelist.style.display === 'none';
     if (display) {
       showTimeList();
+      var seconds = ref.hours() * 3600 + ref.minutes() * 60 + ref.seconds()
+      timelist.scrollTop = seconds * 30 / o.timeInterval
     } else {
       hideTimeList();
     }
   }
 
-  function showTimeList () { if (timelist) { timelist.style.display = 'block'; } }
-  function hideTimeList () { if (timelist) { timelist.style.display = 'none'; } }
+  function showTimeList () { 
+    if (timelist) { timelist.style.display = 'block'; } 
+  }
+  function hideTimeList () { 
+    if (timelist) { timelist.style.display = 'none'; }
+    if (time && !o.date) { hideCalendar() } 
+  }
   function showCalendar () { container.style.display = 'inline-block'; api.emit('show'); }
   function hideCalendar () {
     if (container.style.display !== 'none') {
@@ -654,9 +662,10 @@ function calendar (calendarOptions) {
   }
 
   function pickDefaultTime(e) {
+    return;
     var target = e.target;
-    if  ((e.target.toggled && o.date) || (!e.target.toggled && !o.date)) {
-      e.target.toggled = false;
+    if  ((timeToggled && o.date) || (!timeToggled && !o.date)) {
+      timeToggled = false;
       var value = momentum.moment(text(target), o.timeFormat);
       setTime(ref, value);
       refCal = ref.clone();
@@ -669,7 +678,7 @@ function calendar (calendarOptions) {
       }
     }
     else{
-      e.target.toggled = true;
+      timeToggled = true;
       toggleTimeList();
     }
   }

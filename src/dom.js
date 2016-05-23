@@ -5,6 +5,7 @@ function dom (options) {
   if (!o.type) { o.type = 'div'; }
   var elem = document.createElement(o.type);
   if (o.className) { elem.className = o.className; }
+  if(o.value) { elem.value = o.value }
   if (o.text) { elem.innerText = elem.textContent = o.text; }
   if (o.attributes) {
     Object.keys(o.attributes).forEach(function(key) {
