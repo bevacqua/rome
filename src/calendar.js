@@ -260,7 +260,7 @@ function calendar (calendarOptions) {
   }
   function hideTimeList () { 
     if (timelist) { timelist.style.display = 'none'; }
-    if (time && !o.date) { hideCalendar() } 
+    if (time && !o.date) { hideCalendar() }
   }
   function showCalendar () { container.style.display = 'inline-block'; api.emit('show'); }
   function hideCalendar () {
