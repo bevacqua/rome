@@ -36,7 +36,6 @@ function calendar (calendarOptions) {
   var secondsInDay = 60 * 60 * 24;
   var time;
   var timelist;
-  var timeToggled
 
   var api = emitter({
     associated: calendarOptions.associated
@@ -249,7 +248,8 @@ function calendar (calendarOptions) {
     if (display) {
       showTimeList();
       var seconds = ref.hours() * 3600 + ref.minutes() * 60 + ref.seconds()
-      timelist.scrollTop = seconds * 30 / o.timeInterval
+      console.log(o.offset)
+      timelist.scrollTop = (seconds + o.timeInterval * (o.offset || 0))* 30 / o.timeInterval 
     } else {
       hideTimeList();
     }

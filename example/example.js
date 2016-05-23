@@ -6,7 +6,7 @@ rome(ivp, { initialValue: '2014-12-08 08:36' });
 rome(sm, { weekStart: 1 });
 rome(d, { time: false });
 rome(t, { date: false });
-rome(tdef, { date: false, defaultTime: '04:30'});
+rome(tdef, { date: false, defaultTime: '04:30', offset: 1});
 rome(mms, { monthsInCalendar: 2 });
 
 var picker = rome(ind);
