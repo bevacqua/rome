@@ -247,10 +247,9 @@ function calendar (calendarOptions) {
     var display = typeof show === 'boolean' ? show : timelist.style.display === 'none';
     if (display) {
       showTimeList();
-      var seconds = ref.hours() * 3600 + ref.minutes() * 60 + ref.seconds()
-      console.log(o.offset)
-      timelist.scrollTop = (seconds + o.timeInterval * (o.offset || 0))* 30 / o.timeInterval
-      timelist.scrollTop = (seconds + o.timeInterval * (o.offset || 0))* 30 / o.timeInterval  
+      var scrollTime = time ? momentum.moment(time.innerHTML, o.timeFormat) : (o.defaultTime ? momentum.moment(o.defaultTime, o.timeFormat) : momentum.moment());
+      var seconds = (scrollTime).hours() * 3600 + (scrollTime).minutes() * 60 + (scrollTime).seconds()
+      timelist.scrollTop = (seconds + o.timeInterval * (o.offset || 0))* 29 / o.timeInterval
     } else {
       hideTimeList();
     }
@@ -297,16 +296,11 @@ function calendar (calendarOptions) {
 
   function calendarEventTarget (e) {
     var target = e.target;
-    console.log('')
-    console.log(container)
-    console.log('')
     if (target === api.associated) {
-      console.log('lol')
       return true;
     }
     while (target) {
       if (target === container) {
-        console.log('fish')
         return true;
       }
       target = target.parentNode;
@@ -321,7 +315,6 @@ function calendar (calendarOptions) {
   }
 
   function hideOnClick (e) {
-    console.log('here')
     if (calendarEventTarget(e)) {
       return;
     }
@@ -665,28 +658,6 @@ function calendar (calendarOptions) {
       hideConditionally();
     } else {
       hideTimeList();
-    }
-  }
-
-  function pickDefaultTime(e) {
-    return;
-    var target = e.target;
-    if  ((timeToggled && o.date) || (!timeToggled && !o.date)) {
-      timeToggled = false;
-      var value = momentum.moment(text(target), o.timeFormat);
-      setTime(ref, value);
-      refCal = ref.clone();
-      emitValues();
-      updateTime();
-      if ((!o.date && o.autoClose === true) || o.autoClose === 'time') {
-        hideConditionally();
-      } else {
-        hideTimeList();
-      }
-    }
-    else{
-      timeToggled = true;
-      toggleTimeList();
     }
   }
 
