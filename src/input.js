@@ -104,6 +104,7 @@ function inputCalendar (input, calendarOptions) {
   function takeInput () {
     var value = input.value.trim();
     if (isEmpty()) {
+      api.setValue(defaultTime)
       return;
     }
     var date = momentum.moment(value, o.inputFormat, o.strictParse);

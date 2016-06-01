@@ -249,7 +249,8 @@ function calendar (calendarOptions) {
       showTimeList();
       var seconds = ref.hours() * 3600 + ref.minutes() * 60 + ref.seconds()
       console.log(o.offset)
-      timelist.scrollTop = (seconds + o.timeInterval * (o.offset || 0))* 30 / o.timeInterval 
+      timelist.scrollTop = (seconds + o.timeInterval * (o.offset || 0))* 30 / o.timeInterval
+      timelist.scrollTop = (seconds + o.timeInterval * (o.offset || 0))* 30 / o.timeInterval  
     } else {
       hideTimeList();
     }
@@ -296,11 +297,16 @@ function calendar (calendarOptions) {
 
   function calendarEventTarget (e) {
     var target = e.target;
+    console.log('')
+    console.log(container)
+    console.log('')
     if (target === api.associated) {
+      console.log('lol')
       return true;
     }
     while (target) {
       if (target === container) {
+        console.log('fish')
         return true;
       }
       target = target.parentNode;
@@ -315,6 +321,7 @@ function calendar (calendarOptions) {
   }
 
   function hideOnClick (e) {
+    console.log('here')
     if (calendarEventTarget(e)) {
       return;
     }
