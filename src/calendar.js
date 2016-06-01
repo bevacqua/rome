@@ -254,7 +254,14 @@ function calendar (calendarOptions) {
   }
 
   function scrollTimeList () {
-    var removedInterval = momentum.moment(timelist.children[0].innerHTML, o.timeFormat);
+    var firstChild
+    for (var i = 0; i < timelist.children.length; i++){
+      if(timelist.children[i].style.display != 'none'){
+        firstChild = timelist.children[i];
+        break;
+      }
+    }
+    var removedInterval = momentum.moment(firstChild.innerHTML, o.timeFormat);
     var removedIntervalSeconds = removedInterval.hours() * 3600 + removedInterval.minutes() * 60 + removedInterval.seconds();
     var scrollTime = time ? momentum.moment(time.innerHTML, o.timeFormat) : (o.defaultTime ? momentum.moment(o.defaultTime, o.timeFormat) : momentum.moment());
     var seconds = scrollTime.hours() * 3600 + scrollTime.minutes() * 60 + scrollTime.seconds() - removedIntervalSeconds
