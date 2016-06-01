@@ -247,12 +247,18 @@ function calendar (calendarOptions) {
     var display = typeof show === 'boolean' ? show : timelist.style.display === 'none';
     if (display) {
       showTimeList();
-      var scrollTime = time ? momentum.moment(time.innerHTML, o.timeFormat) : (o.defaultTime ? momentum.moment(o.defaultTime, o.timeFormat) : momentum.moment());
-      var seconds = (scrollTime).hours() * 3600 + (scrollTime).minutes() * 60 + (scrollTime).seconds()
-      timelist.scrollTop = (seconds + o.timeInterval * (o.offset || 0))* 29 / o.timeInterval
+      scrollTimeList();
     } else {
       hideTimeList();
     }
+  }
+
+  function scrollTimeList () {
+    var removedInterval = momentum.moment(timelist.children[0].innerHTML, o.timeFormat);
+    var removedIntervalSeconds = removedInterval.hours() * 3600 + removedInterval.minutes() * 60 + removedInterval.seconds();
+    var scrollTime = time ? momentum.moment(time.innerHTML, o.timeFormat) : (o.defaultTime ? momentum.moment(o.defaultTime, o.timeFormat) : momentum.moment());
+    var seconds = scrollTime.hours() * 3600 + scrollTime.minutes() * 60 + scrollTime.seconds() - removedIntervalSeconds
+    timelist.scrollTop = (seconds + o.timeInterval * (o.offset || 0))* 29 / o.timeInterval
   }
 
   function showTimeList () { 
