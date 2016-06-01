@@ -75,7 +75,7 @@ function inputCalendar (input, calendarOptions) {
 
   function containerClick () {
     ignoreShow = true;
-    input.focus();
+    //input.focus();
     ignoreShow = false;
   }
 
@@ -104,7 +104,7 @@ function inputCalendar (input, calendarOptions) {
   function takeInput () {
     var value = input.value.trim();
     if (isEmpty()) {
-      api.setValue(defaultTime)
+      api.setValue(o.defaultTime || momentum.moment())
       return;
     }
     var date = momentum.moment(value, o.inputFormat, o.strictParse);
