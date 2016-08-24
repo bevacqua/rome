@@ -505,6 +505,7 @@ function calendar (calendarOptions) {
           text: day.format(o.dayFormat),
           className: validationTest(day, data.cell.join(' ').split(' ')).join(' ')
         });
+        node.setAttribute('data-date', day.date());
         if (data.selectable && day.date() === current) {
           selectDayElement(node);
         }
@@ -591,7 +592,7 @@ function calendar (calendarOptions) {
     if (classes.contains(target, o.styles.dayDisabled) || !classes.contains(target, o.styles.dayBodyElem)) {
       return;
     }
-    var day = parseInt(text(target), 10);
+    var day = target.getAttribute('data-date');
     var prev = classes.contains(target, o.styles.dayPrevMonth);
     var next = classes.contains(target, o.styles.dayNextMonth);
     var offset = getMonthOffset(target) - getMonthOffset(lastDayElement);
