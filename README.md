@@ -73,6 +73,7 @@ Option             | Description
 `initialValue`     | Value used to initialize calendar. Takes `string`, `Date`, or `moment`
 `inputFormat`      | Format string used for the input field as well as the results of `rome`
 `invalidate`       | Ensures the date is valid when the field is blurred
+`allowUserInput`   | Allows to enter manually date and time which are not present in the dropdown
 `strictParse`      | Compares input strictly against `inputFormat`, and partial matches are discarded
 `max`              | Disallow dates past `max`. Takes `string`, `Date`, or `moment`
 `min`              | Disallow dates before `min`. Takes `string`, `Date`, or `moment`
