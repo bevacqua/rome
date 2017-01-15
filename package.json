@@ -19,7 +19,7 @@
   "main": "src/rome.moment.js",
   "dependencies": {
     "bullseye": "1.4.6",
-    "contra": "1.9.1",
+    "contra": "^1.9.4",
     "crossvent": "1.5.0",
     "moment": "^2.8.2"
   },
