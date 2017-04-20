@@ -591,7 +591,9 @@ function calendar (calendarOptions) {
     if (classes.contains(target, o.styles.dayDisabled) || !classes.contains(target, o.styles.dayBodyElem)) {
       return;
     }
-    var day = parseInt(text(target), 10);
+    var t = text(target)
+    var parsed = ref.localeData().preparse(t)
+    var day = parseInt(parsed, 10);
     var prev = classes.contains(target, o.styles.dayPrevMonth);
     var next = classes.contains(target, o.styles.dayNextMonth);
     var offset = getMonthOffset(target) - getMonthOffset(lastDayElement);
