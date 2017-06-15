@@ -72,6 +72,7 @@ function defaults (options, cal) {
   if (o.monthsInCalendar === no) { o.monthsInCalendar = 1; }
   if (o.monthFormat === no) { o.monthFormat = 'MMMM YYYY'; }
   if (o.dayFormat === no) { o.dayFormat = 'DD'; }
+  if (o.showYears === no) { o.showYears = false; }
   if (o.styles === no) { o.styles = {}; }
 
   o.styles._isStylesConfiguration = true;
@@ -91,6 +92,8 @@ function defaults (options, cal) {
   if (styl.dayHeadElem === no) { styl.dayHeadElem = 'rd-day-head'; }
   if (styl.dayRow === no) { styl.dayRow = 'rd-days-row'; }
   if (styl.dayTable === no) { styl.dayTable = 'rd-days'; }
+  if (styl.year === no) { styl.year = 'rd-year'; }
+  if (styl.yearLabel === no) { styl.yearLabel = 'rd-year-label'; }
   if (styl.month === no) { styl.month = 'rd-month'; }
   if (styl.monthLabel === no) { styl.monthLabel = 'rd-month-label'; }
   if (styl.next === no) { styl.next = 'rd-next'; }
