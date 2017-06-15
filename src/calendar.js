@@ -322,7 +322,7 @@ function calendar (calendarOptions) {
     bound = inRange(refCal.clone());
     ref = bound || ref;
     if (bound) { refCal = bound.clone(); }
-    update();
+    update(true);
     api.emit(op === 'add' ? 'next' : 'back', ref.month());
   }
 
