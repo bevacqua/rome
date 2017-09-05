@@ -254,13 +254,14 @@ function calendar (calendarOptions) {
   }
 
   function scrollTimeList () {
-    var firstChild
+    var firstChild;
     for (var i = 0; i < timelist.children.length; i++){
       if(timelist.children[i].style.display != 'none'){
         firstChild = timelist.children[i];
         break;
       }
     }
+    firstChild = firstChild || timelist.children[0];
     var removedInterval = momentum.moment(firstChild.innerHTML, o.timeFormat);
     var removedIntervalSeconds = removedInterval.hours() * 3600 + removedInterval.minutes() * 60 + removedInterval.seconds();
     var scrollTime = time ? momentum.moment(time.innerHTML, o.timeFormat) : (o.defaultTime ? momentum.moment(o.defaultTime, o.timeFormat) : momentum.moment());
