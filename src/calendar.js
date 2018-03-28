@@ -81,6 +81,10 @@ function calendar (calendarOptions) {
     api.setValue = setValue;
     api.show = show;
 
+    api.changeMonth = changeMonth;
+    api.subtractMonth = subtractMonth;
+    api.addMonth = addMonth;
+
     eventListening();
     ready();
 
@@ -116,6 +120,11 @@ function calendar (calendarOptions) {
     api.restore = init;
     api.setValue = napi;
     api.show = napi;
+
+    api.changeMonth = napi;
+    api.subtractMonth = napi;
+    api.addMonth = napi;
+
     api.off();
 
     if (silent !== true) {
@@ -167,8 +176,13 @@ function calendar (calendarOptions) {
       renderMonth(i);
     }
 
-    crossvent.add(back, 'click', subtractMonth);
-    crossvent.add(next, 'click', addMonth);
+    // Have to pass in functions that call the API otherwise you can't overload
+    crossvent.add(back, 'click', function () {
+      api.subtractMonth();
+    })
+    crossvent.add(next, 'click', function () {
+      api.addMonth();
+    });
     crossvent.add(datewrapper, 'click', pickDay);
 
     function renderMonth (i) {
@@ -314,7 +328,7 @@ function calendar (calendarOptions) {
 
   function subtractMonth () { changeMonth('subtract'); }
   function addMonth () { changeMonth('add'); }
-  function changeMonth (op) {
+  function changeMonth (op, silent) {
     var bound;
     var direction = op === 'add' ? -1 : 1;
     var offset = o.monthsInCalendar + direction * getMonthOffset(lastDayElement);
@@ -322,7 +336,7 @@ function calendar (calendarOptions) {
     bound = inRange(refCal.clone());
     ref = bound || ref;
     if (bound) { refCal = bound.clone(); }
-    update();
+    update(silent);
     api.emit(op === 'add' ? 'next' : 'back', ref.month());
   }
 
