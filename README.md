@@ -21,14 +21,14 @@ Oh, `rome` synchronizes in real-time with inputs, never steals focus, and its CS
 From npm or Bower.
 
 ```shell
-npm install --save rome
+npm install --save @bevacqua/rome
 ```
 
 ```shell
-bower install --save rome
+bower install --save @bevacqua/rome
 ```
 
-Note that if you're using the standalone version, the API is published under the `rome` global. If you're using CJS, then you'll have to `require('rome')`.
+Note that if you're using the standalone version, the API is published under the `rome` global. If you're using CJS, then you'll have to `require('@bevacqua/rome')`.
 
 ### Setup
 
