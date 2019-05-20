@@ -3,3 +3,4 @@ npm-debug.log
 .DS_Store
 Thumbs.db
 .idea
+package-lock.json
