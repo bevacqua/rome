@@ -128,7 +128,7 @@ function calendar (calendarOptions) {
   function eventListening (remove) {
     var op = remove ? 'remove' : 'add';
     if (o.autoHideOnBlur) { crossvent[op](document.documentElement, 'focus', hideOnBlur, true); }
-    if (o.autoHideOnClick) { crossvent[op](document, 'click', hideOnClick); }
+    if (o.autoHideOnClick) { crossvent[op](document, 'click', hideOnClick, true); }
   }
 
   function changeOptions (options) {
