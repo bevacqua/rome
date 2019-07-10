@@ -72,6 +72,7 @@ function calendar (calendarOptions) {
     api.getDate = getDate;
     api.getDateString = getDateString;
     api.getMoment = getMoment;
+    api.getRefCal = getRefCal
     api.hide = hide;
     api.next = addMonth;
     api.options = changeOptions;
@@ -440,12 +441,18 @@ function calendar (calendarOptions) {
     return api;
   }
 
-  function setValue (value) {
+  function setValue (value, force = false) {
     var date = parse(value, o.inputFormat);
     if (date === null) {
       return;
     }
-    ref = inRange(date) || ref;
+
+    if (force) {
+      ref = value
+    } else {
+      ref = inRange(date) || ref;
+    }
+
     refCal = ref.clone();
     update(true);
 
@@ -677,6 +684,10 @@ function calendar (calendarOptions) {
 
   function getMoment () {
     return ref.clone();
+  }
+
+  function getRefCal () {
+	  return refCal
   }
 }
 
