@@ -441,7 +441,7 @@ function calendar (calendarOptions) {
     return api;
   }
 
-  function setValue (value, force = false) {
+  function setValue (value, force) {
     var date = parse(value, o.inputFormat);
     if (date === null) {
       return;
