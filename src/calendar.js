@@ -62,7 +62,7 @@ function calendar (calendarOptions) {
     removeChildren(container);
     rendered = false;
     ref = o.initialValue ? o.initialValue : (o.defaultTime ? momentum.moment(o.defaultTime, o.timeFormat) : momentum.moment());
-    
+
     refCal = ref.clone();
 
     api.back = subtractMonth;
@@ -268,10 +268,10 @@ function calendar (calendarOptions) {
     timelist.scrollTop = (seconds + o.timeInterval * (o.offset || 0))* 29 / o.timeInterval
   }
 
-  function showTimeList () { 
-    if (timelist) { timelist.style.display = 'block'; } 
+  function showTimeList () {
+    if (timelist) { timelist.style.display = 'block'; }
   }
-  function hideTimeList () { 
+  function hideTimeList () {
     if (timelist) { timelist.style.display = 'none'; }
     if (time && !o.date) { hideCalendar() }
   }
@@ -508,6 +508,19 @@ function calendar (calendarOptions) {
       base: lastDay,
       length: weekdayCount - tr.children.length,
       cell: nextMonth
+    });
+
+    var todayTr = dom({ type: 'tr', parent: month.body });
+    var todayTd = dom({ type: 'td', parent: todayTr, attributes: { colspan: '100%' } });
+    var today = momentum.moment();
+    var todayButton = dom({ type: 'button', text: 'Today', className: o.styles.todayButton, parent: todayTd });
+    todayButton.disabled = !isInRange(today, true, o.dateValidator);
+    todayButton.addEventListener('click', function() {
+      ref.year(today.year()).month(today.month()).date(today.date()); // must run after setting the month
+      setTime(ref, inRange(ref) || ref);
+      refCal = ref.clone();
+      if (o.autoClose === true) { hideConditionally(); }
+      update();
     });
 
     back.disabled = !isInRangeLeft(first, true);

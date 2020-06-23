@@ -96,6 +96,7 @@ function defaults (options, cal) {
   if (styl.next === no) { styl.next = 'rd-next'; }
   if (styl.selectedDay === no) { styl.selectedDay = 'rd-day-selected'; }
   if (styl.selectedTime === no) { styl.selectedTime = 'rd-time-selected'; }
+  if (styl.todayButton === no) { styl.todayButton = 'rd-today-button'; }
   if (styl.time === no) { styl.time = 'rd-time'; }
   if (styl.timeList === no) { styl.timeList = 'rd-time-list'; }
   if (styl.timeOption === no) { styl.timeOption = 'rd-time-option'; }
