@@ -243,7 +243,7 @@ function calendar (calendarOptions) {
   }
 
   function toggleTimeList (show) {
-    var display = typeof show === 'boolean' ? show : timelist.style.display === 'none';
+    var display = typeof show === 'boolean' ? show : !classes.contains(timelist, o.styles.timeListActive);
     if (display) {
       showTimeList();
     } else {
@@ -251,12 +251,12 @@ function calendar (calendarOptions) {
     }
   }
 
-  function showTimeList () { if (timelist) { timelist.style.display = 'block'; } }
-  function hideTimeList () { if (timelist) { timelist.style.display = 'none'; } }
-  function showCalendar () { container.style.display = 'inline-block'; api.emit('show'); }
+  function showTimeList () { if (timelist) { classes.add(timelist, o.styles.timeListActive); } }
+  function hideTimeList () { if (timelist) { classes.remove(timelist, o.styles.timeListActive); } }
+  function showCalendar () { classes.add(container, o.styles.containerActive); api.emit('show'); }
   function hideCalendar () {
-    if (container.style.display !== 'none') {
-      container.style.display = 'none';
+    if (classes.contains(container, o.styles.containerActive)) {
+      classes.remove(container, o.styles.containerActive);
       api.emit('hide');
     }
   }

@@ -79,6 +79,7 @@ function defaults (options, cal) {
   var styl = o.styles;
   if (styl.back === no) { styl.back = 'rd-back'; }
   if (styl.container === no) { styl.container = 'rd-container'; }
+  if (styl.containerActive === no) { styl.containerActive = 'rd-container-active'; }
   if (styl.positioned === no) { styl.positioned = 'rd-container-attachment'; }
   if (styl.date === no) { styl.date = 'rd-date'; }
   if (styl.dayBody === no) { styl.dayBody = 'rd-days-body'; }
@@ -98,6 +99,7 @@ function defaults (options, cal) {
   if (styl.selectedTime === no) { styl.selectedTime = 'rd-time-selected'; }
   if (styl.time === no) { styl.time = 'rd-time'; }
   if (styl.timeList === no) { styl.timeList = 'rd-time-list'; }
+  if (styl.timeListActive === no) { styl.timeListActive = 'rd-time-list-active'; }
   if (styl.timeOption === no) { styl.timeOption = 'rd-time-option'; }
 
   return o;

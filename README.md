@@ -125,6 +125,7 @@ If you don't set an option, the default will be used. You can [look up the defau
   "styles": {
     "back": "rd-back",
     "container": "rd-container",
+    "containerActive": "rd-container-active",
     "date": "rd-date",
     "dayBody": "rd-days-body",
     "dayBodyElem": "rd-day-body",
@@ -141,6 +142,7 @@ If you don't set an option, the default will be used. You can [look up the defau
     "selectedTime": "rd-time-selected",
     "time": "rd-time",
     "timeList": "rd-time-list",
+    "timeListActive": "rd-time-list-active",
     "timeOption": "rd-time-option"
   },
   "time": true,
