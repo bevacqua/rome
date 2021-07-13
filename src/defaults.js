@@ -19,6 +19,7 @@ function defaults (options, cal) {
       throw new Error('Inline calendars must be appended to a parent node explicitly.');
     }
   }
+  if (o.freeNav === no) { o.freeNav = false; } // Navigate to months outside bounds
   if (o.invalidate === no) { o.invalidate = true; }
   if (o.required === no) { o.required = false; }
   if (o.date === no) { o.date = true; }
