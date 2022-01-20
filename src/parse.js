@@ -9,7 +9,7 @@ function raw (date, format) {
   if (Object.prototype.toString.call(date) === '[object Date]') {
     return momentum.moment(date);
   }
-  if (momentum.isMoment(date)) {
+  if (date && date.clone) {
     return date.clone();
   }
 }
