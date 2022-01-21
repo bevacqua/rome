@@ -550,11 +550,12 @@ function calendar (calendarOptions) {
       return inRange(o.max.clone());
     }
     var value = date.clone().subtract(1, 'day');
-    if (validateTowards(value, date, 'add')) {
+    value = validateTowards(value, date, 'add');
+    if (value) {
       return inTimeRange(value);
     }
-    value = date.clone();
-    if (validateTowards(value, date, 'subtract')) {
+    value = validateTowards(date.clone(), date, 'subtract');
+    if (value) {
       return inTimeRange(value);
     }
   }
@@ -583,7 +584,7 @@ function calendar (calendarOptions) {
       }
       valid = o.dateValidator.call(api, value.toDate());
     }
-    return valid !== false;
+    return valid !== false ? value : null;
   }
 
   function pickDay (e) {
