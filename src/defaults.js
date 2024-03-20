@@ -24,6 +24,7 @@ function defaults (options, cal) {
   if (o.date === no) { o.date = true; }
   if (o.time === no) { o.time = true; }
   if (o.date === false && o.time === false) { throw new Error('At least one of `date` or `time` must be `true`.'); }
+  if (o.highlightedDays === no) { o.highlightedDays = []; }
   if (o.inputFormat === no) {
     if (o.date && o.time) {
       o.inputFormat = 'YYYY-MM-DD HH:mm';
@@ -94,6 +95,7 @@ function defaults (options, cal) {
   if (styl.month === no) { styl.month = 'rd-month'; }
   if (styl.monthLabel === no) { styl.monthLabel = 'rd-month-label'; }
   if (styl.next === no) { styl.next = 'rd-next'; }
+  if (styl.highlightedDay === no) { styl.highlightedDay = 'rd-day-highlight'; }
   if (styl.selectedDay === no) { styl.selectedDay = 'rd-day-selected'; }
   if (styl.selectedTime === no) { styl.selectedTime = 'rd-time-selected'; }
   if (styl.time === no) { styl.time = 'rd-time'; }
