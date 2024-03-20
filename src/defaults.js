@@ -47,7 +47,7 @@ function defaults (options, cal) {
       o.max = o.min;
       o.min = temp;
     }
-    if (o.date === true) {
+    if (o.time === false) {
       if (o.max.clone().subtract(1, 'days').isBefore(o.min)) {
         throw new Error('`max` must be at least one day after `min`');
       }
