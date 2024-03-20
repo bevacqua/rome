@@ -68,6 +68,7 @@ Option             | Description
 `date`             | The calendar shows days and allows you to navigate between months
 `dateValidator`    | Function to validate that a given date is considered valid. Receives a native `Date` parameter.
 `dayFormat`        | Format string used to display days on the calendar
+`freeNav`          | Enables date navigation to months prior to the current month (default: `false`)
 `initialValue`     | Value used to initialize calendar. Takes `string`, `Date`, or `moment`
 `inputFormat`      | Format string used for the input field as well as the results of `rome`
 `invalidate`       | Ensures the date is valid when the field is blurred
