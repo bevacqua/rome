@@ -1362,6 +1362,7 @@ function calendar (calendarOptions) {
   var lastMonth;
   var lastDay;
   var lastDayElement;
+  var lastTimeElement;
   var datewrapper;
   var back;
   var next;
@@ -1391,6 +1392,7 @@ function calendar (calendarOptions) {
     lastYear = no;
     lastDay = no;
     lastDayElement = no;
+    lastTimeElement = no;
     o.appendTo.appendChild(container);
 
     removeChildren(container);
@@ -1972,6 +1974,15 @@ function calendar (calendarOptions) {
     var target = e.target;
     if (!classes.contains(target, o.styles.timeOption)) {
       return;
+    }
+    if (!classes.contains(target, o.styles.selectedTime)) {
+      if (lastTimeElement) {
+        classes.remove(lastTimeElement, o.styles.selectedTime);
+      }
+      if(target){
+        classes.add(target, o.styles.selectedTime);
+      }      
+      lastTimeElement = target;
     }
     var value = momentum.moment(text(target), o.timeFormat);
     setTime(ref, value);
