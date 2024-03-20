@@ -73,6 +73,8 @@ function defaults (options, cal) {
   if (o.monthFormat === no) { o.monthFormat = 'MMMM YYYY'; }
   if (o.dayFormat === no) { o.dayFormat = 'DD'; }
   if (o.styles === no) { o.styles = {}; }
+  
+  if (o.horizontalAlignment === no) { o.horizontalAlignment == 'left'; }
 
   o.styles._isStylesConfiguration = true;
 
