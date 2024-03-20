@@ -208,10 +208,10 @@ function calendar (calendarOptions) {
     timelist = dom({ className: o.styles.timeList, parent: timewrapper });
     crossvent.add(timelist, 'click', pickTime);
     var next = momentum.moment('00:00:00', 'HH:mm:ss');
-    var latest = next.clone().add(1, 'days');
+    var latest = next.clone().add(1, 'day');
     while (next.isBefore(latest)) {
       dom({ className: o.styles.timeOption, parent: timelist, text: next.format(o.timeFormat) });
-      next.add(o.timeInterval, 'seconds');
+      next = next.add(o.timeInterval, 'second');
     }
   }
 
@@ -318,7 +318,7 @@ function calendar (calendarOptions) {
     var bound;
     var direction = op === 'add' ? -1 : 1;
     var offset = o.monthsInCalendar + direction * getMonthOffset(lastDayElement);
-    refCal[op](offset, 'months');
+    refCal = refCal[op](offset, 'month');
     bound = inRange(refCal.clone());
     ref = bound || ref;
     if (bound) { refCal = bound.clone(); }
@@ -352,7 +352,7 @@ function calendar (calendarOptions) {
     renderAllDays();
 
     function updateMonth (month, i) {
-      var offsetCal = refCal.clone().add(i, 'months');
+      var offsetCal = refCal.clone().add(i, 'month');
       text(month.label, offsetCal.format(o.monthFormat));
       removeChildren(month.body);
     }
@@ -456,7 +456,7 @@ function calendar (calendarOptions) {
 
   function renderDays (offset) {
     var month = calendarMonths[offset];
-    var offsetCal = refCal.clone().add(offset, 'months');
+    var offsetCal = refCal.clone().add(offset, 'month');
     var total = offsetCal.daysInMonth();
     var current = offsetCal.month() !== ref.month() ? -1 : ref.date(); // -1 : 1..31
     var first = offsetCal.clone().date(1);
@@ -468,7 +468,7 @@ function calendar (calendarOptions) {
     var lastDay;
 
     part({
-      base: first.clone().subtract(firstDay, 'days'),
+      base: first.clone().subtract(firstDay, 'day'),
       length: firstDay,
       cell: prevMonth
     });
@@ -480,7 +480,7 @@ function calendar (calendarOptions) {
       selectable: true
     });
 
-    lastDay = first.clone().add(total, 'days');
+    lastDay = first.clone().add(total, 'day');
 
     part({
       base: lastDay,
@@ -498,7 +498,7 @@ function calendar (calendarOptions) {
         if (tr.children.length === weekdayCount) {
           tr = dom({ type: 'tr', className: o.styles.dayRow, parent: month.body });
         }
-        day = data.base.clone().add(i, 'days');
+        day = data.base.clone().add(i, 'day');
         node = dom({
           type: 'td',
           parent: tr,
@@ -549,24 +549,25 @@ function calendar (calendarOptions) {
     } else if (o.max && date.isAfter(o.max)) {
       return inRange(o.max.clone());
     }
-    var value = date.clone().subtract(1, 'days');
-    if (validateTowards(value, date, 'add')) {
+    var value = date.clone().subtract(1, 'day');
+    value = validateTowards(value, date, 'add');
+    if (value) {
       return inTimeRange(value);
     }
-    value = date.clone();
-    if (validateTowards(value, date, 'subtract')) {
+    value = validateTowards(date.clone(), date, 'subtract');
+    if (value) {
       return inTimeRange(value);
     }
   }
 
   function inTimeRange (value) {
-    var copy = value.clone().subtract(o.timeInterval, 'seconds');
+    var copy = value.clone().subtract(o.timeInterval, 'second');
     var times = Math.ceil(secondsInDay / o.timeInterval);
     var i;
     for (i = 0; i < times; i++) {
-      copy.add(o.timeInterval, 'seconds');
+      copy = copy.add(o.timeInterval, 'second');
       if (copy.date() > value.date()) {
-        copy.subtract(1, 'days');
+        copy = copy.subtract(1, 'day');
       }
       if (o.timeValidator.call(api, copy.toDate()) !== false) {
         return copy;
@@ -577,13 +578,13 @@ function calendar (calendarOptions) {
   function validateTowards (value, date, op) {
     var valid = false;
     while (valid === false) {
-      value[op](1, 'days');
+      value = value[op](1, 'day');
       if (value.month() !== date.month()) {
         break;
       }
       valid = o.dateValidator.call(api, value.toDate());
     }
-    return valid !== false;
+    return valid !== false ? value : null;
   }
 
   function pickDay (e) {
@@ -595,13 +596,13 @@ function calendar (calendarOptions) {
     var prev = classes.contains(target, o.styles.dayPrevMonth);
     var next = classes.contains(target, o.styles.dayNextMonth);
     var offset = getMonthOffset(target) - getMonthOffset(lastDayElement);
-    ref.add(offset, 'months');
+    ref = ref.add(offset, 'month');
     if (prev || next) {
-      ref.add(prev ? -1 : 1, 'months');
+      ref = ref.add(prev ? -1 : 1, 'month');
     }
     selectDayElement(target);
-    ref.date(day); // must run after setting the month
-    setTime(ref, inRange(ref) || ref);
+    ref = ref.date(day); // must run after setting the month
+    ref = setTime(ref, inRange(ref) || ref);
     refCal = ref.clone();
     if (o.autoClose === true) { hideConditionally(); }
     update();
@@ -630,7 +631,7 @@ function calendar (calendarOptions) {
   }
 
   function setTime (to, from) {
-    to.hour(from.hour()).minute(from.minute()).second(from.second());
+    to = to.hour(from.hour()).minute(from.minute()).second(from.second());
     return to;
   }
 
@@ -640,7 +641,7 @@ function calendar (calendarOptions) {
       return;
     }
     var value = momentum.moment(text(target), o.timeFormat);
-    setTime(ref, value);
+    ref = setTime(ref, value);
     refCal = ref.clone();
     emitValues();
     updateTime();
